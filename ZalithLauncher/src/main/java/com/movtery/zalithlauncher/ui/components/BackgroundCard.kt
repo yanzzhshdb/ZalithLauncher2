@@ -22,12 +22,12 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -52,7 +52,7 @@ private fun flatCardElevation() = CardDefaults.cardElevation(
     disabledElevation = 0.dp
 )
 
-/** A subtle specular edge that gives translucent surfaces a liquid-glass finish. */
+/** Soft specular border used by translucent launcher surfaces. */
 @Composable
 private fun liquidGlassBorder(): BorderStroke {
     val highlight = MaterialTheme.colorScheme.onSurface
@@ -69,9 +69,7 @@ private fun liquidGlassBorder(): BorderStroke {
     )
 }
 
-/**
- * Background card with adaptive blur, a translucent fill, and a soft specular glass edge.
- */
+/** Background card with adaptive blur, translucent fill, and a subtle glass edge. */
 @Composable
 fun BackgroundCard(
     modifier: Modifier = Modifier,
@@ -100,7 +98,7 @@ fun BackgroundCard(
     }
 }
 
-/** Clickable background card with the same liquid-glass treatment as other launcher surfaces. */
+/** Clickable background card with the same liquid-glass treatment as other surfaces. */
 @Composable
 fun BackgroundCard(
     modifier: Modifier = Modifier,
@@ -148,12 +146,9 @@ fun CardTitleLayout(
     blur: Int = LauncherSettings.backgroundBlur.state,
     content: @Composable @UiComposable ColumnScope.() -> Unit
 ) {
-    Column(
-        modifier = modifier.fillMaxWidth()
-    ) {
+    Column(modifier = modifier.fillMaxWidth()) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            shape = CircleShape,
             color = color,
             contentColor = contentColor,
         ) {

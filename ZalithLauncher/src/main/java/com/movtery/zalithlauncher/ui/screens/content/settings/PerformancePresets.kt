@@ -1,7 +1,19 @@
 /*
  * Zalith Launcher 2
  * Copyright (C) 2025-2026 MovTery <movtery228@qq.com> and contributors
- * Licensed under the GNU General Public License v3.0 or later.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/gpl-3.0.txt>.
  */
 
 package com.movtery.zalithlauncher.ui.screens.content.settings
@@ -34,6 +46,7 @@ private enum class PerformancePreset(
     VISUAL_QUALITY(100, true, R.string.nlauncher_preset_quality, R.string.nlauncher_preset_quality_summary)
 }
 
+/** One-tap starting points; users can still fine-tune the underlying settings below. */
 @Composable
 fun PerformancePresets(modifier: Modifier = Modifier) {
     val resolution = RendererSettings.resolutionRatio.state
@@ -61,30 +74,23 @@ fun PerformancePresets(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             PerformancePreset.entries.forEachIndexed { index, preset ->
+                val isSelected = selectedPreset == preset
+                val baseTitle = stringResource(preset.titleRes)
                 SettingsCard(
                     modifier = Modifier.fillMaxWidth(),
                     position = when {
-                        PerformancePreset.entries.size == 1 -> CardPosition.Single
+                        index == 0 && index == PerformancePreset.entries.lastIndex -> CardPosition.Single
                         index == 0 -> CardPosition.Top
                         index == PerformancePreset.entries.lastIndex -> CardPosition.Bottom
                         else -> CardPosition.Middle
                     },
-                    title = stringResource(preset.titleRes),
+                    title = if (isSelected) "$baseTitle · ${stringResource(R.string.nlauncher_preset_selected)}" else baseTitle,
                     summary = stringResource(preset.descriptionRes),
                     onClick = {
                         RendererSettings.resolutionRatio.save(preset.resolutionPercent)
                         RendererSettings.sustainedPerformance.save(preset.sustainedPerformance)
                     }
-                ) {
-                    if (selectedPreset == preset) {
-                        Text(
-                            modifier = Modifier.padding(start = 16.dp, bottom = 12.dp),
-                            text = stringResource(R.string.nlauncher_preset_selected),
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                }
+                )
             }
         }
     }
