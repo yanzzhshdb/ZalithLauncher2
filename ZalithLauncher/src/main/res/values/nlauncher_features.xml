@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nlauncher_performance_title">Performance presets</string>
+    <string name="nlauncher_performance_disclaimer">Starting points only. Results vary by device, game version, renderer, and mods. Presets adjust render resolution and sustained-performance mode; RAM stays unchanged.</string>
+    <string name="nlauncher_preset_battery">Battery saver</string>
+    <string name="nlauncher_preset_battery_summary">50% render resolution; sustained performance mode off.</string>
+    <string name="nlauncher_preset_balanced">Balanced</string>
+    <string name="nlauncher_preset_balanced_summary">75% render resolution; sustained performance mode on.</string>
+    <string name="nlauncher_preset_quality">Visual quality</string>
+    <string name="nlauncher_preset_quality_summary">100% render resolution; sustained performance mode on.</string>
+    <string name="nlauncher_preset_selected">Current preset</string>
+</resources>

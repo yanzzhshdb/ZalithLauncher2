@@ -1,19 +1,7 @@
 /*
  * Zalith Launcher 2
  * Copyright (C) 2025-2026 MovTery <movtery228@qq.com> and contributors
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/gpl-3.0.txt>.
+ * Licensed under the GNU General Public License v3.0 or later.
  */
 
 package com.movtery.zalithlauncher.ui.screens.content.settings
@@ -85,6 +73,14 @@ fun GameSettingsScreen(
             isVisible = isVisible
         ) {
             AnimatedItem { ctx ->
+                PerformancePresets(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .animated(ctx)
+                )
+            }
+
+            AnimatedItem { ctx ->
                 SettingsCardColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -129,7 +125,7 @@ fun GameSettingsScreen(
                             modifier = Modifier.fillMaxWidth(),
                             position = CardPosition.Top,
                             unit = GameSettings.javaRuntime,
-                            items = RuntimesManager.getRuntimes().filter { it.isCompatible() },
+                            items = runtimes.filter { it.isCompatible() },
                             title = stringResource(R.string.settings_game_java_runtime_title),
                             summary = stringResource(R.string.settings_game_java_runtime_summary),
                             getItemText = { it.name },
@@ -145,31 +141,28 @@ fun GameSettingsScreen(
                         summary = stringResource(R.string.settings_game_auto_pick_java_runtime_summary)
                     )
 
-                    val nativePlugins = remember {
-                        NativePluginManager.getPlugins()
-                    }
+                    val nativePlugins = remember { NativePluginManager.getPlugins() }
 
                     @Composable
                     fun DLNativeLibsButton() {
-                        IconButton(
-                            onClick = {
-                                eventViewModel.sendDLPlugin(
-                                    githubLink = URL_GITHUB_NATIVE_LIB_PLUGINS,
-                                    cloudDrives = listOf(
-                                        EventViewModel.Event.DownloadPlugins.CloudDrive(
-                                            language = "zh",
-                                            link = URL_CLOUD_NATIVE_LIB_PLUGINS
-                                        )
+                        IconButton(onClick = {
+                            eventViewModel.sendDLPlugin(
+                                githubLink = URL_GITHUB_NATIVE_LIB_PLUGINS,
+                                cloudDrives = listOf(
+                                    EventViewModel.Event.DownloadPlugins.CloudDrive(
+                                        language = "zh",
+                                        link = URL_CLOUD_NATIVE_LIB_PLUGINS
                                     )
                                 )
-                            }
-                        ) {
+                            )
+                        }) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_download_2_filled),
                                 contentDescription = stringResource(R.string.generic_download)
                             )
                         }
                     }
+
                     if (nativePlugins.isNotEmpty()) {
                         StringListSettingsCard(
                             modifier = Modifier.fillMaxWidth(),
@@ -177,23 +170,15 @@ fun GameSettingsScreen(
                             unit = GameSettings.disableNativeLibPlugins,
                             items = nativePlugins,
                             onItemsChange = { value, item ->
-                                if (value) {
-                                    this - item.packageName
-                                } else {
-                                    this + item.packageName
-                                }
+                                if (value) this - item.packageName else this + item.packageName
                             },
                             title = stringResource(R.string.settings_game_native_lib_plugin_title),
                             summary = stringResource(R.string.settings_game_native_lib_plugin_summary),
                             getItemID = { it.packageName },
                             getItemText = { it.displayName },
-                            getItemSummary = { plugin ->
-                                NativePluginSummaryLayout(plugin)
-                            },
+                            getItemSummary = { plugin -> NativePluginSummaryLayout(plugin) },
                             getItemCheck = { contains -> !contains },
-                            trailingIcon = {
-                                DLNativeLibsButton()
-                            },
+                            trailingIcon = { DLNativeLibsButton() }
                         )
                     } else {
                         SettingsCard(
@@ -202,9 +187,7 @@ fun GameSettingsScreen(
                             title = stringResource(R.string.settings_game_native_lib_plugin_title),
                             summary = stringResource(R.string.settings_game_native_lib_plugin_summary),
                             onClick = {},
-                            trailingIcon = {
-                                DLNativeLibsButton()
-                            }
+                            trailingIcon = { DLNativeLibsButton() }
                         )
                     }
 
@@ -219,9 +202,7 @@ fun GameSettingsScreen(
                         fineTuningControl = true,
                         previewContent = {
                             MemoryPreview(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(start = 2.dp),
+                                modifier = Modifier.fillMaxWidth().padding(start = 2.dp),
                                 preview = (GameSettings.ramAllocation.state ?: GameSettings.ramAllocation.min).toDouble(),
                                 usedText = { usedMemory, totalMemory ->
                                     stringResource(R.string.settings_game_java_memory_used_text, usedMemory.toInt(), totalMemory.toInt())
@@ -284,7 +265,6 @@ fun GameSettingsScreen(
     }
 }
 
-
 @Composable
 private fun NativePluginSummaryLayout(plugin: NativePlugin) {
     FlowRow(
@@ -292,36 +272,19 @@ private fun NativePluginSummaryLayout(plugin: NativePlugin) {
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
-            text = stringResource(R.string.settings_renderer_from_plugins,plugin.appName),
+            text = stringResource(R.string.settings_renderer_from_plugins, plugin.appName),
             style = MaterialTheme.typography.labelSmall
         )
-
         val minVer = plugin.minMCVer
         val maxVer = plugin.maxMCVer
-
         if (minVer != null || maxVer != null) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Text(
-                    text = stringResource(R.string.renderer_version_support),
-                    style = MaterialTheme.typography.labelSmall
-                )
-
-                minVer?.let {
-                    Text(
-                        text = ">= $it",
-                        style = MaterialTheme.typography.labelSmall
-                    )
-                }
-
-                maxVer?.let {
-                    Text(
-                        text = "<= $it",
-                        style = MaterialTheme.typography.labelSmall
-                    )
-                }
+                Text(text = stringResource(R.string.renderer_version_support), style = MaterialTheme.typography.labelSmall)
+                minVer?.let { Text(text = ">= $it", style = MaterialTheme.typography.labelSmall) }
+                maxVer?.let { Text(text = "<= $it", style = MaterialTheme.typography.labelSmall) }
             }
         }
     }
