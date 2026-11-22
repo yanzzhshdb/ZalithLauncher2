@@ -22,6 +22,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
@@ -31,6 +32,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.UiComposable
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
@@ -50,9 +52,25 @@ private fun flatCardElevation() = CardDefaults.cardElevation(
     disabledElevation = 0.dp
 )
 
+/** A subtle specular edge that gives translucent surfaces a liquid-glass finish. */
+@Composable
+private fun liquidGlassBorder(): BorderStroke {
+    val highlight = MaterialTheme.colorScheme.onSurface
+    return BorderStroke(
+        width = 1.dp,
+        brush = Brush.linearGradient(
+            colors = listOf(
+                highlight.copy(alpha = 0.34f),
+                highlight.copy(alpha = 0.08f),
+                highlight.copy(alpha = 0.20f),
+                highlight.copy(alpha = 0.04f)
+            )
+        )
+    )
+}
+
 /**
- * 背景卡片组件，
- * 使用方式与原本的[Card]无异，但[BackgroundCard]配置了更舒适的背景颜色
+ * Background card with adaptive blur, a translucent fill, and a soft specular glass edge.
  */
 @Composable
 fun BackgroundCard(
@@ -65,7 +83,7 @@ fun BackgroundCard(
     ),
     elevation: CardElevation = flatCardElevation(),
     blur: Int = LauncherSettings.backgroundBlur.state,
-    border: BorderStroke? = null,
+    border: BorderStroke? = liquidGlassBorder(),
     content: @Composable ColumnScope.() -> Unit
 ) {
     Card(
@@ -82,10 +100,7 @@ fun BackgroundCard(
     }
 }
 
-/**
- * 背景卡片组件，
- * 使用方式与原本的[Card]无异，但[BackgroundCard]配置了更舒适的背景颜色
- */
+/** Clickable background card with the same liquid-glass treatment as other launcher surfaces. */
 @Composable
 fun BackgroundCard(
     modifier: Modifier = Modifier,
@@ -98,7 +113,7 @@ fun BackgroundCard(
     ),
     elevation: CardElevation = flatCardElevation(),
     blur: Int = LauncherSettings.backgroundBlur.state,
-    border: BorderStroke? = null,
+    border: BorderStroke? = liquidGlassBorder(),
     onClick: () -> Unit,
     enabled: Boolean = true,
     content: @Composable @UiComposable ColumnScope.() -> Unit
@@ -119,10 +134,7 @@ fun BackgroundCard(
     }
 }
 
-/**
- * 适合在背景卡片组件顶部使用的标题栏Layout
- * @param alpha 组件背景颜色不透明度
- */
+/** Translucent heading row for grouping content inside a glass card. */
 @Composable
 fun CardTitleLayout(
     modifier: Modifier = Modifier,
@@ -141,6 +153,7 @@ fun CardTitleLayout(
     ) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
+            shape = CircleShape,
             color = color,
             contentColor = contentColor,
         ) {
