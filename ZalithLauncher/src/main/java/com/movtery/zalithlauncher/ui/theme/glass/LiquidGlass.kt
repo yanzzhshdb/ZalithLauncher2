@@ -20,6 +20,7 @@ package com.movtery.zalithlauncher.ui.theme.glass
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -28,6 +29,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -41,10 +43,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.drawOutline
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContentColor
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.movtery.zalithlauncher.ui.screens.content.elements.backgroundGlass
@@ -84,21 +83,29 @@ fun Modifier.liquidGlass(
         )
     }
 
-    if (border) {
-        //边缘高光圈绘制在裁剪之外，保证 1dp 描边不会被裁掉一半
-        modifier = modifier.drawWithContent {
-            drawContent()
-            drawGlassEdge(shape, spec)
-        }
+    if (border && spec.edgeAlpha > 0f) {
+        //边缘高光圈，模拟玻璃折射出的亮边
+        modifier = modifier.border(
+            width = 1.dp,
+            brush = Brush.linearGradient(
+                colors = listOf(
+                    spec.highlightColor.copy(alpha = spec.edgeAlpha),
+                    spec.highlightColor.copy(alpha = spec.edgeAlpha * 0.12f),
+                    spec.highlightColor.copy(alpha = spec.edgeAlpha * 0.45f),
+                    spec.highlightColor.copy(alpha = spec.edgeAlpha)
+                )
+            ),
+            shape = shape
+        )
     }
 
     modifier = modifier.clip(shape)
 
-    modifier = if (backdropBlur) {
-        modifier.backgroundGlass(spec.blurRadius, spec.tint.copy(alpha = spec.tintAlpha))
-    } else {
-        modifier.background(spec.tint.copy(alpha = spec.tintAlpha))
+    //模糊层必须单独绘制在底色之下：backgroundGlass 在没有可用背景时会直接跳过
+    if (backdropBlur) {
+        modifier = modifier.backgroundGlass(spec.blurRadius, Color.Transparent)
     }
+    modifier = modifier.background(spec.tint.copy(alpha = spec.tintAlpha))
 
     return modifier.drawWithContent {
         drawContent()
@@ -139,26 +146,6 @@ private fun DrawScope.drawGlassSheen(spec: GlassSpec) {
             )
         )
     }
-}
-
-/**
- * 1dp 渐变描边，模拟玻璃边缘的折射高光
- */
-private fun DrawScope.drawGlassEdge(shape: Shape, spec: GlassSpec) {
-    if (spec.edgeAlpha <= 0f) return
-
-    drawOutline(
-        outline = shape.createOutline(size, layoutDirection, this),
-        brush = Brush.linearGradient(
-            colors = listOf(
-                spec.highlightColor.copy(alpha = spec.edgeAlpha),
-                spec.highlightColor.copy(alpha = spec.edgeAlpha * 0.12f),
-                spec.highlightColor.copy(alpha = spec.edgeAlpha * 0.45f),
-                spec.highlightColor.copy(alpha = spec.edgeAlpha)
-            )
-        ),
-        style = Stroke(width = 1.dp.toPx())
-    )
 }
 
 /**
