@@ -158,7 +158,6 @@ fun PerformanceSettingsScreen(
                             title = stringResource(R.string.performance_preset_title),
                             summary = stringResource(PerformanceSettings.preset.state.summaryRes),
                             getItemText = { stringResource(it.nameRes) },
-                            getItemId = { it.name },
                             getItemSummary = {
                                 Text(
                                     text = stringResource(it.summaryRes),
