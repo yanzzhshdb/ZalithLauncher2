@@ -18,6 +18,7 @@
 
 package com.movtery.zalithlauncher.notification
 
+import android.app.NotificationManager.IMPORTANCE_DEFAULT
 import android.app.NotificationManager.IMPORTANCE_LOW
 import android.content.Context
 import com.movtery.zalithlauncher.R
@@ -47,5 +48,15 @@ enum class NotificationChannelData(
     /**
      * 陶瓦联机 VPN 状态显示服务
      */
-    TERRACOTTA_VPN_CHANNEL("terracotta_vpn_channel", { "Terracotta VPN" }, { it.getString(R.string.terracotta_terracotta) }, IMPORTANCE_LOW, false)
+    TERRACOTTA_VPN_CHANNEL("terracotta_vpn_channel", { "Terracotta VPN" }, { it.getString(R.string.terracotta_terracotta) }, IMPORTANCE_LOW, false),
+
+    /**
+     * 启动器新版本通知
+     */
+    LAUNCHER_UPDATE_CHANNEL(
+        "launcher.update",
+        { it.getString(R.string.notification_launcher_update_channel_name) },
+        { it.getString(R.string.notification_launcher_update_channel_desc) },
+        IMPORTANCE_DEFAULT
+    )
 }

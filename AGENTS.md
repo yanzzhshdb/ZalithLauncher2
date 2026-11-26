@@ -64,3 +64,21 @@
   `EaseOutFluent(3)`. Power saver still snaps everything.
 - `MenuButtonLayout` adds a spring press-scale (`pressScale`) via `interactionSource`; keep
   the power-saver branch snapping when adding similar press feedback elsewhere.
+
+## Branding assets
+- Launcher icon lives in `mipmap-*/ic_launcher(.webp|_round.webp)`; the adaptive icon
+  (`mipmap-anydpi-v26`) uses `@color/ic_launcher_background` + PNG foreground/monochrome
+  in `drawable-xxxhdpi` (no vectors any more). Replace all of them together when the logo
+  changes, and keep `drawable/img_launcher.png` (in-app logo: welcome, loading, About) in sync.
+- The splash screen points at `@drawable/img_launcher`, so it follows the logo automatically.
+- Founder credit uses `drawable/img_avatar_patrick.png` through `CreditItem` in
+  `AboutInfoScreen`; add new people next to it rather than inventing another card layout.
+
+## Update notifications
+- `upgrade/LauncherReleaseChecker` reads `releases/latest` of `yanzzhshdb/ZalithLauncher2`
+  and compares the tag against `BuildConfig.VERSION_NAME` with a semver compare (a `v`
+  prefix is fine). It is the source of truth for "new build" notifications.
+- `MainActivity.checkLauncherRelease()` runs at most once every 6 hours (`UpgradePrefs
+  .lastReleaseCheck`) and skips a tag already notified (`UpgradePrefs.notifiedReleaseTag`).
+- `notification/LauncherUpdateNotification` posts on the `launcher.update` channel and opens
+  the release page on tap; it silently no-ops when notifications are disabled.

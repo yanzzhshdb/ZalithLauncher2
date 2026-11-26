@@ -287,6 +287,12 @@
     <string name="notification_data_jvm_service_message">To ensure a smooth installation, the launcher needs to run the installer in the foreground. We\'ll try to start a foreground service to maintain stability, but this requires notification permissions. Could you help us enable notification permissions? This will help prevent installation interruptions!</string>
     <!-- Notification channel name of the foreground installation service -->
     <string name="notification_data_jvm_service_name">Foreground Installation Service</string>
+
+    <string name="notification_launcher_update_channel_name">Launcher updates</string>
+    <string name="notification_launcher_update_channel_desc">Tells you when a new version of the launcher is available.</string>
+    <string name="notification_launcher_update_title">%1$s %2$s is available</string>
+    <string name="notification_launcher_update_text">A newer version of %1$s (%2$s) can be downloaded now.</string>
+    <string name="notification_launcher_update_detail">%1$s\n\n%2$s</string>
     <!-- Notification title shown while a game is being installed -->
     <string name="notification_data_jvm_service_running">Installing game via foreground service</string>
     <!-- Dialog on the multiplayer screen explaining why notification permission is needed -->
@@ -2634,6 +2640,12 @@
     <!-- Summary of the last month sponsors settlement dialog; %s is the hardcoded launcher name -->
     <string name="sponsors_last_month_summary">Here are the sponsors who supported %s last month. Thanks for all your support!</string>
     <!-- Section title of the acknowledgements list on the About page -->
+    <string name="about_credits_title">Credits</string>
+    <string name="about_credits_summary">%1$s exists thanks to the people below.</string>
+    <string name="about_credits_founder_title">Patrick</string>
+    <string name="about_credits_founder_role">Founder &amp; logo designer</string>
+    <string name="about_credits_founder_text">Visual identity, app icon and design direction of %1$s.</string>
+
     <string name="about_acknowledgements_title">Acknowledgements</string>
     <!-- Description of the PojavLauncher item in the acknowledgements; %s is the launcher name -->
     <string name="about_acknowledgements_pojav_text">%s uses the launch backend from PojavLauncher</string>
@@ -3216,7 +3228,7 @@
     <!-- What's new -->
     <string name="whats_new_title">What\'s new</string>
     <string name="whats_new_confirm">Got it</string>
-    <string name="whats_new_body">• Community (group chat &amp; voice rooms) stays disabled while its realtime backend is migrated and audited.\n• New control catalog: tap once to add ready-made buttons for jump, sneak/sprint toggles, attack, use, inventory, drop, chat, hotbar 1-9, F1/F3/F5/F11, scroll and mouse clicks, complete with search and categories.\n• Quick combat pack: one tap places attack, use, jump, sneak toggle and inventory around the thumb area.\n• Smoother motion: eased page exits, cards bloom in with a gentle scale, and every menu row now springs back when pressed.\n• Power saver mode, music sleep timer and the maintenance notice from the previous update are still here.</string>
+    <string name="whats_new_body">• Brand new look: NORX Launcher icon, in-app logo and splash screen.\n• Credits section in About: Patrick is credited as founder and logo designer.\n• Update notifications: when a new build is published you now get a system notification; tap it to open the download page.\n• Control catalog, quick combat pack, smoother animations and power saver mode from the previous update are still here.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Power saver mode</string>

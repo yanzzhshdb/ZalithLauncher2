@@ -89,6 +89,12 @@
     <string name="notification_request">Minta Perizinan</string>
     <string name="notification_data_jvm_service_message">Agar instalasi berjalan lancar, launcher perlu menjalankan penginstal di latar depan. Kami akan mencoba memulai layanan latar depan untuk menjaga stabilitas, tetapi hal ini memerlukan izin notifikasi. Bisa bantu mengaktifkan izin notifikasi? Ini akan membantu mencegah gangguan saat instalasi!</string>
     <string name="notification_data_jvm_service_name">Layanan Instalasi Latar Depan</string>
+
+    <string name="notification_launcher_update_channel_name">Update launcher</string>
+    <string name="notification_launcher_update_channel_desc">Memberi tahu kalau ada versi baru launcher.</string>
+    <string name="notification_launcher_update_title">%1$s %2$s sudah tersedia</string>
+    <string name="notification_launcher_update_text">Versi baru %1$s (%2$s) sudah bisa diunduh.</string>
+    <string name="notification_launcher_update_detail">%1$s\n\n%2$s</string>
     <string name="notification_data_jvm_service_running">Menginstal game melalui layanan Latar Depan</string>
     <string name="unpack_screen_jre8">Lingkungan Java 8 (diperlukan untuk Minecraft 1.16 ke bawah)</string>
     <string name="unpack_screen_jre17">Lingkungan Java 17 (diperlukan untuk Minecraft 1.17+)</string>
@@ -724,6 +730,12 @@
     <string name="about_launcher_author_movtery_text">Pembuat %s</string>
     <string name="about_launcher_project_link">Link Project</string>
     <string name="about_sponsor">Dukung Dengan Sponsor</string>
+    <string name="about_credits_title">Kredit</string>
+    <string name="about_credits_summary">%1$s ada berkat orang-orang di bawah ini.</string>
+    <string name="about_credits_founder_title">Patrick</string>
+    <string name="about_credits_founder_role">Pendiri &amp; perancang logo</string>
+    <string name="about_credits_founder_text">Identitas visual, ikon aplikasi, dan arah desain %1$s.</string>
+
     <string name="about_acknowledgements_title">Ucapan Terima Kasih Kepada</string>
     <string name="about_acknowledgements_pojav_text">%s menggunakan backend peluncur dari PojavLauncher</string>
     <string name="about_acknowledgements_modrinth_text">%s memport preset animasi model pemain dari Modrinth</string>
@@ -1591,7 +1603,7 @@
     <!-- What's new -->
     <string name="whats_new_title">Yang baru</string>
     <string name="whats_new_confirm">Oke</string>
-    <string name="whats_new_body">• Komunitas (grup chat &amp; voice room) tetap dimatikan selama backend realtime-nya dimigrasi dan diaudit.\n• Katalog kontrol baru: sekali tap langsung menambah tombol siap pakai untuk lompat, toggle jongkok/sprint, serang, pakai, inventaris, buang item, chat, hotbar 1-9, F1/F3/F5/F11, gulir dan klik mouse, lengkap dengan pencarian dan kategori.\n• Paket tempur cepat: sekali tap langsung menaruh serang, pakai, lompat, toggle jongkok, dan inventaris di area jempol.\n• Animasi lebih halus: transisi keluar pakai easing, kartu masuk dengan skala lembut, dan semua baris menu memantul halus saat ditekan.\n• Mode Hemat Daya, sleep timer musik, dan pemberitahuan maintenance dari update sebelumnya tetap ada.</string>
+    <string name="whats_new_body">• Tampilan baru: ikon NORX Launcher, logo di dalam aplikasi, dan splash screen baru.\n• Bagian Kredit di Tentang: Patrick tercatat sebagai pendiri dan perancang logo.\n• Notifikasi update: kalau ada versi baru terbit, kamu dapat notifikasi; ketuk untuk membuka halaman unduhan.\n• Katalog kontrol, paket tempur cepat, animasi yang lebih halus, dan mode hemat daya dari update sebelumnya tetap ada.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Mode Hemat Daya</string>

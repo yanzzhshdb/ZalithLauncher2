@@ -19,6 +19,7 @@
 package com.movtery.zalithlauncher.ui.screens.content.settings
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -141,6 +143,28 @@ fun AboutInfoScreen(
                                     Text(text = stringResource(R.string.about_sponsor))
                                 }
                             }
+                        )
+                    }
+                }
+            }
+
+            animatedItem { ctx ->
+                ChunkLayout(
+                    modifier = Modifier.animated(ctx),
+                    title = stringResource(R.string.about_credits_title)
+                ) {
+                    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Text(
+                            text = stringResource(R.string.about_credits_summary, BuildKeys.LAUNCHER_NAME),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+
+                        CreditItem(
+                            icon = painterResource(R.drawable.img_avatar_patrick),
+                            title = stringResource(R.string.about_credits_founder_title),
+                            role = stringResource(R.string.about_credits_founder_role),
+                            text = stringResource(R.string.about_credits_founder_text, BuildKeys.LAUNCHER_NAME)
                         )
                     }
                 }
@@ -391,6 +415,63 @@ private fun LinkIconItem(
                         )
                     }
                 }
+            }
+        }
+    }
+}
+
+/**
+ * 人员署名卡片，例如项目的设计者与创始人
+ */
+@Composable
+private fun CreditItem(
+    modifier: Modifier = Modifier,
+    icon: Painter,
+    title: String,
+    role: String,
+    text: String,
+    color: Color = itemColor(),
+    contentColor: Color = onItemColor(),
+) {
+    Surface(
+        modifier = modifier,
+        color = color,
+        contentColor = contentColor,
+        shape = MaterialTheme.shapes.large,
+        onClick = {}
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 14.dp, vertical = 10.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                modifier = Modifier
+                    .size(52.dp)
+                    .clip(CircleShape)
+                    .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape),
+                painter = icon,
+                contentDescription = null,
+                contentScale = ContentScale.Crop
+            )
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleSmall
+                )
+                Text(
+                    text = role,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    modifier = Modifier.alpha(0.7f),
+                    text = text,
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
         }
     }

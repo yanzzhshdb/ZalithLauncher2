@@ -40,6 +40,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.movtery.guide.GuideHost
 import com.movtery.petlib.PetGazeRouter
+import com.movtery.zalithlauncher.BuildConfig
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.context.COPY_LABEL_LINK
 import com.movtery.zalithlauncher.coroutine.Task
@@ -53,6 +54,7 @@ import com.movtery.zalithlauncher.game.plugin.PluginLoader
 import com.movtery.zalithlauncher.game.renderer.Renderers
 import com.movtery.zalithlauncher.game.version.installed.Version
 import com.movtery.zalithlauncher.game.version.installed.VersionsManager
+import com.movtery.zalithlauncher.notification.LauncherUpdateNotification
 import com.movtery.zalithlauncher.notification.NotificationManager
 import com.movtery.zalithlauncher.path.PathManager
 import com.movtery.zalithlauncher.path.URL_SUPPORT
@@ -86,6 +88,7 @@ import com.movtery.zalithlauncher.ui.theme.showThemed
 import com.movtery.zalithlauncher.ui.toAndroidString
 import com.movtery.zalithlauncher.ui.vulkan_checker.VCOperation
 import com.movtery.zalithlauncher.ui.vulkan_checker.VulkanChecker
+import com.movtery.zalithlauncher.upgrade.LauncherReleaseChecker
 import com.movtery.zalithlauncher.upgrade.TooFrequentOperationException
 import com.movtery.zalithlauncher.upgrade.UpgradePrefs
 import com.movtery.zalithlauncher.utils.compareLangTag
@@ -119,6 +122,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.concurrent.TimeUnit
 import java.io.File
 import java.util.Locale
 
@@ -225,6 +229,9 @@ class MainActivity : BaseAppCompatActivity() {
 
         //初始化通知管理（创建渠道）
         NotificationManager.initManager(this)
+
+        //有新版本时推送通知
+        checkLauncherRelease()
 
         //检查更新
         if (!isImporting && launcherUpgradeViewModel.operation == LauncherUpgradeOperation.None) {
@@ -594,6 +601,30 @@ class MainActivity : BaseAppCompatActivity() {
         withContext(Dispatchers.Main) {
             val (result, useTurnip) = vulkanCheckerViewModel.check(version)
             vulkanCheckerViewModel.changeOperation(VCOperation.Result(result, useTurnip))
+        }
+    }
+
+    /**
+     * 检查 NLauncher 是否发布了新版本，有新版本时推送系统通知
+     */
+    private fun checkLauncherRelease() {
+        val now = System.currentTimeMillis()
+        if (now - UpgradePrefs.lastReleaseCheck < TimeUnit.HOURS.toMillis(6L)) return
+        UpgradePrefs.lastReleaseCheck = now
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val release = LauncherReleaseChecker.fetchLatest() ?: return@launch
+            if (!LauncherReleaseChecker.isNewer(release.version, BuildConfig.VERSION_NAME)) {
+                //已经是最新版本，之前残留的通知不再有意义
+                withContext(Dispatchers.Main) {
+                    LauncherUpdateNotification.cancel(this@MainActivity)
+                }
+                return@launch
+            }
+            if (UpgradePrefs.notifiedReleaseTag == release.tag) return@launch
+            withContext(Dispatchers.Main) {
+                LauncherUpdateNotification.show(this@MainActivity, release)
+            }
         }
     }
 

@@ -33,6 +33,25 @@ object UpgradePrefs {
         }
 
     /**
+     * 上次检查 NLauncher 新版本通知的时间戳
+     */
+    var lastReleaseCheck: Long
+        get() = mmkv.getLong("lastReleaseCheck", 0L)
+        set(value) {
+            mmkv.putLong("lastReleaseCheck", value).apply()
+        }
+
+    /**
+     * 已经推送过通知的版本标签
+     */
+    var notifiedReleaseTag: String?
+        get() = mmkv.getString("notifiedReleaseTag", null)
+        set(value) {
+            if (value == null) mmkv.remove("notifiedReleaseTag")
+            else mmkv.putString("notifiedReleaseTag", value).apply()
+        }
+
+    /**
      * 用户选择忽略的更新版本号
      */
     var lastIgnoredVersion: Int?
