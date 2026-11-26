@@ -130,10 +130,10 @@ object VoiceRoomController {
         engine?.stop()
         engine = null
 
-        val repository = repository
+        val currentRepository = repository
         val groupId = currentGroupId.value
-        if (repository != null && groupId != null) {
-            scope.launch { runCatching { repository.leaveVoice(groupId) } }
+        if (currentRepository != null && groupId != null) {
+            scope.launch { runCatching { currentRepository.leaveVoice(groupId) } }
         }
 
         offered.clear()
