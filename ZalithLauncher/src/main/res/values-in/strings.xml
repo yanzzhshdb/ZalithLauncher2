@@ -1537,7 +1537,10 @@
     <string name="community_config_title">Konfigurasi Firebase</string>
     <string name="community_config_summary">Salin nilai ini dari Firebase console, Project settings, Your apps (Android). Aktifkan Firestore, Anonymous Auth, dan Storage di proyek tersebut.</string>
     <string name="community_config_api_key">API key</string>
-    <string name="community_config_app_id">Application ID</string>
+    <string name="community_config_app_id">App ID (1:...:android:...)</string>
+    <string name="community_config_package">Daftarkan nama paket ini di Firebase: %1$s</string>
+    <string name="community_config_package_copy">Salin nama paket</string>
+    <string name="community_package_copied">Nama paket disalin</string>
     <string name="community_config_project_id">Project ID</string>
     <string name="community_config_sender_id">Sender ID (opsional)</string>
     <string name="community_config_storage_bucket">Storage bucket (opsional)</string>

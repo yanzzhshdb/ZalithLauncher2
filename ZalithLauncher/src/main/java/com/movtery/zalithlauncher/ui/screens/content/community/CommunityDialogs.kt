@@ -18,25 +18,34 @@
 
 package com.movtery.zalithlauncher.ui.screens.content.community
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
@@ -44,6 +53,7 @@ import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.community.CommunityController
 import com.movtery.zalithlauncher.setting.CommunitySettings
 import com.movtery.zalithlauncher.ui.components.SimpleEditDialog
+import kotlinx.coroutines.delay
 
 /**
  * Firebase 与网络配置对话框
@@ -74,6 +84,7 @@ fun CommunityConfigDialog(onDismiss: () -> Unit) {
                     text = stringResource(R.string.community_config_summary),
                     style = MaterialTheme.typography.bodySmall
                 )
+                PackageNameRow()
                 ConfigField(
                     label = stringResource(R.string.community_config_display_name),
                     value = displayName,
@@ -157,6 +168,46 @@ fun CommunityConfigDialog(onDismiss: () -> Unit) {
             }
         }
     )
+}
+
+/**
+ * 提示需要在 Firebase 中注册的包名（一键复制）
+ */
+@Composable
+private fun PackageNameRow() {
+    val context = LocalContext.current
+    val packageName = context.packageName
+    var copied by remember { mutableStateOf(false) }
+
+    LaunchedEffect(copied) {
+        if (copied) {
+            delay(1_500)
+            copied = false
+        }
+    }
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(
+            text = stringResource(R.string.community_config_package, packageName),
+            modifier = Modifier.weight(1f),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        IconButton(
+            onClick = {
+                val manager = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                manager?.setPrimaryClip(ClipData.newPlainText("package", packageName))
+                copied = true
+            }
+        ) {
+            Icon(
+                painter = painterResource(
+                    if (copied) R.drawable.ic_check else R.drawable.ic_content_copy_filled
+                ),
+                contentDescription = stringResource(R.string.community_config_package_copy)
+            )
+        }
+    }
 }
 
 @Composable

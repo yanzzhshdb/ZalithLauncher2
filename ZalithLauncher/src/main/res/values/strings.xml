@@ -3162,7 +3162,10 @@
     <string name="community_config_title">Firebase configuration</string>
     <string name="community_config_summary">Copy these values from Firebase console, Project settings, Your apps (Android). Enable Firestore, Anonymous Auth and Storage in that project.</string>
     <string name="community_config_api_key">API key</string>
-    <string name="community_config_app_id">Application ID</string>
+    <string name="community_config_app_id">App ID (1:...:android:...)</string>
+    <string name="community_config_package">Register this package name in Firebase: %1$s</string>
+    <string name="community_config_package_copy">Copy package name</string>
+    <string name="community_package_copied">Package name copied</string>
     <string name="community_config_project_id">Project ID</string>
     <string name="community_config_sender_id">Sender ID (optional)</string>
     <string name="community_config_storage_bucket">Storage bucket (optional)</string>
