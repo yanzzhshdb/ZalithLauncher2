@@ -64,6 +64,21 @@ sealed interface NormalNavKey : TitledNavKey {
         @Contextual override val title: AndroidStringText = androidText(R.string.terracotta_terracotta)
     }
 
+    /** 社区（群聊 / 语音）嵌套子屏幕 */
+    sealed interface Community : NormalNavKey {
+        /** 社区主页屏幕 */
+        @Serializable data object Home : Community {
+            @Contextual override val title: AndroidStringText = androidText(R.string.community_title)
+        }
+        /** 群聊屏幕 */
+        @Serializable data class Chat(
+            val groupId: String,
+            val groupName: String
+        ) : Community {
+            @Contextual override val title: AndroidStringText = androidText(groupName)
+        }
+    }
+
     /** 查看日志屏幕 */
     @Serializable data class LogView(
         val logPath: String

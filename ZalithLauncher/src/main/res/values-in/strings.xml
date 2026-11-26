@@ -1528,4 +1528,55 @@
     <string name="settings_glass_intensity_summary">Mengatur kekuatan warna, kilau, dan blur pada permukaan kaca di seluruh antarmuka.</string>
     <string name="settings_glass_specular_title">Kilau spekular</string>
     <string name="settings_glass_specular_summary">Menggambar pantulan cahaya dan cincin bias di tepi permukaan kaca. Matikan untuk menghemat sedikit daya.</string>
+
+    <!-- Community -->
+    <string name="community_title">Komunitas</string>
+    <string name="community_setup_title">Hubungkan komunitasmu</string>
+    <string name="community_setup_summary">Chat grup dan ruang suara berjalan di proyek Firebase milikmu sendiri, jadi pesan masuk secara realtime untuk semua orang. Isi kunci proyek sekali lalu bagikan ke teman-temanmu.</string>
+    <string name="community_setup_action">Atur Firebase</string>
+    <string name="community_config_title">Konfigurasi Firebase</string>
+    <string name="community_config_summary">Salin nilai ini dari Firebase console, Project settings, Your apps (Android). Aktifkan Firestore, Anonymous Auth, dan Storage di proyek tersebut.</string>
+    <string name="community_config_api_key">API key</string>
+    <string name="community_config_app_id">Application ID</string>
+    <string name="community_config_project_id">Project ID</string>
+    <string name="community_config_sender_id">Sender ID (opsional)</string>
+    <string name="community_config_storage_bucket">Storage bucket (opsional)</string>
+    <string name="community_config_display_name">Nama tampilan</string>
+    <string name="community_config_stun">Server STUN</string>
+    <string name="community_config_turn">Server TURN (opsional)</string>
+    <string name="community_config_turn_user">Username TURN</string>
+    <string name="community_config_turn_password">Password TURN</string>
+    <string name="community_config_rules">Untuk pengujian, izinkan akses terautentikasi di aturan Firestore: allow read, write: if request.auth != null;</string>
+    <string name="community_create_group">Grup baru</string>
+    <string name="community_join_group">Gabung pakai kode</string>
+    <string name="community_group_name">Nama grup</string>
+    <string name="community_invite_code">Kode undangan</string>
+    <string name="community_member_count">%1$d anggota</string>
+    <string name="community_empty_title">Belum ada grup</string>
+    <string name="community_empty_summary">Buat grup, lalu bagikan kode undangannya ke teman-temanmu.</string>
+    <string name="community_message_hint">Pesan</string>
+    <string name="community_send">Kirim</string>
+    <string name="community_record">Rekam pesan suara</string>
+    <string name="community_recording">Merekam, ketuk untuk kirim</string>
+    <string name="community_voice_message">Pesan suara</string>
+    <string name="community_voice_join">Ruang suara</string>
+    <string name="community_voice_leave">Keluar</string>
+    <string name="community_voice_mute">Bisukan</string>
+    <string name="community_voice_unmute">Aktifkan suara</string>
+    <string name="community_voice_in_room">%1$d di ruang suara</string>
+    <string name="community_typing">%1$s sedang mengetik</string>
+    <string name="community_online">%1$d online</string>
+    <string name="community_leave_group">Keluar dari grup</string>
+    <string name="community_copy_invite">Salin kode undangan</string>
+    <string name="community_invite_copied">Kode undangan disalin</string>
+    <string name="community_connecting">Menghubungkan</string>
+    <string name="community_connected">Terhubung</string>
+    <string name="community_failed">Koneksi gagal</string>
+    <string name="community_mic_permission">Izin mikrofon dibutuhkan</string>
+    <string name="community_storage_missing">Storage bucket Firebase belum diatur</string>
+    <string name="community_voice_needs_permission">Izinkan akses mikrofon untuk masuk ruang suara</string>
+    <string name="community_you">Kamu</string>
+    <string name="community_config_saved">Konfigurasi Firebase disimpan</string>
+    <string name="community_settings_entry">Komunitas</string>
+    <string name="community_settings_summary">Chat grup dan ruang suara lewat proyek Firebase milikmu</string>
 </resources>

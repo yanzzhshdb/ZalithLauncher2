@@ -40,6 +40,7 @@ fun loadAllSettings(context: Context, reloadAll: Boolean = false) {
         MiscSettings.reloadAll()
         MusicSettings.reloadAll()
         GlassSettings.reloadAll()
+        CommunitySettings.reloadAll()
         return
     }
 

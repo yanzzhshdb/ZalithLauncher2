@@ -59,3 +59,10 @@
 
 # SoraEditor language-textmate
 -keep class org.jcodings.** { *; }
+
+# WebRTC (JNI bindings)
+-keep class org.webrtc.** { *; }
+-dontwarn org.webrtc.**
+
+# Firebase Firestore model classes
+-keep class com.movtery.zalithlauncher.community.model.** { *; }

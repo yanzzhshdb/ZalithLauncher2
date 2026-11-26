@@ -112,6 +112,7 @@ import com.movtery.zalithlauncher.ui.screens.content.VersionSettingsScreen
 import com.movtery.zalithlauncher.ui.screens.content.VersionsManageScreen
 import com.movtery.zalithlauncher.ui.screens.content.WebViewScreen
 import com.movtery.zalithlauncher.ui.screens.content.addoninfo.AddonInfoScreen
+import com.movtery.zalithlauncher.ui.screens.content.community.CommunityHostScreen
 import com.movtery.zalithlauncher.ui.screens.content.navigateToDownload
 import com.movtery.zalithlauncher.ui.screens.navigateTo
 import com.movtery.zalithlauncher.ui.screens.onBack
@@ -245,6 +246,12 @@ fun MainScreen(
                                 screenKey = NormalNavKey.Multiplayer
                             )
                         },
+                        toCommunityScreen = {
+                            screenBackStackModel.mainScreen.removeAndNavigateTo(
+                                removes = screenBackStackModel.clearBeforeNavKeys,
+                                screenKey = screenBackStackModel.communityScreen
+                            )
+                        },
                         openFileManager = {
                             eventViewModel.sendEvent(
                                 EventViewModel.Event.OpenFileManager(
@@ -318,6 +325,7 @@ private fun <E: TitledNavKey> TopBar(
     toSettingsScreen: () -> Unit,
     toDownloadScreen: () -> Unit,
     toMultiplayerScreen: () -> Unit,
+    toCommunityScreen: () -> Unit,
     openFileManager: () -> Unit,
     changeExpandedState: () -> Unit,
 ) {
@@ -326,6 +334,7 @@ private fun <E: TitledNavKey> TopBar(
     val inMultiplayerScreen = mainScreenKey is NormalNavKey.Multiplayer
     val inDownloadScreen = mainScreenKey is NestedNavKey.Download
     val inSettingsScreen = mainScreenKey is NestedNavKey.Settings
+    val inCommunityScreen = mainScreenKey is NestedNavKey.Community
 
     CompositionLocalProvider(
         LocalContentColor provides contentColor
@@ -484,6 +493,15 @@ private fun <E: TitledNavKey> TopBar(
                     text = stringResource(R.string.terracotta),
                     onClick = {
                         if (!inMultiplayerScreen) toMultiplayerScreen()
+                    },
+                )
+
+                TopBarRailItem(
+                    selected = inCommunityScreen,
+                    painter = painterResource(R.drawable.ic_forum_filled),
+                    text = stringResource(R.string.community_title),
+                    onClick = {
+                        if (!inCommunityScreen) toCommunityScreen()
                     },
                 )
 
@@ -711,6 +729,13 @@ private fun NavigationUI(
                 entry<NormalNavKey.Multiplayer> {
                     MultiplayerScreen(
                         backScreenViewModel = screenBackStackModel,
+                        eventViewModel = eventViewModel
+                    )
+                }
+                entry<NestedNavKey.Community> { key ->
+                    CommunityHostScreen(
+                        key = key,
+                        backStackViewModel = screenBackStackModel,
                         eventViewModel = eventViewModel
                     )
                 }

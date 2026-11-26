@@ -19,6 +19,10 @@
 package com.movtery.zalithlauncher.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.scaleIn
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -72,8 +76,17 @@ fun MiniMusicPlayer(
     AnimatedVisibility(
         visible = visible && playback.hasTrack,
         modifier = modifier,
-        enter = fadeIn() + slideInVertically(initialOffsetY = { it / 2 }),
-        exit = fadeOut() + slideOutVertically(targetOffsetY = { it / 2 })
+        enter = fadeIn(animationSpec = tween(200)) +
+            slideInVertically(
+                animationSpec = spring(dampingRatio = 0.8f, stiffness = Spring.StiffnessMediumLow),
+                initialOffsetY = { it }
+            ) +
+            scaleIn(
+                animationSpec = spring(dampingRatio = 0.8f, stiffness = Spring.StiffnessMediumLow),
+                initialScale = 0.92f
+            ),
+        exit = fadeOut(animationSpec = tween(150)) +
+            slideOutVertically(animationSpec = tween(180), targetOffsetY = { it / 2 })
     ) {
         LiquidGlassSurface(
             modifier = Modifier.fillMaxWidth(),

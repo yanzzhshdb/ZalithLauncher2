@@ -49,6 +49,13 @@ sealed interface NestedNavKey {
             backStack.addIfEmpty(NormalNavKey.Settings.Renderer)
         }
     }
+
+    /** 社区屏幕 */
+    @Serializable class Community : BackStackNavKey<TitledNavKey>(androidText(R.string.community_title)) {
+        init {
+            backStack.addIfEmpty(NormalNavKey.Community.Home)
+        }
+    }
     /** 版本详细设置屏幕 */
     @Serializable
     class VersionSettings(@Contextual val version: Version) : BackStackNavKey<TitledNavKey>(

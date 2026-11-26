@@ -3153,4 +3153,55 @@
     <string name="settings_glass_intensity_summary">Adjusts the tint, highlight and blur strength of glass surfaces across the interface.</string>
     <string name="settings_glass_specular_title">Specular highlights</string>
     <string name="settings_glass_specular_summary">Draws the light reflection and the refractive edge ring on glass surfaces. Turn off to save a little power.</string>
+
+    <!-- Community -->
+    <string name="community_title">Community</string>
+    <string name="community_setup_title">Connect your community</string>
+    <string name="community_setup_summary">Group chat and voice rooms run on your own Firebase project, so messages arrive in realtime for everyone. Add the project keys once and share them with your friends.</string>
+    <string name="community_setup_action">Configure Firebase</string>
+    <string name="community_config_title">Firebase configuration</string>
+    <string name="community_config_summary">Copy these values from Firebase console, Project settings, Your apps (Android). Enable Firestore, Anonymous Auth and Storage in that project.</string>
+    <string name="community_config_api_key">API key</string>
+    <string name="community_config_app_id">Application ID</string>
+    <string name="community_config_project_id">Project ID</string>
+    <string name="community_config_sender_id">Sender ID (optional)</string>
+    <string name="community_config_storage_bucket">Storage bucket (optional)</string>
+    <string name="community_config_display_name">Display name</string>
+    <string name="community_config_stun">STUN server</string>
+    <string name="community_config_turn">TURN server (optional)</string>
+    <string name="community_config_turn_user">TURN username</string>
+    <string name="community_config_turn_password">TURN password</string>
+    <string name="community_config_rules">For testing, allow authenticated access in Firestore rules: allow read, write: if request.auth != null;</string>
+    <string name="community_create_group">New group</string>
+    <string name="community_join_group">Join with code</string>
+    <string name="community_group_name">Group name</string>
+    <string name="community_invite_code">Invite code</string>
+    <string name="community_member_count">%1$d members</string>
+    <string name="community_empty_title">No groups yet</string>
+    <string name="community_empty_summary">Create a group, then share the invite code with your friends.</string>
+    <string name="community_message_hint">Message</string>
+    <string name="community_send">Send</string>
+    <string name="community_record">Record a voice message</string>
+    <string name="community_recording">Recording, tap to send</string>
+    <string name="community_voice_message">Voice message</string>
+    <string name="community_voice_join">Voice room</string>
+    <string name="community_voice_leave">Leave</string>
+    <string name="community_voice_mute">Mute</string>
+    <string name="community_voice_unmute">Unmute</string>
+    <string name="community_voice_in_room">%1$d in voice</string>
+    <string name="community_typing">%1$s is typing</string>
+    <string name="community_online">%1$d online</string>
+    <string name="community_leave_group">Leave group</string>
+    <string name="community_copy_invite">Copy invite code</string>
+    <string name="community_invite_copied">Invite code copied</string>
+    <string name="community_connecting">Connecting</string>
+    <string name="community_connected">Connected</string>
+    <string name="community_failed">Connection failed</string>
+    <string name="community_mic_permission">Microphone permission is required</string>
+    <string name="community_storage_missing">Firebase Storage bucket is not configured</string>
+    <string name="community_voice_needs_permission">Allow microphone access to join a voice room</string>
+    <string name="community_you">You</string>
+    <string name="community_config_saved">Firebase configuration saved</string>
+    <string name="community_settings_entry">Community</string>
+    <string name="community_settings_summary">Group chat and voice rooms over your own Firebase project</string>
 </resources>

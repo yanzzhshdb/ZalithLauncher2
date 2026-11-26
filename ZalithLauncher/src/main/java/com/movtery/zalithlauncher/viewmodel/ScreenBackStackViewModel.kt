@@ -29,6 +29,8 @@ class ScreenBackStackViewModel : ViewModel() {
     val settingsScreen = NestedNavKey.Settings()
     /** 下载屏幕 */
     val downloadScreen = NestedNavKey.Download()
+    /** 社区屏幕 */
+    val communityScreen = NestedNavKey.Community()
 
     /** 下载游戏屏幕 */
     val downloadGameScreen = NestedNavKey.DownloadGame()
@@ -52,6 +54,7 @@ class ScreenBackStackViewModel : ViewModel() {
     val clearBeforeNavKeys = listOf(
         settingsScreen::class,
         downloadScreen::class,
+        communityScreen::class,
         NormalNavKey.Multiplayer::class
     )
 }
