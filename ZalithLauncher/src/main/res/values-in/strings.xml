@@ -142,7 +142,7 @@
     <string name="download_addon_category_library">Pustaka</string>
     <string name="minecraft_download_failed_notfound">Beberapa file dependensi tidak dapat diunduh. Jika masalah tetap terjadi setelah beberapa kali percobaan, game mungkin kehilangan pustaka yang diperlukan. Kami menyarankan untuk menginstal ulang game.</string>
     <string name="settings_renderer_from_plugins">Dari plugin %s</string>
-    <string name="settings_renderer_sustained_performance_title">Mempertahankan Mode Kinerja</string>
+    <string name="settings_renderer_sustained_performance_title">Mode Performa Stabil</string>
     <string name="download_game_install_forgelike_analyse">Analisa pustaka untuk %s</string>
     <string name="download_game_install_forgelike_preparing_mapping_file">Menyiapkan file pemetaan untuk %s</string>
     <string name="download_game_install_game_files_progress">Menginstal file game</string>

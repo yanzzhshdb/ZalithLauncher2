@@ -364,6 +364,18 @@ private fun GameActionContent(
             Spacer(modifier = Modifier.height(8.dp))
         }
 
+        //持续性能模式，长时间游玩时更稳
+        item {
+            MenuSwitchButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.settings_renderer_sustained_performance_title),
+                switch = RendererSettings.sustainedPerformance.state,
+                onSwitch = { RendererSettings.sustainedPerformance.save(it) },
+                color = color,
+                contentColor = contentColor,
+            )
+        }
+
         //内置录屏
         item {
             RecordMenuContent(
