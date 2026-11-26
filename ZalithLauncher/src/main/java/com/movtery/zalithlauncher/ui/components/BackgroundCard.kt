@@ -22,14 +22,13 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.UiComposable
 import androidx.compose.ui.graphics.Color
@@ -39,6 +38,9 @@ import com.movtery.zalithlauncher.setting.LauncherSettings
 import com.movtery.zalithlauncher.ui.screens.content.elements.backgroundGlass
 import com.movtery.zalithlauncher.ui.theme.cardColor
 import com.movtery.zalithlauncher.ui.theme.cardTitleColor
+import com.movtery.zalithlauncher.ui.theme.glass.GlassSpec
+import com.movtery.zalithlauncher.ui.theme.glass.LiquidGlassCard
+import com.movtery.zalithlauncher.ui.theme.glass.rememberGlassSpec
 import com.movtery.zalithlauncher.ui.theme.onCardColor
 
 @Composable
@@ -69,18 +71,15 @@ fun BackgroundCard(
     border: BorderStroke? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Card(
+    LiquidGlassCard(
         modifier = modifier,
         shape = shape,
-        colors = colors,
-        elevation = elevation,
-        border = border,
-    ) {
-        Column(
-            modifier = Modifier.backgroundGlass(blur, colors.containerColor, influencedByBackground),
-            content = content
-        )
-    }
+        spec = rememberCardGlassSpec(colors.containerColor, influencedByBackground, blur),
+        backdropBlur = influencedByBackground,
+        shadow = false,
+        contentColor = colors.contentColor,
+        content = content
+    )
 }
 
 /**
@@ -104,19 +103,41 @@ fun BackgroundCard(
     enabled: Boolean = true,
     content: @Composable @UiComposable ColumnScope.() -> Unit
 ) {
-    Card(
+    LiquidGlassCard(
         modifier = modifier,
         shape = shape,
-        colors = colors,
-        elevation = elevation,
-        border = border,
-        onClick = onClick,
+        spec = rememberCardGlassSpec(colors.containerColor, influencedByBackground, blur),
+        backdropBlur = influencedByBackground,
+        shadow = false,
         enabled = enabled,
-    ) {
-        Column(
-            modifier = Modifier.backgroundGlass(blur, colors.containerColor, influencedByBackground),
-            content = content
-        )
+        contentColor = colors.contentColor,
+        onClick = onClick,
+        content = content
+    )
+}
+
+/**
+ * 卡片使用的玻璃参数：默认跟随全局玻璃设置，
+ * 若调用方指定了自定义卡片颜色，则以该颜色作为玻璃底色，保持原有配色语义
+ */
+@Composable
+private fun rememberCardGlassSpec(
+    containerColor: Color,
+    influencedByBackground: Boolean,
+    blur: Int
+): GlassSpec {
+    val spec = rememberGlassSpec()
+    val defaultColor = cardColor(influencedByBackground)
+    return remember(spec, containerColor, defaultColor, blur) {
+        val base = if (spec.blurRadius == blur) spec else spec.copy(blurRadius = blur)
+        if (containerColor == defaultColor) {
+            base
+        } else {
+            base.copy(
+                tint = containerColor.copy(alpha = 1f),
+                tintAlpha = containerColor.alpha.coerceAtLeast(base.tintAlpha)
+            )
+        }
     }
 }
 

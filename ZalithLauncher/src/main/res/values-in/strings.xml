@@ -1524,4 +1524,8 @@
     <string name="music_delete_message">Hapus %1$s? File yang tersimpan juga dihapus dari launcher.</string>
     <string name="music_notification_channel">Pemutaran musik</string>
     <string name="music_notification_channel_description">Menampilkan lagu yang sedang diputar dan kontrolnya</string>
+    <string name="settings_glass_intensity_title">Intensitas Liquid Glass</string>
+    <string name="settings_glass_intensity_summary">Mengatur kekuatan warna, kilau, dan blur pada permukaan kaca di seluruh antarmuka.</string>
+    <string name="settings_glass_specular_title">Kilau spekular</string>
+    <string name="settings_glass_specular_summary">Menggambar pantulan cahaya dan cincin bias di tepi permukaan kaca. Matikan untuk menghemat sedikit daya.</string>
 </resources>

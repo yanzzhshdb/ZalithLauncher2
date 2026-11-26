@@ -72,6 +72,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.movtery.zalithlauncher.ui.screens.content.elements.DisabledAlpha
+import com.movtery.zalithlauncher.ui.theme.glass.GlassLayer
+import com.movtery.zalithlauncher.ui.theme.glass.liquidGlass
+import com.movtery.zalithlauncher.ui.theme.glass.rememberGlassSpec
 import kotlinx.coroutines.launch
 
 @Composable
@@ -224,9 +227,13 @@ fun BaseIconTextButton(
 ) {
     Row(
         modifier = modifier
-            .clip(shape = shape)
+            .liquidGlass(
+                shape = shape,
+                spec = rememberGlassSpec(GlassLayer.Thin),
+                shadow = false
+            )
             .combinedClickable(enabled = enabled, onClick = onClick, onLongClick = onLongClick)
-            .padding(PaddingValues(horizontal = 8.dp, vertical = 4.dp))
+            .padding(PaddingValues(horizontal = 10.dp, vertical = 6.dp))
             .alpha(if (enabled) 1f else DisabledAlpha),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {

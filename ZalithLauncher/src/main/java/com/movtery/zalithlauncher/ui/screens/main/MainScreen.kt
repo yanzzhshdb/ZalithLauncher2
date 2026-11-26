@@ -28,6 +28,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,6 +44,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -61,8 +63,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
@@ -86,6 +90,7 @@ import com.movtery.zalithlauncher.ui.AndroidStringText
 import com.movtery.zalithlauncher.ui.androidText
 import com.movtery.zalithlauncher.ui.components.BackgroundCard
 import com.movtery.zalithlauncher.ui.components.CardTitleLayout
+import com.movtery.zalithlauncher.ui.components.MiniMusicPlayer
 import com.movtery.zalithlauncher.ui.components.TextRailItem
 import com.movtery.zalithlauncher.ui.guide.sendStartGuideOnce
 import com.movtery.zalithlauncher.ui.screens.BackStackNavKey
@@ -113,6 +118,9 @@ import com.movtery.zalithlauncher.ui.screens.onBack
 import com.movtery.zalithlauncher.ui.screens.rememberTransitionSpec
 import com.movtery.zalithlauncher.ui.theme.backgroundColor
 import com.movtery.zalithlauncher.ui.theme.cardColor
+import com.movtery.zalithlauncher.ui.theme.glass.GlassLayer
+import com.movtery.zalithlauncher.ui.theme.glass.LiquidGlassSurface
+import com.movtery.zalithlauncher.ui.theme.glass.rememberGlassSpec
 import com.movtery.zalithlauncher.ui.theme.festivals.FestivalTitleText
 import com.movtery.zalithlauncher.ui.theme.onBackgroundColor
 import com.movtery.zalithlauncher.ui.theme.onCardColor
@@ -160,6 +168,9 @@ fun MainScreen(
     val mainScreenKey = screenBackStackModel.mainScreen.currentKey
     val inLauncherScreen = mainScreenKey == null || mainScreenKey is NormalNavKey.LauncherMain
 
+    val inMusicScreen = mainScreenKey is NestedNavKey.Settings &&
+            screenBackStackModel.settingsScreen.currentKey is NormalNavKey.Settings.Music
+
     val isBackgroundValid = LocalBackgroundViewModel.current?.isValid == true
     val launcherBackgroundOpacity = LauncherSettings.launcherBackgroundOpacity.state.toFloat() / 100f
 
@@ -167,54 +178,86 @@ fun MainScreen(
         backgroundColor().copy(alpha = launcherBackgroundOpacity)
     } else backgroundColor()
 
+    //无自定义背景时，用主题色铺一层极光渐变，让液态玻璃有可折射的底色
+    val colorScheme = MaterialTheme.colorScheme
+    val backgroundBrush = remember(backgroundColor, isBackgroundValid, colorScheme) {
+        if (isBackgroundValid) {
+            Brush.linearGradient(listOf(backgroundColor, backgroundColor))
+        } else {
+            Brush.linearGradient(
+                colors = listOf(
+                    colorScheme.primary.copy(alpha = 0.20f).compositeOver(backgroundColor),
+                    backgroundColor,
+                    colorScheme.tertiary.copy(alpha = 0.16f).compositeOver(backgroundColor),
+                    colorScheme.secondary.copy(alpha = 0.12f).compositeOver(backgroundColor)
+                )
+            )
+        }
+    }
+
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = backgroundColor,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(backgroundBrush),
+        color = Color.Transparent,
         contentColor = onBackgroundColor()
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            TopBar(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp),
-                mainScreenKey = mainScreenKey,
-                inLauncherScreen = inLauncherScreen,
-                taskRunning = taskRunning,
-                isTasksExpanded = isTaskMenuExpanded,
-                contentColor = onBackgroundColor(),
-                onScreenBack = {
-                    screenBackStackModel.mainScreen.backStack.removeFirstOrNull()
-                },
-                toMainScreen = toMainScreen,
-                toSettingsScreen = {
-                    screenBackStackModel.mainScreen.removeAndNavigateTo(
-                        removes = screenBackStackModel.clearBeforeNavKeys,
-                        screenKey = screenBackStackModel.settingsScreen
+                    .padding(horizontal = 8.dp, vertical = 6.dp)
+            ) {
+                LiquidGlassSurface(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(22.dp),
+                    spec = rememberGlassSpec(GlassLayer.Thin),
+                    shadow = false
+                ) {
+                    TopBar(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(40.dp),
+                        mainScreenKey = mainScreenKey,
+                        inLauncherScreen = inLauncherScreen,
+                        taskRunning = taskRunning,
+                        isTasksExpanded = isTaskMenuExpanded,
+                        contentColor = onBackgroundColor(),
+                        onScreenBack = {
+                            screenBackStackModel.mainScreen.backStack.removeFirstOrNull()
+                        },
+                        toMainScreen = toMainScreen,
+                        toSettingsScreen = {
+                            screenBackStackModel.mainScreen.removeAndNavigateTo(
+                                removes = screenBackStackModel.clearBeforeNavKeys,
+                                screenKey = screenBackStackModel.settingsScreen
+                            )
+                        },
+                        toDownloadScreen = {
+                            screenBackStackModel.navigateToDownload()
+                        },
+                        toMultiplayerScreen = {
+                            screenBackStackModel.mainScreen.removeAndNavigateTo(
+                                removes = screenBackStackModel.clearBeforeNavKeys,
+                                screenKey = NormalNavKey.Multiplayer
+                            )
+                        },
+                        openFileManager = {
+                            eventViewModel.sendEvent(
+                                EventViewModel.Event.OpenFileManager(
+                                    rootPath = PathManager.DIR_FILES_EXTERNAL.absolutePath
+                                )
+                            )
+                        },
+                        changeExpandedState = {
+                            changeTasksExpandedState()
+                        },
                     )
-                },
-                toDownloadScreen = {
-                    screenBackStackModel.navigateToDownload()
-                },
-                toMultiplayerScreen = {
-                    screenBackStackModel.mainScreen.removeAndNavigateTo(
-                        removes = screenBackStackModel.clearBeforeNavKeys,
-                        screenKey = NormalNavKey.Multiplayer
-                    )
-                },
-                openFileManager = {
-                    eventViewModel.sendEvent(
-                        EventViewModel.Event.OpenFileManager(
-                            rootPath = PathManager.DIR_FILES_EXTERNAL.absolutePath
-                        )
-                    )
-                },
-                changeExpandedState = {
-                    changeTasksExpandedState()
-                },
-            )
+                }
+            }
 
             Box(
                 modifier = Modifier
@@ -232,6 +275,20 @@ fun MainScreen(
                         submitError = submitError
                     )
                 }
+
+                MiniMusicPlayer(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(horizontal = 12.dp, vertical = 10.dp),
+                    visible = !inMusicScreen,
+                    onOpenPlayer = {
+                        screenBackStackModel.mainScreen.removeAndNavigateTo(
+                            removes = screenBackStackModel.clearBeforeNavKeys,
+                            screenKey = screenBackStackModel.settingsScreen
+                        )
+                        screenBackStackModel.settingsScreen.clearWith(NormalNavKey.Settings.Music)
+                    }
+                )
 
                 TaskMenu(
                     isExpanded = isTaskMenuExpanded,

@@ -3149,4 +3149,8 @@
     <string name="music_delete_message">Delete %1$s? The saved file is removed from the launcher too.</string>
     <string name="music_notification_channel">Music playback</string>
     <string name="music_notification_channel_description">Shows the current song and playback controls</string>
+    <string name="settings_glass_intensity_title">Liquid Glass intensity</string>
+    <string name="settings_glass_intensity_summary">Adjusts the tint, highlight and blur strength of glass surfaces across the interface.</string>
+    <string name="settings_glass_specular_title">Specular highlights</string>
+    <string name="settings_glass_specular_summary">Draws the light reflection and the refractive edge ring on glass surfaces. Turn off to save a little power.</string>
 </resources>

@@ -75,6 +75,7 @@ import com.movtery.zalithlauncher.contract.MediaPickerContract
 import com.movtery.zalithlauncher.coroutine.Task
 import com.movtery.zalithlauncher.coroutine.TaskSystem
 import com.movtery.zalithlauncher.path.PathManager
+import com.movtery.zalithlauncher.setting.GlassSettings
 import com.movtery.zalithlauncher.setting.LauncherSettings
 import com.movtery.zalithlauncher.setting.enums.AppLanguage
 import com.movtery.zalithlauncher.setting.enums.BackgroundBlur
@@ -320,6 +321,34 @@ fun LauncherSettingsScreen(
                             }
                         )
                     }
+                }
+            }
+
+            //液态玻璃设置板块
+            AnimatedItem { ctx ->
+                SettingsCardColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .animated(ctx)
+                ) {
+                    IntSliderSettingsCard(
+                        modifier = Modifier.fillMaxWidth(),
+                        position = CardPosition.Top,
+                        unit = GlassSettings.intensity,
+                        title = stringResource(R.string.settings_glass_intensity_title),
+                        summary = stringResource(R.string.settings_glass_intensity_summary),
+                        valueRange = GlassSettings.intensity.floatRange,
+                        suffix = "%",
+                        fineTuningControl = true
+                    )
+
+                    SwitchSettingsCard(
+                        modifier = Modifier.fillMaxWidth(),
+                        position = CardPosition.Bottom,
+                        unit = GlassSettings.specular,
+                        title = stringResource(R.string.settings_glass_specular_title),
+                        summary = stringResource(R.string.settings_glass_specular_summary)
+                    )
                 }
             }
 

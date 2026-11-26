@@ -42,10 +42,15 @@ fun onBackgroundColor(): Color = MaterialTheme.colorScheme.onSurfaceVariant
 @Composable
 fun cardColor(
     influencedByBackground: Boolean = true
-): Color = influencedByBackgroundColor(
-    color = MaterialTheme.colorScheme.surfaceBright,
-    enabled = influencedByBackground
-)
+): Color {
+    val color = MaterialTheme.colorScheme.surfaceBright
+    return if (influencedByBackground) {
+        influencedByBackgroundColor(color = color, enabled = true)
+    } else {
+        //不受背景影响时（如对话框、浮层）保留一点通透感，配合遮罩形成磨砂效果
+        color.copy(alpha = 0.88f)
+    }
+}
 @Composable
 fun onCardColor(): Color = MaterialTheme.colorScheme.onSurface
 /**

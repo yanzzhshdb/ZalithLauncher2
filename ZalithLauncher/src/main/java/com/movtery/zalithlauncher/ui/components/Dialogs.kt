@@ -36,6 +36,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
@@ -57,6 +58,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalWindowInfo
@@ -68,6 +71,9 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.ui.theme.cardColor
+import com.movtery.zalithlauncher.ui.theme.glass.GlassLayer
+import com.movtery.zalithlauncher.ui.theme.glass.liquidGlass
+import com.movtery.zalithlauncher.ui.theme.glass.rememberGlassSpec
 import com.movtery.zalithlauncher.ui.theme.onCardColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -85,6 +91,42 @@ fun rememberDialogMaxHeight(): Dp {
     var maxHeight by remember(windowInfo) { mutableIntStateOf(windowInfo.containerSize.height) }
     maxHeight = maxOf(maxHeight, windowInfo.containerSize.height)
     return with(density) { maxHeight.toDp() }
+}
+
+/**
+ * 液态玻璃对话框容器：
+ * 对话框位于独立窗口，无法采样启动器背景，因此只绘制玻璃底色、镜面高光与边缘折射圈
+ */
+@Composable
+private fun GlassAlertDialog(
+    onDismissRequest: () -> Unit,
+    confirmButton: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    dismissButton: (@Composable () -> Unit)? = null,
+    icon: (@Composable () -> Unit)? = null,
+    title: (@Composable () -> Unit)? = null,
+    text: (@Composable () -> Unit)? = null,
+) {
+    val shape: Shape = RoundedCornerShape(32.dp)
+    AlertDialog(
+        onDismissRequest = onDismissRequest,
+        confirmButton = confirmButton,
+        modifier = modifier.liquidGlass(
+            shape = shape,
+            spec = rememberGlassSpec(GlassLayer.Thick),
+            backdropBlur = false,
+            shadow = false
+        ),
+        dismissButton = dismissButton,
+        icon = icon,
+        title = title,
+        text = text,
+        shape = shape,
+        containerColor = Color.Transparent,
+        iconContentColor = MaterialTheme.colorScheme.onSurface,
+        titleContentColor = MaterialTheme.colorScheme.onSurface,
+        textContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+    )
 }
 
 /**
@@ -106,7 +148,7 @@ fun SimpleAlertDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    AlertDialog(
+    GlassAlertDialog(
         onDismissRequest = {
             if (dismissByDialog) onDismiss()
         },
@@ -155,7 +197,7 @@ fun SimpleAlertDialog(
     dismissByDialog: Boolean = true,
     onDismiss: () -> Unit
 ) {
-    AlertDialog(
+    GlassAlertDialog(
         onDismissRequest = {
             if (dismissByDialog) onDismiss()
         },
@@ -193,7 +235,7 @@ fun SimpleAlertDialog(
     onCancel: () -> Unit,
     onDismissRequest: () -> Unit = {}
 ) {
-    AlertDialog(
+    GlassAlertDialog(
         onDismissRequest = onDismissRequest,
         title = {
             Text(
@@ -238,7 +280,7 @@ fun SimpleAlertDialog(
     confirmText: String = stringResource(R.string.generic_confirm),
     onDismiss: () -> Unit
 ) {
-    AlertDialog(
+    GlassAlertDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(

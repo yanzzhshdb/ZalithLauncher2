@@ -20,9 +20,11 @@ package com.movtery.zalithlauncher.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.LocalOverscrollFactory
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialExpressiveTheme
 import androidx.compose.material3.MotionScheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -36,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamicColorScheme
 import com.movtery.zalithlauncher.setting.LauncherSettings
@@ -579,6 +582,17 @@ private val verdantDawnDark = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDark.verdantDawn,
 )
 
+/**
+ * 全局圆角：更大的连续圆角，配合液态玻璃呈现 iOS 27 的观感
+ */
+private val AppShapes = Shapes(
+    extraSmall = RoundedCornerShape(10.dp),
+    small = RoundedCornerShape(14.dp),
+    medium = RoundedCornerShape(20.dp),
+    large = RoundedCornerShape(26.dp),
+    extraLarge = RoundedCornerShape(34.dp)
+)
+
 private fun customLight(
     color: Color,
     style: PaletteStyle,
@@ -683,6 +697,7 @@ fun ZalithLauncherTheme(
         MaterialExpressiveTheme(
             colorScheme = currentDisplayScheme,
             motionScheme = MotionScheme.expressive(),
+            shapes = AppShapes,
             typography = AppTypography,
             content = content
         )
