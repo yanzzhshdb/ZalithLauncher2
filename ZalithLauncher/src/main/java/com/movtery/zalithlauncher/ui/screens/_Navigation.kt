@@ -30,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.scene.Scene
 import com.movtery.zalithlauncher.setting.LauncherSettings
+import com.movtery.zalithlauncher.utils.animation.EaseOutFluent
 import com.movtery.zalithlauncher.utils.animation.SwapClock
 import com.movtery.zalithlauncher.utils.animation.SwapTimeline
 import kotlin.reflect.KClass
@@ -117,7 +118,10 @@ fun rememberSwapTween(): FiniteAnimationSpec<Float> {
         if (powerSaver) {
             snap()
         } else {
-            tween(durationMillis = SwapTimeline.time(SwapTimeline.CONTENT_BASE))
+            tween(
+                durationMillis = SwapTimeline.time(SwapTimeline.CONTENT_BASE),
+                easing = EaseOutFluent(3)
+            )
         }
     }
 }

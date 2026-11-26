@@ -282,7 +282,7 @@ private fun ContentMenu(
             isVisible = isVisible,
             modifier = modifier
                 .fillMaxSize()
-                .animated(ctx)
+                .animated(ctx, scaleIn = 0.96f)
         )
     }
 }

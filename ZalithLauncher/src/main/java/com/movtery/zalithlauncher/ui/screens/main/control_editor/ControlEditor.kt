@@ -32,6 +32,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -56,7 +60,9 @@ import com.movtery.layer_controller.data.TextData
 import com.movtery.layer_controller.data.VisibilityType
 import com.movtery.layer_controller.data.createAdaptiveButtonSize
 import com.movtery.layer_controller.data.createWidgetWithUUID
+import com.movtery.layer_controller.data.ButtonPosition
 import com.movtery.layer_controller.data.lang.createTranslatable
+import com.movtery.layer_controller.observable.ObservableNormalData
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.setting.GameUiSettings
 import com.movtery.zalithlauncher.setting.enums.isLauncherInDarkTheme
@@ -66,6 +72,10 @@ import com.movtery.zalithlauncher.ui.guide.GuideKeys
 import com.movtery.zalithlauncher.ui.guide.NextTipLabel
 import com.movtery.zalithlauncher.ui.guide.rememberAppGuides
 import com.movtery.zalithlauncher.ui.screens.main.control_editor.edit_widget.EditWidgetDialog
+import com.movtery.zalithlauncher.ui.screens.main.control_editor.preset.ControlPresets
+import com.movtery.zalithlauncher.ui.screens.main.control_editor.preset.ControlPresetCatalogDialog
+import com.movtery.zalithlauncher.ui.screens.main.control_editor.preset.StarterPackPlacements
+import com.movtery.zalithlauncher.ui.screens.main.control_editor.preset.findPreset
 import com.movtery.zalithlauncher.ui.screens.main.control_editor.style_cabinet.OpenCabinetSource
 import com.movtery.zalithlauncher.viewmodel.EditorViewModel
 import java.io.File
@@ -104,6 +114,21 @@ fun BoxWithConstraintsScope.ControlEditor(
 
         val density = LocalDensity.current
         val screenSize = rememberBoxSize()
+
+        /** 预设目录弹窗是否显示 */
+        var showPresetCatalog by remember { mutableStateOf(false) }
+        /** 连续添加预设时错开位置，避免控件完全重叠 */
+        var presetAddCount by remember { mutableIntStateOf(0) }
+
+        //预设的本地化名称，供添加控件时作为默认文字使用
+        val presetLabels = ControlPresets.associate { preset ->
+            val arg = preset.labelArg
+            preset.id to if (arg != null) {
+                stringResource(preset.labelRes, arg)
+            } else {
+                stringResource(preset.labelRes)
+            }
+        }
 
         if (viewModel.isPreviewMode) {
             PreviewControlBox(
@@ -234,6 +259,9 @@ fun BoxWithConstraintsScope.ControlEditor(
                     )
                 }
             },
+            openPresetCatalog = {
+                showPresetCatalog = true
+            },
             openStyleList = viewModel::openStyleList,
             openJoystickStyleList = viewModel::openJoystickStyleList,
             openStyleCabinet = {
@@ -297,6 +325,69 @@ fun BoxWithConstraintsScope.ControlEditor(
             openJoystickStyleList = viewModel::openJoystickStyleList,
             onEditJoystickEvents = {
                 guides.startOnce(GuideKeys.JoystickEvents)
+            }
+        )
+
+        ControlPresetCatalogDialog(
+            visible = showPresetCatalog,
+            onDismissRequest = { showPresetCatalog = false },
+            onAddPreset = { preset, label ->
+                val step = presetAddCount++
+                val offset = (step % 5 - 2) * 600
+                viewModel.addWidget(layers) { layer ->
+                    layer.addNormalButton(
+                        ObservableNormalData(
+                            NormalData(
+                                text = createTranslatable(default = label),
+                                uuid = createWidgetWithUUID { uuid -> uuid },
+                                position = ButtonPosition(
+                                    x = (5000 + offset).coerceIn(0, 10000),
+                                    y = (5000 + offset / 2).coerceIn(0, 10000)
+                                ),
+                                buttonSize = createAdaptiveButtonSize(
+                                    referenceLength = screenSize.height,
+                                    density = density.density,
+                                    targetDpSize = preset.sizeDp
+                                ),
+                                visibilityType = VisibilityType.ALWAYS,
+                                isSwipple = false,
+                                isPenetrable = false,
+                                isToggleable = preset.toggleable
+                            )
+                        ).apply {
+                            clickEvents = preset.clickEvents
+                        }
+                    )
+                }
+            },
+            onAddStarterPack = {
+                viewModel.addWidget(layers) { layer ->
+                    StarterPackPlacements.forEach { placement ->
+                        val preset = findPreset(placement.presetId) ?: return@forEach
+                        layer.addNormalButton(
+                            ObservableNormalData(
+                                NormalData(
+                                    text = createTranslatable(
+                                        default = presetLabels[preset.id] ?: ""
+                                    ),
+                                    uuid = createWidgetWithUUID { uuid -> uuid },
+                                    position = ButtonPosition(placement.x, placement.y),
+                                    buttonSize = createAdaptiveButtonSize(
+                                        referenceLength = screenSize.height,
+                                        density = density.density,
+                                        targetDpSize = preset.sizeDp
+                                    ),
+                                    visibilityType = VisibilityType.ALWAYS,
+                                    isSwipple = false,
+                                    isPenetrable = false,
+                                    isToggleable = preset.toggleable
+                                )
+                            ).apply {
+                                clickEvents = preset.clickEvents
+                            }
+                        )
+                    }
+                }
             }
         )
 

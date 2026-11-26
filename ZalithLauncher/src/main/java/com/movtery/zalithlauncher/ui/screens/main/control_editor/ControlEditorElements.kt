@@ -176,6 +176,7 @@ fun EditorMenu(
     addNewButton: () -> Unit,
     addNewText: () -> Unit,
     addNewJoystick: () -> Unit,
+    openPresetCatalog: () -> Unit,
     openStyleList: () -> Unit,
     openJoystickStyleList: () -> Unit,
     openStyleCabinet: () -> Unit,
@@ -208,6 +209,7 @@ fun EditorMenu(
                 addNewButton = addNewButton,
                 addNewText = addNewText,
                 addNewJoystick = addNewJoystick,
+                openPresetCatalog = openPresetCatalog,
                 openStyleList = openStyleList,
                 openJoystickStyleList = openJoystickStyleList,
                 openStyleCabinet = openStyleCabinet,
@@ -273,6 +275,7 @@ private fun EditorMenuContent(
     addNewButton: () -> Unit,
     addNewText: () -> Unit,
     addNewJoystick: () -> Unit,
+    openPresetCatalog: () -> Unit,
     openStyleList: () -> Unit,
     openJoystickStyleList: () -> Unit,
     openStyleCabinet: () -> Unit,
@@ -353,6 +356,26 @@ private fun EditorMenuContent(
                 enabled = isPreviewMode.not(),
                 text = stringResource(R.string.control_editor_menu_new_widget_joystick),
                 onClick = addNewJoystick,
+                color = color,
+                contentColor = contentColor,
+            )
+        }
+
+        //从预设目录添加控件
+        item(key = "add_preset_catalog") {
+            MenuTextButton(
+                modifier = Modifier
+                    .guideNode(
+                        key = GuideKeys.Editor.Step.AddButtons,
+                        holeShape = MaterialTheme.shapes.large
+                    )
+                    .fillMaxWidth(),
+                enabled = isPreviewMode.not(),
+                text = stringResource(R.string.control_preset_menu_entry),
+                onClick = {
+                    openPresetCatalog()
+                    closeScreen()
+                },
                 color = color,
                 contentColor = contentColor,
             )

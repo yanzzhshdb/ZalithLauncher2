@@ -44,3 +44,23 @@
   `com.movtery.zalithlauncher` so sources and the R class are untouched.
 - Intent action strings (`com.movtery.zalithlauncher.filemanager.EVENT_SERVICE`, music
   actions) are internal names, not the package: keep code and manifest in sync if renamed.
+
+## Control preset catalog (editor)
+- `ui/screens/main/control_editor/preset/ControlPreset.kt` holds `ControlPresets`: every
+  entry is a ready-made `NormalData` button whose `ClickEvent`s are already bound to a
+  GLFW keycode (`ControlEventKeycode.*`) or a `LAUNCHER_EVENT_*` string. Add a new control
+  by appending one `ControlPreset(...)` to the matching private list; labels need a
+  `control_preset_*` string in `values` (and `values-in`).
+- `StarterPackPlacements` + `findPreset()` describe the one-tap "quick combat pack"
+  (attack/use/jump/sneak/inventory at fixed 0~10000 coordinates).
+- `ControlPresetCatalogDialog` is opened from the editor menu (`add_preset_catalog` item,
+  wired in `EditorMenu`), and calls `EditorViewModel.addWidget(layers) { … }` so presets
+  land on the currently selected layer.
+
+## Animation tuning
+- `Modifier.animated(...)` gained a `scaleIn` factor (1f = off) driven by the same progress
+  as the slide, so cards can bloom instead of popping. The home grid uses `scaleIn = 0.96f`.
+- Exit tweens use `EaseOutFluent(2)` instead of `LinearEasing`; `rememberSwapTween` uses
+  `EaseOutFluent(3)`. Power saver still snaps everything.
+- `MenuButtonLayout` adds a spring press-scale (`pressScale`) via `interactionSource`; keep
+  the power-saver branch snapping when adding similar press feedback elsewhere.

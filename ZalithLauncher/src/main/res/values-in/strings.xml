@@ -1591,7 +1591,7 @@
     <!-- What's new -->
     <string name="whats_new_title">Yang baru</string>
     <string name="whats_new_confirm">Oke</string>
-    <string name="whats_new_body">• Komunitas (grup chat &amp; voice room) dimatikan sementara untuk maintenance: backend realtime-nya sedang dimigrasi dan diaudit.\n• Mode Hemat Daya baru: mematikan efek liquid glass dan animasi halaman supaya UI tetap lancar dan baterai lebih awet.\n• Sleep timer baru di pemutar musik: lagu berhenti otomatis setelah 5-60 menit.\n• Database sekarang membangun ulang dirinya sendiri, tidak crash lagi kalau APK lama dipasang di atas yang baru.</string>
+    <string name="whats_new_body">• Komunitas (grup chat &amp; voice room) tetap dimatikan selama backend realtime-nya dimigrasi dan diaudit.\n• Katalog kontrol baru: sekali tap langsung menambah tombol siap pakai untuk lompat, toggle jongkok/sprint, serang, pakai, inventaris, buang item, chat, hotbar 1-9, F1/F3/F5/F11, gulir dan klik mouse, lengkap dengan pencarian dan kategori.\n• Paket tempur cepat: sekali tap langsung menaruh serang, pakai, lompat, toggle jongkok, dan inventaris di area jempol.\n• Animasi lebih halus: transisi keluar pakai easing, kartu masuk dengan skala lembut, dan semua baris menu memantul halus saat ditekan.\n• Mode Hemat Daya, sleep timer musik, dan pemberitahuan maintenance dari update sebelumnya tetap ada.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Mode Hemat Daya</string>
@@ -1602,4 +1602,48 @@
     <string name="music_sleep_timer_off">Mati</string>
     <string name="music_sleep_timer_minutes">%1$d menit</string>
     <string name="music_sleep_timer_remaining">Berhenti dalam %1$d mnt</string>
+
+
+    <!-- 控件预设目录 -->
+    <string name="control_preset_starter_pack">Paket tempur cepat</string>
+    <string name="control_preset_starter_pack_desc">Sekali tap langsung menambah serang, pakai, lompat, jongkok toggle, dan inventaris dengan posisi yang sudah diatur di area jempol.</string>
+    <string name="control_preset_menu_entry">Tambah dari katalog kontrol</string>
+    <string name="control_preset_catalog_title">Katalog Kontrol</string>
+    <string name="control_preset_catalog_desc">Sekali tap langsung jadi tombol yang sudah terikat ke tombol Minecraft. Preset jongkok dan sprint otomatis pakai mode toggle, jadi tetap tertekan sampai kamu tap lagi.</string>
+    <string name="control_preset_search_hint">Cari kontrol</string>
+    <string name="control_preset_empty">Tidak ada kontrol yang cocok</string>
+    <string name="control_preset_added">Ditambahkan: %1$d</string>
+    <string name="control_preset_category_all">Semua</string>
+    <string name="control_preset_category_movement">Gerak</string>
+    <string name="control_preset_category_action">Aksi</string>
+    <string name="control_preset_category_hotbar">Hotbar</string>
+    <string name="control_preset_category_view">Tampilan</string>
+    <string name="control_preset_category_launcher">Launcher</string>
+    <string name="control_preset_forward">Maju</string>
+    <string name="control_preset_left">Kiri</string>
+    <string name="control_preset_back">Mundur</string>
+    <string name="control_preset_right">Kanan</string>
+    <string name="control_preset_jump">Lompat</string>
+    <string name="control_preset_sneak">Jongkok (toggle)</string>
+    <string name="control_preset_sprint">Sprint (toggle)</string>
+    <string name="control_preset_attack">Serang</string>
+    <string name="control_preset_use">Pakai / Pasang</string>
+    <string name="control_preset_inventory">Inventaris</string>
+    <string name="control_preset_drop">Buang item</string>
+    <string name="control_preset_swap_hand">Tukar tangan</string>
+    <string name="control_preset_chat">Chat</string>
+    <string name="control_preset_command">Perintah</string>
+    <string name="control_preset_player_list">Daftar pemain</string>
+    <string name="control_preset_pause">Menu pause</string>
+    <string name="control_preset_hotbar">Slot %1$d</string>
+    <string name="control_preset_hide_hud">Sembunyikan HUD</string>
+    <string name="control_preset_debug">Layar debug</string>
+    <string name="control_preset_perspective">Ganti perspektif</string>
+    <string name="control_preset_fullscreen">Layar penuh</string>
+    <string name="control_preset_switch_ime">Ganti keyboard</string>
+    <string name="control_preset_switch_menu">Menu launcher</string>
+    <string name="control_preset_scroll_up">Gulir atas</string>
+    <string name="control_preset_scroll_down">Gulir bawah</string>
+    <string name="control_preset_mouse_middle">Klik tengah</string>
 </resources>
+

@@ -3216,7 +3216,7 @@
     <!-- What's new -->
     <string name="whats_new_title">What\'s new</string>
     <string name="whats_new_confirm">Got it</string>
-    <string name="whats_new_body">• Community (group chat &amp; voice rooms) is disabled for maintenance: the realtime backend is being migrated and audited.\n• New Power saver mode: turns off liquid glass effects and page animations to keep the UI smooth and save battery.\n• New sleep timer in the music player: stop playback automatically after 5-60 minutes.\n• The database now rebuilds itself instead of crashing when an older build is installed over a newer one.</string>
+    <string name="whats_new_body">• Community (group chat &amp; voice rooms) stays disabled while its realtime backend is migrated and audited.\n• New control catalog: tap once to add ready-made buttons for jump, sneak/sprint toggles, attack, use, inventory, drop, chat, hotbar 1-9, F1/F3/F5/F11, scroll and mouse clicks, complete with search and categories.\n• Quick combat pack: one tap places attack, use, jump, sneak toggle and inventory around the thumb area.\n• Smoother motion: eased page exits, cards bloom in with a gentle scale, and every menu row now springs back when pressed.\n• Power saver mode, music sleep timer and the maintenance notice from the previous update are still here.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Power saver mode</string>
@@ -3227,4 +3227,48 @@
     <string name="music_sleep_timer_off">Off</string>
     <string name="music_sleep_timer_minutes">%1$d minutes</string>
     <string name="music_sleep_timer_remaining">Stops in %1$d min</string>
+
+
+    <!-- 控件预设目录 / control preset catalog -->
+    <string name="control_preset_starter_pack">Quick combat pack</string>
+    <string name="control_preset_starter_pack_desc">Adds attack, use, jump, sneak toggle and inventory in one tap, already placed around the thumb area.</string>
+    <string name="control_preset_menu_entry">Add from control catalog</string>
+    <string name="control_preset_catalog_title">Control Catalog</string>
+    <string name="control_preset_catalog_desc">One tap adds a button that is already bound to the matching Minecraft key. Sneak and sprint presets come as toggles, so they stay pressed until you tap again.</string>
+    <string name="control_preset_search_hint">Search controls</string>
+    <string name="control_preset_empty">No control matches your search</string>
+    <string name="control_preset_added">Added: %1$d</string>
+    <string name="control_preset_category_all">All</string>
+    <string name="control_preset_category_movement">Movement</string>
+    <string name="control_preset_category_action">Action</string>
+    <string name="control_preset_category_hotbar">Hotbar</string>
+    <string name="control_preset_category_view">View</string>
+    <string name="control_preset_category_launcher">Launcher</string>
+    <string name="control_preset_forward">Forward</string>
+    <string name="control_preset_left">Left</string>
+    <string name="control_preset_back">Back</string>
+    <string name="control_preset_right">Right</string>
+    <string name="control_preset_jump">Jump</string>
+    <string name="control_preset_sneak">Sneak (toggle)</string>
+    <string name="control_preset_sprint">Sprint (toggle)</string>
+    <string name="control_preset_attack">Attack</string>
+    <string name="control_preset_use">Use / Place</string>
+    <string name="control_preset_inventory">Inventory</string>
+    <string name="control_preset_drop">Drop item</string>
+    <string name="control_preset_swap_hand">Swap hands</string>
+    <string name="control_preset_chat">Chat</string>
+    <string name="control_preset_command">Command</string>
+    <string name="control_preset_player_list">Player list</string>
+    <string name="control_preset_pause">Pause menu</string>
+    <string name="control_preset_hotbar">Slot %1$d</string>
+    <string name="control_preset_hide_hud">Hide HUD</string>
+    <string name="control_preset_debug">Debug screen</string>
+    <string name="control_preset_perspective">Perspective</string>
+    <string name="control_preset_fullscreen">Fullscreen</string>
+    <string name="control_preset_switch_ime">On-screen keyboard</string>
+    <string name="control_preset_switch_menu">Launcher menu</string>
+    <string name="control_preset_scroll_up">Scroll up</string>
+    <string name="control_preset_scroll_down">Scroll down</string>
+    <string name="control_preset_mouse_middle">Middle click</string>
 </resources>
+

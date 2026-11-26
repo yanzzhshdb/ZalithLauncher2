@@ -21,6 +21,8 @@ package com.movtery.zalithlauncher.ui.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -30,6 +32,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -733,13 +736,31 @@ fun MenuButtonLayout(
         scale.animateTo(targetValue = 1f, animationSpec = getAnimateTween())
     }
 
+    //按下时的回弹反馈，让点击手感更顺滑
+    val interactionSource = remember { MutableInteractionSource() }
+    val pressed by interactionSource.collectIsPressedAsState()
+    val powerSaver = LauncherSettings.launcherPowerSaver.state
+    val pressScale by animateFloatAsState(
+        targetValue = if (pressed) 0.975f else 1f,
+        animationSpec = if (powerSaver) {
+            snap()
+        } else {
+            spring(dampingRatio = 0.65f, stiffness = 720f)
+        },
+        label = "menuPressScale"
+    )
+
     Surface(
-        modifier = modifier.graphicsLayer(scaleY = scale.value, scaleX = scale.value),
+        modifier = modifier.graphicsLayer(
+            scaleY = scale.value * pressScale,
+            scaleX = scale.value * pressScale
+        ),
         shape = shape,
         color = color,
         contentColor = contentColor,
         enabled = enabled,
-        onClick = onClick
+        onClick = onClick,
+        interactionSource = interactionSource
     ) {
         Row(
             modifier = Modifier

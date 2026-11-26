@@ -19,7 +19,6 @@
 package com.movtery.zalithlauncher.ui.components
 
 import androidx.compose.animation.core.DurationBasedAnimationSpec
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -111,12 +110,14 @@ private fun rememberAnimatedContext(
  * @param from 进入方向，[AnimatedDirection.Auto] 时使用容器默认方向
  * @param distance 位移距离，按方向取正负号
  * @param fade 是否伴随淡入
+ * @param scaleIn 完全隐藏时的缩放比例，1f 表示不缩放
  */
 fun Modifier.animated(
     ctx: AnimatedContext,
     from: AnimatedDirection = AnimatedDirection.Auto,
     distance: Dp = 40.dp,
-    fade: Boolean = true
+    fade: Boolean = true,
+    scaleIn: Float = 1f
 ): Modifier = this.graphicsLayer {
     val progress = ctx.progress.value
     val direction = if (from == AnimatedDirection.Auto) ctx.defaultDirection else from
@@ -151,6 +152,12 @@ fun Modifier.animated(
         translationY = 0f
     }
     alpha = if (fade) ctx.alphaProgress.value else 1f
+    if (scaleIn < 1f) {
+        //随位移进度轻微放大，避免元素凭空出现，静止时精确为 1f
+        val scale = 1f - (1f - scaleIn) * (1f - progress)
+        scaleX = scale
+        scaleY = scale
+    }
 }
 
 @Composable
@@ -170,7 +177,7 @@ private fun swapAnimateProgressAsState(
         tween(
             durationMillis = SwapTimeline.swapTime(SwapTimeline.EXIT_ITEM),
             delayMillis = SwapTimeline.exitStagger(index),
-            easing = LinearEasing
+            easing = EaseOutFluent(2)
         )
     }
     return swapAnimateProgressAsState(isVisible = isVisible, animationSpec = spec)
@@ -205,7 +212,7 @@ private fun swapAnimateAlphaProgressAsState(
         tween(
             durationMillis = SwapTimeline.swapTime(SwapTimeline.EXIT_ALPHA),
             delayMillis = SwapTimeline.exitStagger(index),
-            easing = LinearEasing
+            easing = EaseOutFluent(2)
         )
     }
     return swapAnimateAlphaProgressAsState(isVisible = isVisible, animationSpec = spec)
@@ -233,13 +240,13 @@ private fun swapAnimateDistanceScaleAsState(
         tween(
             durationMillis = SwapTimeline.swapTime(SwapTimeline.ENTER_ITEM),
             delayMillis = SwapTimeline.enterStagger(index),
-            easing = LinearEasing
+            easing = EaseOutFluent(2)
         )
     } else {
         tween(
             durationMillis = SwapTimeline.swapTime(SwapTimeline.EXIT_ITEM),
             delayMillis = SwapTimeline.exitStagger(index),
-            easing = LinearEasing
+            easing = EaseOutFluent(2)
         )
     }
     return animateFloatAsState(
