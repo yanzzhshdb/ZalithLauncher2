@@ -97,6 +97,8 @@ abstract class AppDatabase : RoomDatabase() {
                     "launcher_data.db"
                 )
                 .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                // 覆盖安装旧版本 APK 时数据库版本会倒退，此时重建数据库而不是直接崩溃
+                .fallbackToDestructiveMigrationOnDowngrade(true)
                 .build()
                 INSTANCE = instance
                 instance
