@@ -38,7 +38,7 @@ object PlaytimeTracker {
     /** 达到该时长才推送会话结束通知 */
     private const val NOTIFY_SESSION_MILLIS = 60_000L
     /** 超过该时长的未结束会话视为异常残留 */
-    private const val STALE_SESSION_MILLIS = TimeUnit.HOURS.toMillis(12L)
+    private const val STALE_SESSION_MILLIS = 12L * 60L * 60L * 1000L
 
     private const val KEY_PENDING_VERSION = "playtime.pending.version"
     private const val KEY_PENDING_HOME = "playtime.pending.home"
