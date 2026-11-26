@@ -18,6 +18,9 @@ plugins {
 }
 
 val zalithPackageName = "com.movtery.zalithlauncher"
+//应用的包名（applicationId），与源码 namespace 分开，避免与 Zalith Launcher 冲突
+val nlauncherApplicationId = project.findProperty("launcher_application_id") as? String
+    ?: "com.norxlauncher"
 val launcherAPPName = project.findProperty("launcher_app_name") as? String ?: error("The \"launcher_app_name\" property is not set in gradle.properties.")
 val launcherName = project.findProperty("launcher_name") as? String ?: error("The \"launcher_name\" property is not set in gradle.properties.")
 val launcherShortName = project.findProperty("launcher_short_name") as? String ?: error("The \"launcher_short_name\" property is not set in gradle.properties.")
@@ -239,8 +242,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = zalithPackageName
-        applicationIdSuffix = ".v2"
+        applicationId = nlauncherApplicationId
         minSdk = 26
         targetSdk = 34
         versionCode = launcherVersionCode

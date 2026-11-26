@@ -37,3 +37,10 @@
   `MusicPlaybackState.sleepTimerEndsAt` (0 = off).
 - `WhatsNewDialog` shows once per `BuildConfig.VERSION_CODE`, tracked by
   `LauncherSettings.launcherWhatsNewSeen`.
+
+## Package / applicationId
+- `applicationId` comes from `launcher_application_id` in `ZalithLauncher/gradle.properties`
+  (`com.norxlauncher`, debug `com.norxlauncher.debug`); the Kotlin `namespace` stays
+  `com.movtery.zalithlauncher` so sources and the R class are untouched.
+- Intent action strings (`com.movtery.zalithlauncher.filemanager.EVENT_SERVICE`, music
+  actions) are internal names, not the package: keep code and manifest in sync if renamed.
