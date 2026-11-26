@@ -26,3 +26,14 @@
 - Voice is an audio-only WebRTC mesh (`io.github.webrtc-sdk:android`); the peer with the
   smaller uid creates the offer. STUN defaults to Google, TURN is optional.
 - `CommunityController` is the facade (StateFlows), `VoiceRoomController` owns the mesh.
+- **Maintenance switch**: `community/CommunityAvailability.ENABLED` is `false`, so the top
+  bar entry is hidden and `CommunityHostScreen` renders `CommunityMaintenanceScreen`
+  instead. Set it back to `true` to restore the feature; no other change is needed.
+
+## Feature flags and modes
+- Power saver (`LauncherSettings.launcherPowerSaver`) forces `powerSave` in
+  `rememberGlassSpec` and makes `rememberSwapTween`/`rememberTransitionSpec` snap.
+- Music sleep timer lives in `MusicPlayer.startSleepTimer(minutes)`; state field
+  `MusicPlaybackState.sleepTimerEndsAt` (0 = off).
+- `WhatsNewDialog` shows once per `BuildConfig.VERSION_CODE`, tracked by
+  `LauncherSettings.launcherWhatsNewSeen`.
