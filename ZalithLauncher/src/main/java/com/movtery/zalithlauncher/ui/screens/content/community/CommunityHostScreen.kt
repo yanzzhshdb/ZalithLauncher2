@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
+import com.movtery.zalithlauncher.community.CommunityAvailability
 import com.movtery.zalithlauncher.ui.screens.NestedNavDisplay
 import com.movtery.zalithlauncher.ui.screens.NestedNavKey
 import com.movtery.zalithlauncher.ui.screens.NormalNavKey
@@ -39,6 +40,11 @@ fun CommunityHostScreen(
     backStackViewModel: ScreenBackStackViewModel,
     eventViewModel: EventViewModel
 ) {
+    if (!CommunityAvailability.ENABLED) {
+        CommunityMaintenanceScreen(modifier = Modifier.fillMaxSize())
+        return
+    }
+
     NestedNavDisplay(
         ownerKey = key,
         backStack = key.backStack,

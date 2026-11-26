@@ -33,7 +33,8 @@ data class MusicPlaybackState(
     val hasNext: Boolean = false,
     val repeatMode: MusicRepeatMode = MusicRepeatMode.OFF,
     val shuffleEnabled: Boolean = false,
-    val volume: Int = 100
+    val volume: Int = 100,
+    val sleepTimerEndsAt: Long = 0L
 ) {
     val hasTrack: Boolean get() = trackId != null
 }

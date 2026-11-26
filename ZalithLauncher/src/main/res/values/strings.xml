@@ -3207,4 +3207,24 @@
     <string name="community_config_saved">Firebase configuration saved</string>
     <string name="community_settings_entry">Community</string>
     <string name="community_settings_summary">Group chat and voice rooms over your own Firebase project</string>
+
+    <!-- Community maintenance -->
+    <string name="community_maintenance_title">Community is under maintenance</string>
+    <string name="community_maintenance_message">Group chat and voice rooms are temporarily unavailable while the feature is rebuilt on a safer foundation. Your account and launcher data are not affected.</string>
+    <string name="community_maintenance_reason">Reason: the realtime chat backend is being migrated and audited, so the feature is disabled to avoid broken rooms and lost messages.</string>
+
+    <!-- What's new -->
+    <string name="whats_new_title">What\'s new</string>
+    <string name="whats_new_confirm">Got it</string>
+    <string name="whats_new_body">• Community (group chat &amp; voice rooms) is disabled for maintenance: the realtime backend is being migrated and audited.\n• New Power saver mode: turns off liquid glass effects and page animations to keep the UI smooth and save battery.\n• New sleep timer in the music player: stop playback automatically after 5-60 minutes.\n• The database now rebuilds itself instead of crashing when an older build is installed over a newer one.</string>
+
+    <!-- Power saver -->
+    <string name="settings_power_saver_title">Power saver mode</string>
+    <string name="settings_power_saver_summary">Turns off liquid glass effects and page animations to save battery and keep the UI smooth on slower devices</string>
+
+    <!-- Music sleep timer -->
+    <string name="music_action_sleep_timer">Sleep timer</string>
+    <string name="music_sleep_timer_off">Off</string>
+    <string name="music_sleep_timer_minutes">%1$d minutes</string>
+    <string name="music_sleep_timer_remaining">Stops in %1$d min</string>
 </resources>

@@ -1582,4 +1582,24 @@
     <string name="community_config_saved">Konfigurasi Firebase disimpan</string>
     <string name="community_settings_entry">Komunitas</string>
     <string name="community_settings_summary">Chat grup dan ruang suara lewat proyek Firebase milikmu</string>
+
+    <!-- Community maintenance -->
+    <string name="community_maintenance_title">Komunitas sedang dalam perbaikan</string>
+    <string name="community_maintenance_message">Grup chat dan voice room sementara tidak tersedia karena fiturnya sedang dibangun ulang di fondasi yang lebih aman. Akun dan data launcher kamu tidak terpengaruh.</string>
+    <string name="community_maintenance_reason">Alasan: backend chat realtime sedang dimigrasi dan diaudit, jadi fiturnya dimatikan dulu supaya tidak ada room rusak atau pesan yang hilang.</string>
+
+    <!-- What's new -->
+    <string name="whats_new_title">Yang baru</string>
+    <string name="whats_new_confirm">Oke</string>
+    <string name="whats_new_body">• Komunitas (grup chat &amp; voice room) dimatikan sementara untuk maintenance: backend realtime-nya sedang dimigrasi dan diaudit.\n• Mode Hemat Daya baru: mematikan efek liquid glass dan animasi halaman supaya UI tetap lancar dan baterai lebih awet.\n• Sleep timer baru di pemutar musik: lagu berhenti otomatis setelah 5-60 menit.\n• Database sekarang membangun ulang dirinya sendiri, tidak crash lagi kalau APK lama dipasang di atas yang baru.</string>
+
+    <!-- Power saver -->
+    <string name="settings_power_saver_title">Mode Hemat Daya</string>
+    <string name="settings_power_saver_summary">Mematikan efek liquid glass dan animasi halaman untuk menghemat baterai dan menjaga UI tetap lancar di perangkat lambat</string>
+
+    <!-- Music sleep timer -->
+    <string name="music_action_sleep_timer">Timer tidur</string>
+    <string name="music_sleep_timer_off">Mati</string>
+    <string name="music_sleep_timer_minutes">%1$d menit</string>
+    <string name="music_sleep_timer_remaining">Berhenti dalam %1$d mnt</string>
 </resources>

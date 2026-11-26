@@ -116,6 +116,16 @@ object LauncherSettings : SettingsRegistry() {
     val launcherLogRetentionDays = intSetting("launcherLogRetentionDays", 7, 1..14)
 
     /**
+     * 省电模式：关闭液态玻璃特效与页面切换动画
+     */
+    val launcherPowerSaver = boolSetting("launcherPowerSaver", false)
+
+    /**
+     * 已读过的更新说明版本号
+     */
+    val launcherWhatsNewSeen = intSetting("launcherWhatsNewSeen", 0)
+
+    /**
      * 游戏内容下载源
      */
     val gameDownloadSource = enumSetting(

@@ -82,8 +82,11 @@ fun rememberGlassSpec(layer: GlassLayer = GlassLayer.Regular): GlassSpec {
     val blur = LauncherSettings.backgroundBlur.state
 
     val context = LocalContext.current
-    //省电模式下自动跳过背景采样，避免持续的高斯模糊开销
-    val powerSave = remember(context) { context.powerSaveModeEnabled() }
+    val powerSaverEnabled = LauncherSettings.launcherPowerSaver.state
+    //省电模式（系统或启动器设置）下自动跳过背景采样，避免持续的高斯模糊开销
+    val powerSave = remember(context, powerSaverEnabled) {
+        powerSaverEnabled || context.powerSaveModeEnabled()
+    }
 
     return remember(dark, intensity, specular, blur, powerSave, layer) {
         buildGlassSpec(

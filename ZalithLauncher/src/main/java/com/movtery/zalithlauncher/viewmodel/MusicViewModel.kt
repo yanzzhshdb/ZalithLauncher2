@@ -91,6 +91,8 @@ class MusicViewModel : ViewModel() {
 
     fun toggleShuffle(): Boolean = MusicPlayer.toggleShuffle()
 
+    fun setSleepTimer(minutes: Int) = MusicPlayer.startSleepTimer(minutes)
+
     fun delete(track: MusicTrack) {
         viewModelScope.launch {
             if (MusicPlayer.state.value.trackId == track.id) MusicPlayer.stop()

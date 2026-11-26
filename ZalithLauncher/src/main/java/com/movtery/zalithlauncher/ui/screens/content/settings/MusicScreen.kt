@@ -25,6 +25,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -164,6 +167,7 @@ private fun MusicContent(isVisible: Boolean, viewModel: MusicViewModel) {
                 onSeek = { viewModel.seekTo(it) },
                 onCycleRepeat = { viewModel.cycleRepeatMode() },
                 onToggleShuffle = { viewModel.toggleShuffle() },
+                onSleepTimer = { viewModel.setSleepTimer(it) },
                 onVolumeChange = { viewModel.setVolume(it) },
                 onStop = { viewModel.stop() }
             )
@@ -226,6 +230,7 @@ private fun NowPlayingCard(
     onSeek: (Long) -> Unit,
     onCycleRepeat: () -> Unit,
     onToggleShuffle: () -> Unit,
+    onSleepTimer: (Int) -> Unit,
     onVolumeChange: (Int) -> Unit,
     onStop: () -> Unit,
     modifier: Modifier = Modifier
@@ -318,6 +323,45 @@ private fun NowPlayingCard(
                         }
                     )
                 }
+                var timerMenuExpanded by remember { mutableStateOf(false) }
+                Box {
+                    IconButton(
+                        onClick = { timerMenuExpanded = true },
+                        enabled = playback.hasTrack
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_schedule_outlined),
+                            contentDescription = stringResource(R.string.music_action_sleep_timer),
+                            tint = if (playback.sleepTimerEndsAt > 0L) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            }
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = timerMenuExpanded,
+                        onDismissRequest = { timerMenuExpanded = false }
+                    ) {
+                        listOf(0, 5, 15, 30, 60).forEach { minutes ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = if (minutes == 0) {
+                                            stringResource(R.string.music_sleep_timer_off)
+                                        } else {
+                                            stringResource(R.string.music_sleep_timer_minutes, minutes)
+                                        }
+                                    )
+                                },
+                                onClick = {
+                                    timerMenuExpanded = false
+                                    onSleepTimer(minutes)
+                                }
+                            )
+                        }
+                    }
+                }
                 IconButton(onClick = onPrevious, enabled = playback.hasTrack && playback.hasPrevious) {
                     Icon(
                         painter = painterResource(R.drawable.ic_skip_previous_filled),
@@ -361,6 +405,19 @@ private fun NowPlayingCard(
                         }
                     )
                 }
+            }
+
+            if (playback.sleepTimerEndsAt > 0L) {
+                val remainingMinutes = (
+                        (playback.sleepTimerEndsAt - System.currentTimeMillis()) / 60_000L
+                        ).coerceAtLeast(0L).toInt()
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(R.string.music_sleep_timer_remaining, remainingMinutes),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.Center
+                )
             }
 
             Row(

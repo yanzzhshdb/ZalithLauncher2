@@ -112,8 +112,13 @@ fun <E: TitledNavKey> NavBackStack<E>.addIfEmpty(navKey: E) {
 @Composable
 fun rememberSwapTween(): FiniteAnimationSpec<Float> {
     val level = LauncherSettings.launcherAnimateSpeedLevel.state
-    return remember(level) {
-        tween(durationMillis = SwapTimeline.time(SwapTimeline.CONTENT_BASE))
+    val powerSaver = LauncherSettings.launcherPowerSaver.state
+    return remember(level, powerSaver) {
+        if (powerSaver) {
+            snap()
+        } else {
+            tween(durationMillis = SwapTimeline.time(SwapTimeline.CONTENT_BASE))
+        }
     }
 }
 
@@ -123,13 +128,21 @@ fun rememberSwapTween(): FiniteAnimationSpec<Float> {
 @Composable
 fun <T : Any> rememberTransitionSpec(): AnimatedContentTransitionScope<Scene<T>>.() -> ContentTransform {
     val level = LauncherSettings.launcherAnimateSpeedLevel.state
-    return remember(level) {
+    val powerSaver = LauncherSettings.launcherPowerSaver.state
+    return remember(level, powerSaver) {
         val transform: AnimatedContentTransitionScope<Scene<T>>.() -> ContentTransform = {
-            val window = SwapClock.record(initialState, targetState)
-            ContentTransform(
-                fadeIn(animationSpec = snap(delayMillis = window.enterDelayMillis)),
-                fadeOut(animationSpec = snap(delayMillis = window.exitDelayMillis)),
-            )
+            if (powerSaver) {
+                ContentTransform(
+                    fadeIn(animationSpec = snap()),
+                    fadeOut(animationSpec = snap())
+                )
+            } else {
+                val window = SwapClock.record(initialState, targetState)
+                ContentTransform(
+                    fadeIn(animationSpec = snap(delayMillis = window.enterDelayMillis)),
+                    fadeOut(animationSpec = snap(delayMillis = window.exitDelayMillis)),
+                )
+            }
         }
         transform
     }

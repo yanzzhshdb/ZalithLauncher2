@@ -362,6 +362,14 @@ fun LauncherSettingsScreen(
                     SwitchSettingsCard(
                         modifier = Modifier.fillMaxWidth(),
                         position = CardPosition.Top,
+                        unit = LauncherSettings.launcherPowerSaver,
+                        title = stringResource(R.string.settings_power_saver_title),
+                        summary = stringResource(R.string.settings_power_saver_summary)
+                    )
+
+                    SwitchSettingsCard(
+                        modifier = Modifier.fillMaxWidth(),
+                        position = CardPosition.Middle,
                         unit = LauncherSettings.launcherSwapAnimEnabled,
                         title = stringResource(R.string.settings_launcher_swap_anim_enabled_title),
                         summary = stringResource(R.string.settings_launcher_swap_anim_enabled_summary)
@@ -375,7 +383,8 @@ fun LauncherSettingsScreen(
                         summary = stringResource(R.string.settings_launcher_animate_speed_summary),
                         valueRange = LauncherSettings.launcherAnimateSpeedLevel.floatRange,
                         valueText = { value -> "×" + (value / 10f) },
-                        enabled = LauncherSettings.launcherSwapAnimEnabled.state,
+                        enabled = LauncherSettings.launcherSwapAnimEnabled.state &&
+                                !LauncherSettings.launcherPowerSaver.state,
                     )
                 }
             }

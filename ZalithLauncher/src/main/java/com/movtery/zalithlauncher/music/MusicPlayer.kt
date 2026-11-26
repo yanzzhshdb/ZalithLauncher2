@@ -53,6 +53,7 @@ object MusicPlayer {
     private var player: ExoPlayer? = null
     private var queue: List<MusicTrack> = emptyList()
     private var positionJob: Job? = null
+    private var sleepTimerJob: Job? = null
 
     private val _state = MutableStateFlow(MusicPlaybackState())
     val state: StateFlow<MusicPlaybackState> = _state.asStateFlow()
@@ -102,6 +103,8 @@ object MusicPlayer {
 
     fun stop() {
         stopTicker()
+        sleepTimerJob?.cancel()
+        sleepTimerJob = null
         player?.run {
             stop()
             clearMediaItems()
@@ -113,6 +116,27 @@ object MusicPlayer {
             volume = MusicSettings.volume.getValue()
         )
         MusicPlaybackService.stop(GlobalContext)
+    }
+
+    /**
+     * 定时停止播放，[minutes] 为 0 时取消定时
+     */
+    fun startSleepTimer(minutes: Int) {
+        sleepTimerJob?.cancel()
+        sleepTimerJob = null
+        if (minutes <= 0) {
+            _state.update { it.copy(sleepTimerEndsAt = 0L) }
+            return
+        }
+
+        val timeoutMs = minutes * 60_000L
+        _state.update { it.copy(sleepTimerEndsAt = System.currentTimeMillis() + timeoutMs) }
+        sleepTimerJob = scope.launch {
+            delay(timeoutMs)
+            player?.pause()
+            _state.update { it.copy(sleepTimerEndsAt = 0L) }
+            sleepTimerJob = null
+        }
     }
 
     fun setVolume(percent: Int) {

@@ -81,6 +81,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.entryProvider
 import com.movtery.zalithlauncher.BuildKeys
 import com.movtery.zalithlauncher.R
+import com.movtery.zalithlauncher.community.CommunityAvailability
 import com.movtery.zalithlauncher.coroutine.TaskSystem
 import com.movtery.zalithlauncher.game.version.installed.Version
 import com.movtery.zalithlauncher.game.version.installed.VersionsManager
@@ -92,6 +93,7 @@ import com.movtery.zalithlauncher.ui.components.BackgroundCard
 import com.movtery.zalithlauncher.ui.components.CardTitleLayout
 import com.movtery.zalithlauncher.ui.components.MiniMusicPlayer
 import com.movtery.zalithlauncher.ui.components.TextRailItem
+import com.movtery.zalithlauncher.ui.components.WhatsNewDialog
 import com.movtery.zalithlauncher.ui.guide.sendStartGuideOnce
 import com.movtery.zalithlauncher.ui.screens.BackStackNavKey
 import com.movtery.zalithlauncher.ui.screens.NavStateHost
@@ -203,6 +205,8 @@ fun MainScreen(
         color = Color.Transparent,
         contentColor = onBackgroundColor()
     ) {
+        WhatsNewDialog()
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -496,14 +500,17 @@ private fun <E: TitledNavKey> TopBar(
                     },
                 )
 
-                TopBarRailItem(
-                    selected = inCommunityScreen,
-                    painter = painterResource(R.drawable.ic_forum_filled),
-                    text = stringResource(R.string.community_title),
-                    onClick = {
-                        if (!inCommunityScreen) toCommunityScreen()
-                    },
-                )
+                //社区功能维护期间不显示入口，恢复时把 CommunityAvailability.ENABLED 改回 true 即可
+                if (CommunityAvailability.ENABLED) {
+                    TopBarRailItem(
+                        selected = inCommunityScreen,
+                        painter = painterResource(R.drawable.ic_forum_filled),
+                        text = stringResource(R.string.community_title),
+                        onClick = {
+                            if (!inCommunityScreen) toCommunityScreen()
+                        },
+                    )
+                }
 
                 TopBarRailItem(
                     selected = inDownloadScreen,
