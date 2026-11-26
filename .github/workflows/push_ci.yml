@@ -17,3 +17,15 @@ jobs:
       OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
       LEGAL_DOCS_TOKEN: ${{ secrets.LEGAL_DOCS_TOKEN }}
+
+  Release:
+    uses: ./.github/workflows/build.yml
+    with:
+      variant: Release
+      archs: '["arm64"]'
+    secrets:
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+      OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
+      CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+      LEGAL_DOCS_TOKEN: ${{ secrets.LEGAL_DOCS_TOKEN }}

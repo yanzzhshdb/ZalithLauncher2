@@ -34,11 +34,13 @@ val defaultCurseForgeApiKey = project.findProperty("curseforge_api_key") as? Str
 val projectArch: String = System.getProperty("arch", "all")
 
 fun getKeyFromLocal(envKey: String, fileName: String? = null, default: String? = null): String {
-    val key = System.getenv(envKey)
-    return key ?: fileName?.let {
-        val file = File(rootDir, fileName)
-        if (file.canRead() && file.isFile) file.readText() else null
-    } ?: default ?: run {
+    // 空字符串（CI 中未配置的 secret）不应遮蔽本地文件，密码文件末尾的换行也需要去掉
+    val fromEnv = System.getenv(envKey)?.trim()?.takeIf(String::isNotEmpty)
+    val fromFile = fileName?.let {
+        val file = File(rootDir, it)
+        if (file.canRead() && file.isFile) file.readText().trim().takeIf(String::isNotEmpty) else null
+    }
+    return fromEnv ?: fromFile ?: default ?: run {
         logger.warn("BUILD: $envKey not set; related features may throw exceptions.")
         ""
     }
@@ -208,6 +210,11 @@ androidComponents {
     }
 }
 
+// 未配置发布密钥时（例如在 fork 里本地构建 release），回退到调试签名而不是让构建失败
+val releaseStorePassword = getKeyFromLocal("STORE_PASSWORD", ".store_password.txt")
+val releaseKeyPassword = getKeyFromLocal("KEY_PASSWORD", ".key_password.txt")
+val hasReleaseSigning = releaseStorePassword.isNotEmpty() && releaseKeyPassword.isNotEmpty()
+
 android {
     namespace = zalithPackageName
     compileSdk {
@@ -219,9 +226,9 @@ android {
     signingConfigs {
         create("releaseBuild") {
             storeFile = file("zalith_launcher.jks")
-            storePassword = getKeyFromLocal("STORE_PASSWORD", ".store_password.txt")
+            storePassword = releaseStorePassword
             keyAlias = "movtery_zalith"
-            keyPassword = getKeyFromLocal("KEY_PASSWORD", ".key_password.txt")
+            keyPassword = releaseKeyPassword
         }
         create("debugBuild") {
             storeFile = file("zalith_launcher_debug.jks")
@@ -245,7 +252,12 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName("releaseBuild")
+            signingConfig = if (hasReleaseSigning) {
+                signingConfigs.getByName("releaseBuild")
+            } else {
+                logger.warn("BUILD: STORE_PASSWORD/KEY_PASSWORD not configured; the release APK will be signed with the debug key and must not be published.")
+                signingConfigs.getByName("debugBuild")
+            }
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
