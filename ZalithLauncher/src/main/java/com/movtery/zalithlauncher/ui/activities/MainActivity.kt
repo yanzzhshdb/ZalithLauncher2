@@ -31,6 +31,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
@@ -65,6 +66,7 @@ import com.movtery.zalithlauncher.ui.androidText
 import com.movtery.zalithlauncher.ui.base.BaseAppCompatActivity
 import com.movtery.zalithlauncher.ui.base.ObserveFullScreenSetting
 import com.movtery.zalithlauncher.ui.buildAppendedText
+import com.movtery.zalithlauncher.ui.components.NotificationCheck
 import com.movtery.zalithlauncher.ui.components.SimpleAlertDialog
 import com.movtery.zalithlauncher.ui.guide.GuideKeys
 import com.movtery.zalithlauncher.ui.guide.GuideProgress
@@ -207,6 +209,11 @@ class MainActivity : BaseAppCompatActivity() {
      * 是否开启捕获按键模式
      */
     private var isCaptureKey = false
+
+    /**
+     * 待提示的新版本（通知权限未授予时，先询问用户）
+     */
+    private val pendingRelease = mutableStateOf<LauncherReleaseChecker.LatestRelease?>(null)
 
     /**
      * 文件管理器事件监听
@@ -372,6 +379,20 @@ class MainActivity : BaseAppCompatActivity() {
                         modifier = Modifier.fillMaxSize(),
                         festivals = festivals
                     )
+
+                    //有新版本但通知权限未开启时，询问用户是否开启
+                    val release = pendingRelease.value
+                    if (release != null) {
+                        NotificationCheck(
+                            text = stringResource(R.string.notification_launcher_update_permission),
+                            onGranted = {
+                                LauncherUpdateNotification.show(this@MainActivity, release)
+                                pendingRelease.value = null
+                            },
+                            onIgnore = { pendingRelease.value = null },
+                            onDismiss = { pendingRelease.value = null }
+                        )
+                    }
 
                     //启动游戏操作流程
                     LaunchGameOperation(
@@ -623,7 +644,13 @@ class MainActivity : BaseAppCompatActivity() {
             }
             if (UpgradePrefs.notifiedReleaseTag == release.tag) return@launch
             withContext(Dispatchers.Main) {
-                LauncherUpdateNotification.show(this@MainActivity, release)
+                if (NotificationManager.checkNotificationEnabled(this@MainActivity)) {
+                    LauncherUpdateNotification.show(this@MainActivity, release)
+                } else {
+                    //没有通知权限时，先询问用户是否开启
+                    UpgradePrefs.notifiedReleaseTag = release.tag
+                    pendingRelease.value = release
+                }
             }
         }
     }

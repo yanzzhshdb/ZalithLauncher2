@@ -95,6 +95,7 @@
     <string name="notification_launcher_update_title">%1$s %2$s sudah tersedia</string>
     <string name="notification_launcher_update_text">Versi baru %1$s (%2$s) sudah bisa diunduh.</string>
     <string name="notification_launcher_update_detail">%1$s\n\n%2$s</string>
+    <string name="notification_launcher_update_permission">Izinkan notifikasi supaya launcher bisa memberi tahu kalau ada versi baru.</string>
     <string name="notification_data_jvm_service_running">Menginstal game melalui layanan Latar Depan</string>
     <string name="unpack_screen_jre8">Lingkungan Java 8 (diperlukan untuk Minecraft 1.16 ke bawah)</string>
     <string name="unpack_screen_jre17">Lingkungan Java 17 (diperlukan untuk Minecraft 1.17+)</string>

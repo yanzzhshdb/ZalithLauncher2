@@ -293,6 +293,7 @@
     <string name="notification_launcher_update_title">%1$s %2$s is available</string>
     <string name="notification_launcher_update_text">A newer version of %1$s (%2$s) can be downloaded now.</string>
     <string name="notification_launcher_update_detail">%1$s\n\n%2$s</string>
+    <string name="notification_launcher_update_permission">Allow notifications so the launcher can tell you when a new version is out.</string>
     <!-- Notification title shown while a game is being installed -->
     <string name="notification_data_jvm_service_running">Installing game via foreground service</string>
     <!-- Dialog on the multiplayer screen explaining why notification permission is needed -->
