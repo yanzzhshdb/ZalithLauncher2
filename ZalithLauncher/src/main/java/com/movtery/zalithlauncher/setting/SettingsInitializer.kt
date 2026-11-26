@@ -39,6 +39,8 @@ fun loadAllSettings(context: Context, reloadAll: Boolean = false) {
         GameUiSettings.reloadAll()
         MiscSettings.reloadAll()
         MusicSettings.reloadAll()
+        RecorderSettings.reloadAll()
+        PerformanceSettings.reloadAll()
         GlassSettings.reloadAll()
         CommunitySettings.reloadAll()
         return

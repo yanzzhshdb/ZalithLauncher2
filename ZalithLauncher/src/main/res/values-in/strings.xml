@@ -1640,7 +1640,10 @@
     <!-- What's new -->
     <string name="whats_new_title">Yang baru</string>
     <string name="whats_new_confirm">Oke</string>
-    <string name="whats_new_body">• Pelacakan waktu bermain: launcher mencatat berapa lama kamu main tiap versi, per sesi dan per hari.\n• Halaman Waktu Bermain di Pengaturan: total jam, grafik 7 hari, dan peringkat versi, plus tombol hapus data.\n• Kartu Lanjutkan bermain di layar utama: langsung masuk lagi ke versi yang terakhir kamu mainkan.\n• Notifikasi ringkasan sesi setiap keluar game, jadi kamu tahu durasi tiap sesi.\n• Logo NORX, kredit pendiri, dan notifikasi update dari versi sebelumnya tetap ada.</string>
+    <string name="whats_new_body">• Perekam layar bawaan: rekam gameplay langsung dari menu dalam game, lengkap dengan pilihan kualitas, FPS, dan mikrofon.
+• Preset performa: satu ketuk mengatur options.txt plus pengaturan renderer supaya game tidak lag tapi grafik tetap bagus.
+• Rekaman bisa langsung dibuka atau dibagikan dari notifikasi.
+• Fitur 1.4.0 (waktu bermain, statistik, branding NORX) tetap ada.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Mode Hemat Daya</string>
@@ -1694,5 +1697,51 @@
     <string name="control_preset_scroll_up">Gulir atas</string>
     <string name="control_preset_scroll_down">Gulir bawah</string>
     <string name="control_preset_mouse_middle">Klik tengah</string>
+
+    <!-- Screen recorder & performance presets -->
+    <string name="recorder_switch_title">Rekam layar</string>
+    <string name="recorder_recording_info">Merekam %1$s · ketuk untuk berhenti</string>
+    <string name="recorder_quality_title">Kualitas video</string>
+    <string name="recorder_quality_compact">Hemat ruang</string>
+    <string name="recorder_quality_balanced">Seimbang</string>
+    <string name="recorder_quality_sharp">Tajam (resolusi penuh)</string>
+    <string name="recorder_frame_rate_title">Frame rate</string>
+    <string name="recorder_audio_title">Rekam mikrofon</string>
+    <string name="recorder_hint">Video disimpan di folder aplikasi dan bisa langsung dibuka atau dibagikan dari notifikasi.</string>
+    <string name="recorder_permission_denied">Izin rekam layar ditolak</string>
+    <string name="recorder_audio_permission_denied">Izin mikrofon ditolak, rekaman tanpa suara</string>
+    <string name="recorder_start_failed">Tidak bisa memulai perekam</string>
+    <string name="recorder_notification_channel_name">Rekaman layar</string>
+    <string name="recorder_notification_channel_desc">Status perekam dan video tersimpan</string>
+    <string name="recorder_notification_preparing">Menyiapkan perekam…</string>
+    <string name="recorder_notification_title">Merekam layar</string>
+    <string name="recorder_notification_text">Ketuk Stop untuk menyelesaikan dan menyimpan video</string>
+    <string name="recorder_notification_stop">Stop</string>
+    <string name="recorder_notification_saved_title">Rekaman tersimpan</string>
+    <string name="recorder_notification_saved_text">Tersimpan sebagai %1$s</string>
+    <string name="recorder_notification_saved_detail">Lokasi: %1$s</string>
+    <string name="recorder_action_open">Buka</string>
+    <string name="recorder_action_share">Bagikan</string>
+    <string name="recorder_share_title">Bagikan rekaman</string>
+    <string name="settings_tab_performance">Performa</string>
+    <string name="performance_intro">Pilih preset lalu terapkan ke versi. Launcher hanya mengubah nilai yang sudah ada di options.txt dan menyimpan cadangan sebelum mengubah apa pun.</string>
+    <string name="performance_launcher_note">Pengaturan renderer (mode performa berkelanjutan, refresh rate tertinggi, skala resolusi) juga ikut disesuaikan.</string>
+    <string name="performance_target_version_title">Versi target</string>
+    <string name="performance_target_version_summary">Jalankan versi ini sekali dulu supaya options.txt terbentuk.</string>
+    <string name="performance_preset_title">Preset</string>
+    <string name="performance_preset_balanced">Seimbang</string>
+    <string name="performance_preset_balanced_summary">8 chunk, partikel dikurangi, awan cepat. Grafik tetap halus, FPS lebih stabil.</string>
+    <string name="performance_preset_performance">Performa maksimal</string>
+    <string name="performance_preset_performance_summary">6 chunk, partikel minimal, tanpa awan, FPS dibatasi 60. Paling lancar di HP kelas menengah ke bawah.</string>
+    <string name="performance_preset_quality">Grafik terbaik</string>
+    <string name="performance_preset_quality_summary">12 chunk, partikel penuh, awan fancy. Untuk perangkat kencang.</string>
+    <string name="performance_apply">Terapkan sekarang</string>
+    <string name="performance_restore">Pulihkan cadangan</string>
+    <string name="performance_applied">%1$d opsi diperbarui</string>
+    <string name="performance_apply_failed">Gagal menerapkan preset</string>
+    <string name="performance_no_options">options.txt belum ada. Jalankan versi ini sekali dulu.</string>
+    <string name="performance_no_version">Belum ada versi terpasang. Pasang versi dulu.</string>
+    <string name="performance_restored">options.txt dipulihkan dari cadangan</string>
+    <string name="performance_no_backup">Belum ada cadangan</string>
 </resources>
 

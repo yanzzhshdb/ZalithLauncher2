@@ -3265,7 +3265,10 @@
     <!-- What's new -->
     <string name="whats_new_title">What\'s new</string>
     <string name="whats_new_confirm">Got it</string>
-    <string name="whats_new_body">• Playtime tracking: the launcher now records how long you play every version, per session and per day.\n• New Playtime page in Settings with total time, a 7-day chart and a ranking of your versions, plus a one-tap reset.\n• Continue playing card on the home screen: jumps straight back into the version you played last.\n• Session summary notification when you leave a game, so you always know how long that run was.\n• NORX logo, founder credits and update notifications from the previous update are still here.</string>
+    <string name="whats_new_body">• Perekam layar bawaan: rekam gameplay langsung dari menu dalam game, lengkap dengan pilihan kualitas, FPS, dan mikrofon.
+• Preset performa: satu ketuk mengatur options.txt plus pengaturan renderer supaya game tidak lag tapi grafik tetap bagus.
+• Rekaman bisa langsung dibuka atau dibagikan dari notifikasi.
+• Fitur 1.4.0 (waktu bermain, statistik, branding NORX) tetap ada.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Power saver mode</string>
@@ -3319,5 +3322,54 @@
     <string name="control_preset_scroll_up">Scroll up</string>
     <string name="control_preset_scroll_down">Scroll down</string>
     <string name="control_preset_mouse_middle">Middle click</string>
+
+    <!-- Screen recorder & performance presets -->
+    <string name="recorder_switch_title">Record screen</string>
+    <string name="recorder_recording_info">Recording %1$s · tap to stop</string>
+    <string name="recorder_quality_title">Video quality</string>
+    <string name="recorder_quality_compact">Small file</string>
+    <string name="recorder_quality_balanced">Balanced</string>
+    <string name="recorder_quality_sharp">Native sharp</string>
+    <string name="recorder_frame_rate_title">Frame rate</string>
+    <string name="recorder_frame_rate_24">24 FPS</string>
+    <string name="recorder_frame_rate_30">30 FPS</string>
+    <string name="recorder_frame_rate_60">60 FPS</string>
+    <string name="recorder_audio_title">Record microphone</string>
+    <string name="recorder_hint">Videos are stored in the app folder and can be opened or shared straight from the notification.</string>
+    <string name="recorder_permission_denied">Screen capture permission denied</string>
+    <string name="recorder_audio_permission_denied">Microphone permission denied, recording without audio</string>
+    <string name="recorder_start_failed">Could not start the recorder</string>
+    <string name="recorder_notification_channel_name">Screen recording</string>
+    <string name="recorder_notification_channel_desc">Recorder status and saved videos</string>
+    <string name="recorder_notification_preparing">Preparing recorder…</string>
+    <string name="recorder_notification_title">Recording screen</string>
+    <string name="recorder_notification_text">Tap Stop to finish and save the video</string>
+    <string name="recorder_notification_stop">Stop</string>
+    <string name="recorder_notification_saved_title">Recording saved</string>
+    <string name="recorder_notification_saved_text">Saved as %1$s</string>
+    <string name="recorder_notification_saved_detail">Path: %1$s</string>
+    <string name="recorder_action_open">Open</string>
+    <string name="recorder_action_share">Share</string>
+    <string name="recorder_share_title">Share recording</string>
+    <string name="settings_tab_performance">Performance</string>
+    <string name="performance_intro">Pick a preset and apply it to a version. The launcher only changes keys that already exist in options.txt and keeps a backup before touching anything.</string>
+    <string name="performance_launcher_note">Renderer settings (sustained performance, max refresh rate, resolution scale) are adjusted too.</string>
+    <string name="performance_target_version_title">Target version</string>
+    <string name="performance_target_version_summary">Run the version once so options.txt exists.</string>
+    <string name="performance_preset_title">Preset</string>
+    <string name="performance_preset_balanced">Balanced</string>
+    <string name="performance_preset_balanced_summary">8 chunks, fewer particles, fast clouds. Graphics stay smooth, FPS more stable.</string>
+    <string name="performance_preset_performance">Max performance</string>
+    <string name="performance_preset_performance_summary">6 chunks, minimal particles, no clouds, 60 FPS cap. Smoothest on mid and low-end phones.</string>
+    <string name="performance_preset_quality">Best graphics</string>
+    <string name="performance_preset_quality_summary">12 chunks, full particles, fancy clouds. For fast devices.</string>
+    <string name="performance_apply">Apply now</string>
+    <string name="performance_restore">Restore backup</string>
+    <string name="performance_applied">%1$d options updated</string>
+    <string name="performance_apply_failed">Could not apply the preset</string>
+    <string name="performance_no_options">options.txt not found. Launch this version once first.</string>
+    <string name="performance_no_version">No version installed yet. Install a version first.</string>
+    <string name="performance_restored">options.txt restored from backup</string>
+    <string name="performance_no_backup">No backup found yet</string>
 </resources>
 

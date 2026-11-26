@@ -364,6 +364,20 @@ private fun GameActionContent(
             Spacer(modifier = Modifier.height(8.dp))
         }
 
+        //内置录屏
+        item {
+            RecordMenuContent(
+                modifier = Modifier.fillMaxWidth(),
+                onShowToast = onShowToast,
+                color = color,
+                contentColor = contentColor
+            )
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
         // 分辨率规则与游戏窗口分辨率
         item {
             Column(

@@ -94,3 +94,32 @@
   the home `ContinuePlayingCard` resolves the last played version through
   `VersionsManager.loadVersion` on the IO dispatcher and hides itself when the version is gone.
 - `GameSessionNotification` posts the "session finished" summary on the `game.session` channel.
+
+## Built-in screen recorder
+- `recorder/ScreenRecorder` is the controller: it exposes `recording` / `startedAt` /
+  `lastFile` StateFlows, builds the service intent from the `MediaProjection` consent result
+  and stores videos in `getExternalFilesDir(null)/recordings` (no storage permission needed).
+  Share/open intents go through the existing `FileProvider` (`${packageName}.provider`).
+- `recorder/ScreenRecorderService` is a `mediaProjection` foreground service using
+  `MediaRecorder` (H.264 + optional AAC from the microphone). Order matters: start the
+  foreground service first, then `getMediaProjection`, then `prepare()` the recorder,
+  take `recorder.surface`, create the `VirtualDisplay`, and only then `start()`. The capture
+  size is always the real screen size scaled by `RecorderQuality.scale`, rounded to even
+  numbers; the bitrate is `width * height * fps * bitsPerPixel` clamped to 2–40 Mbps.
+- `RecorderSettings` keeps quality/fps/audio in MMKV, and `ui/screens/game/elements/RecordMenu`
+  renders the switch plus options inside the in-game menu. Recording state survives the menu
+  closing because it lives in the service/object, not in Compose.
+- Videos stop automatically when the user revokes the projection (`MediaProjection.Callback.onStop`),
+  and short recordings whose `stop()` throws are deleted instead of leaving broken MP4s.
+
+## Performance presets
+- `game/performance/PerformancePreset` groups the knobs for Balanced / Max performance /
+  Best graphics: resolution percentage, sustained-performance flag and the `options.txt`
+  values to write.
+- `game/performance/PerformanceOptimizer.apply` patches only the keys the preset defines,
+  keeps the first original as `options.txt.nlbackup`, writes atomically through a `.tmp`
+  file and also updates `RendererSettings` (sustained performance, max refresh rate,
+  resolution ratio when the rule is percentage). `restore` copies the backup back.
+- `PerformanceSettingsScreen` (Settings → Performance) picks the target version from
+  `VersionsManager.versions`; it warns when `options.txt` is missing, which only happens
+  before the version has been launched once.
