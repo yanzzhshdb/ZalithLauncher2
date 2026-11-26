@@ -97,9 +97,17 @@ object HomeCards {
 
     /** 系统卡片（不可变更） */
     fun systemCards(): List<SystemCard> = buildList {
+        add(continuePlayingCard())
         if (BuildConfig.DEBUG) {
             add(debugWarningCard())
         }
+    }
+
+    /**
+     * 最近游玩的版本，一键继续游玩
+     */
+    private fun continuePlayingCard() = SystemCard(id = "system_continue_playing") {
+        ContinuePlayingCard()
     }
 
     /**

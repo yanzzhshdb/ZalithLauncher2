@@ -82,3 +82,15 @@
   .lastReleaseCheck`) and skips a tag already notified (`UpgradePrefs.notifiedReleaseTag`).
 - `notification/LauncherUpdateNotification` posts on the `launcher.update` channel and opens
   the release page on tap; it silently no-ops when notifications are disabled.
+
+## Playtime tracking
+- `game/session/PlaytimeTracker` stores per-version totals, session counts, last-played
+  timestamps and daily buckets in the launcher MMKV (`playtime.*` keys). A session is opened
+  by `VMActivity.createSession` right before `GameLauncher` starts and settled in its `onExit`.
+- Sessions shorter than 10 s are ignored, longer than 12 h are treated as stale, and
+  `MainActivity.onCreate` drops a pending session because a fresh activity means the game
+  is not running (the process was recycled).
+- `PlaytimeScreen` (Settings → Playtime) reads `PlaytimeTracker.snapshot()` once per visit;
+  the home `ContinuePlayingCard` resolves the last played version through
+  `VersionsManager.loadVersion` on the IO dispatcher and hides itself when the version is gone.
+- `GameSessionNotification` posts the "session finished" summary on the `game.session` channel.

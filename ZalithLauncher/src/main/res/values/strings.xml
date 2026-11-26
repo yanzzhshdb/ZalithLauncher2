@@ -2647,6 +2647,42 @@
     <string name="about_credits_founder_role">Founder &amp; logo designer</string>
     <string name="about_credits_founder_text">Visual identity, app icon and design direction of %1$s.</string>
 
+    <!-- Playtime statistics -->
+    <string name="settings_tab_playtime">Playtime</string>
+    <string name="playtime_overview_title">Overview</string>
+    <string name="playtime_total_label">Played</string>
+    <string name="playtime_sessions_label">Sessions</string>
+    <string name="playtime_versions_label">Versions</string>
+    <string name="playtime_empty">No data yet. Start one version and the statistics show up automatically.</string>
+    <string name="playtime_week_title">Last 7 days</string>
+    <string name="playtime_versions_title">By version</string>
+    <string name="playtime_version_detail">%1$d sessions · last %2$s</string>
+    <string name="playtime_reset_title">Clear statistics</string>
+    <string name="playtime_reset">Clear playtime data</string>
+    <string name="playtime_reset_message">Every playtime record will be removed permanently.</string>
+    <string name="playtime_reset_done">Playtime data cleared</string>
+    <string name="playtime_duration_less_min">&lt;1m</string>
+    <string name="playtime_duration_hour_min">%1$dh %2$dm</string>
+    <string name="playtime_duration_min">%1$dm</string>
+    <string name="playtime_compact_hour">%1$dh</string>
+    <string name="playtime_compact_min">%1$dm</string>
+    <string name="playtime_relative_now">just now</string>
+    <string name="playtime_relative_minutes">%1$d min ago</string>
+    <string name="playtime_relative_hours">%1$d h ago</string>
+    <string name="playtime_relative_days">%1$d d ago</string>
+
+    <!-- Continue playing card -->
+    <string name="home_continue_title">Continue playing</string>
+    <string name="home_continue_detail">%1$s · %2$s total</string>
+    <string name="home_continue_play">Play</string>
+
+    <!-- Session summary notification -->
+    <string name="notification_game_session_channel_name">Session summary</string>
+    <string name="notification_game_session_channel_desc">Shows how long you played after leaving the game.</string>
+    <string name="notification_game_session_title">Session finished</string>
+    <string name="notification_game_session_text">You played %1$s for %2$s.</string>
+    <string name="notification_game_session_text_error">%1$s stopped after %2$s.</string>
+
     <string name="about_acknowledgements_title">Acknowledgements</string>
     <!-- Description of the PojavLauncher item in the acknowledgements; %s is the launcher name -->
     <string name="about_acknowledgements_pojav_text">%s uses the launch backend from PojavLauncher</string>
@@ -3229,7 +3265,7 @@
     <!-- What's new -->
     <string name="whats_new_title">What\'s new</string>
     <string name="whats_new_confirm">Got it</string>
-    <string name="whats_new_body">• Brand new look: NORX Launcher icon, in-app logo and splash screen.\n• Credits section in About: Patrick is credited as founder and logo designer.\n• Update notifications: when a new build is published you now get a system notification; tap it to open the download page.\n• Control catalog, quick combat pack, smoother animations and power saver mode from the previous update are still here.</string>
+    <string name="whats_new_body">• Playtime tracking: the launcher now records how long you play every version, per session and per day.\n• New Playtime page in Settings with total time, a 7-day chart and a ranking of your versions, plus a one-tap reset.\n• Continue playing card on the home screen: jumps straight back into the version you played last.\n• Session summary notification when you leave a game, so you always know how long that run was.\n• NORX logo, founder credits and update notifications from the previous update are still here.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Power saver mode</string>

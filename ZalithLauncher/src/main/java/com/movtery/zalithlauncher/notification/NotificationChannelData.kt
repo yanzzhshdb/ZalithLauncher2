@@ -51,6 +51,17 @@ enum class NotificationChannelData(
     TERRACOTTA_VPN_CHANNEL("terracotta_vpn_channel", { "Terracotta VPN" }, { it.getString(R.string.terracotta_terracotta) }, IMPORTANCE_LOW, false),
 
     /**
+     * 游戏会话时长小结
+     */
+    GAME_SESSION_CHANNEL(
+        "game.session",
+        { it.getString(R.string.notification_game_session_channel_name) },
+        { it.getString(R.string.notification_game_session_channel_desc) },
+        IMPORTANCE_LOW,
+        false
+    ),
+
+    /**
      * 启动器新版本通知
      */
     LAUNCHER_UPDATE_CHANNEL(

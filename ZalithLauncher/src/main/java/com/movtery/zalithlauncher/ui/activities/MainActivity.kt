@@ -53,6 +53,7 @@ import com.movtery.zalithlauncher.game.control.ControlManager
 import com.movtery.zalithlauncher.game.path.getVersionsHome
 import com.movtery.zalithlauncher.game.plugin.PluginLoader
 import com.movtery.zalithlauncher.game.renderer.Renderers
+import com.movtery.zalithlauncher.game.session.PlaytimeTracker
 import com.movtery.zalithlauncher.game.version.installed.Version
 import com.movtery.zalithlauncher.game.version.installed.VersionsManager
 import com.movtery.zalithlauncher.notification.LauncherUpdateNotification
@@ -224,6 +225,9 @@ class MainActivity : BaseAppCompatActivity() {
         super.onCreate(savedInstanceState)
         //处理外部导入
         val isImporting = handleImportIfNeeded(intent)
+
+        //清理上次异常退出遗留的游玩会话
+        PlaytimeTracker.clearStaleSession()
 
         //加载渲染器
         Renderers.init()

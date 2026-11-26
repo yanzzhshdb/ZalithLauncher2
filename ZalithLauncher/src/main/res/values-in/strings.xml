@@ -737,6 +737,42 @@
     <string name="about_credits_founder_role">Pendiri &amp; perancang logo</string>
     <string name="about_credits_founder_text">Identitas visual, ikon aplikasi, dan arah desain %1$s.</string>
 
+    <!-- Playtime statistics -->
+    <string name="settings_tab_playtime">Waktu Bermain</string>
+    <string name="playtime_overview_title">Ringkasan</string>
+    <string name="playtime_total_label">Total</string>
+    <string name="playtime_sessions_label">Sesi</string>
+    <string name="playtime_versions_label">Versi</string>
+    <string name="playtime_empty">Belum ada data. Mainkan satu versi dulu, statistik muncul otomatis.</string>
+    <string name="playtime_week_title">7 hari terakhir</string>
+    <string name="playtime_versions_title">Per versi</string>
+    <string name="playtime_version_detail">%1$d sesi · terakhir %2$s</string>
+    <string name="playtime_reset_title">Hapus statistik</string>
+    <string name="playtime_reset">Hapus data waktu bermain</string>
+    <string name="playtime_reset_message">Semua catatan waktu bermain akan dihapus permanen.</string>
+    <string name="playtime_reset_done">Data waktu bermain dihapus</string>
+    <string name="playtime_duration_less_min">&lt;1 m</string>
+    <string name="playtime_duration_hour_min">%1$d j %2$d m</string>
+    <string name="playtime_duration_min">%1$d m</string>
+    <string name="playtime_compact_hour">%1$d j</string>
+    <string name="playtime_compact_min">%1$d m</string>
+    <string name="playtime_relative_now">baru saja</string>
+    <string name="playtime_relative_minutes">%1$d menit lalu</string>
+    <string name="playtime_relative_hours">%1$d jam lalu</string>
+    <string name="playtime_relative_days">%1$d hari lalu</string>
+
+    <!-- Continue playing card -->
+    <string name="home_continue_title">Lanjutkan bermain</string>
+    <string name="home_continue_detail">%1$s · total %2$s</string>
+    <string name="home_continue_play">Main</string>
+
+    <!-- Session summary notification -->
+    <string name="notification_game_session_channel_name">Ringkasan sesi</string>
+    <string name="notification_game_session_channel_desc">Menampilkan durasi bermain setelah keluar dari game.</string>
+    <string name="notification_game_session_title">Sesi selesai</string>
+    <string name="notification_game_session_text">Kamu bermain %1$s selama %2$s.</string>
+    <string name="notification_game_session_text_error">%1$s berhenti setelah %2$s.</string>
+
     <string name="about_acknowledgements_title">Ucapan Terima Kasih Kepada</string>
     <string name="about_acknowledgements_pojav_text">%s menggunakan backend peluncur dari PojavLauncher</string>
     <string name="about_acknowledgements_modrinth_text">%s memport preset animasi model pemain dari Modrinth</string>
@@ -1604,7 +1640,7 @@
     <!-- What's new -->
     <string name="whats_new_title">Yang baru</string>
     <string name="whats_new_confirm">Oke</string>
-    <string name="whats_new_body">• Tampilan baru: ikon NORX Launcher, logo di dalam aplikasi, dan splash screen baru.\n• Bagian Kredit di Tentang: Patrick tercatat sebagai pendiri dan perancang logo.\n• Notifikasi update: kalau ada versi baru terbit, kamu dapat notifikasi; ketuk untuk membuka halaman unduhan.\n• Katalog kontrol, paket tempur cepat, animasi yang lebih halus, dan mode hemat daya dari update sebelumnya tetap ada.</string>
+    <string name="whats_new_body">• Pelacakan waktu bermain: launcher mencatat berapa lama kamu main tiap versi, per sesi dan per hari.\n• Halaman Waktu Bermain di Pengaturan: total jam, grafik 7 hari, dan peringkat versi, plus tombol hapus data.\n• Kartu Lanjutkan bermain di layar utama: langsung masuk lagi ke versi yang terakhir kamu mainkan.\n• Notifikasi ringkasan sesi setiap keluar game, jadi kamu tahu durasi tiap sesi.\n• Logo NORX, kredit pendiri, dan notifikasi update dari versi sebelumnya tetap ada.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Mode Hemat Daya</string>

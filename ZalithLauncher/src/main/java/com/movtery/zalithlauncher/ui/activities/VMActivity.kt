@@ -93,6 +93,7 @@ import com.jakewharton.processphoenix.ProcessPhoenix
 import com.movtery.inputmap.keycodes.LwjglGlfwKeycode
 import com.movtery.zalithlauncher.BuildKeys
 import com.movtery.zalithlauncher.R
+import com.movtery.zalithlauncher.game.session.PlaytimeTracker
 import com.movtery.zalithlauncher.bridge.CURSOR_DISABLED
 import com.movtery.zalithlauncher.bridge.FliteTts
 import com.movtery.zalithlauncher.bridge.LoggerBridge
@@ -258,10 +259,14 @@ class VMViewModel : ViewModel() {
                 val config: LaunchConfig = bundle.getParcelableSafely(INTENT_GAME_CONFIG, LaunchConfig::class.java)
                     ?: throw IllegalStateException("No launch config has been set.")
 
+                //登记本次游玩会话，退出时结算时长
+                PlaytimeTracker.start(config.version.getVersionName(), config.version.getGameHome())
+
                 val launcher = GameLauncher(
                     activity = activity,
                     config = config,
                     onExit = { code, isSignal ->
+                        PlaytimeTracker.finish(activity, code)
                         if (code == 0) {
                             val finishedCount = MiscSettings.finishedGame.getValue()
                             if (finishedCount < Int.MAX_VALUE)  {
