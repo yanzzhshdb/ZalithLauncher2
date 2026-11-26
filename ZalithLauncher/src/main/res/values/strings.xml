@@ -3371,5 +3371,18 @@
     <string name="performance_no_version">No version installed yet. Install a version first.</string>
     <string name="performance_restored">options.txt restored from backup</string>
     <string name="performance_no_backup">No backup found yet</string>
+
+    <!-- Recordings list -->
+    <string name="settings_tab_recordings">Recordings</string>
+    <string name="record_list_hint">Videos are stored in %1$s</string>
+    <string name="record_list_empty">No recordings yet. Start one from the in-game menu.</string>
+    <string name="record_list_detail">%1$s · %2$s</string>
+    <string name="record_delete_title">Delete recording?</string>
+    <string name="record_delete_message">This video will be deleted permanently.</string>
+    <string name="record_deleted">Recording deleted</string>
+    <string name="record_delete_failed">Could not delete the recording</string>
+    <string name="record_action_play">Play</string>
+    <string name="record_play_failed">No video player available</string>
+    <string name="record_share_failed">Could not share the recording</string>
 </resources>
 

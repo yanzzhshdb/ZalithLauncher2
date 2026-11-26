@@ -1743,5 +1743,18 @@
     <string name="performance_no_version">Belum ada versi terpasang. Pasang versi dulu.</string>
     <string name="performance_restored">options.txt dipulihkan dari cadangan</string>
     <string name="performance_no_backup">Belum ada cadangan</string>
+
+    <!-- Recordings list -->
+    <string name="settings_tab_recordings">Rekaman</string>
+    <string name="record_list_hint">Video disimpan di %1$s</string>
+    <string name="record_list_empty">Belum ada rekaman. Mulai rekam dari menu dalam game.</string>
+    <string name="record_list_detail">%1$s · %2$s</string>
+    <string name="record_delete_title">Hapus rekaman?</string>
+    <string name="record_delete_message">Video ini akan dihapus permanen.</string>
+    <string name="record_deleted">Rekaman dihapus</string>
+    <string name="record_delete_failed">Gagal menghapus rekaman</string>
+    <string name="record_action_play">Putar</string>
+    <string name="record_play_failed">Tidak ada pemutar video</string>
+    <string name="record_share_failed">Gagal membagikan rekaman</string>
 </resources>
 

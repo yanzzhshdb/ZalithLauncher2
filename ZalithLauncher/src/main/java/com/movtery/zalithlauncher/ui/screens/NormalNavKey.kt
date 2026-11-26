@@ -124,6 +124,10 @@ sealed interface NormalNavKey : TitledNavKey {
         @Serializable data object Performance : Settings {
             @Contextual override val title: AndroidStringText = androidText(R.string.settings_tab_performance)
         }
+        /** 录屏管理屏幕 */
+        @Serializable data object Recordings : Settings {
+            @Contextual override val title: AndroidStringText = androidText(R.string.settings_tab_recordings)
+        }
         /** 游玩统计屏幕 */
         @Serializable data object Playtime : Settings {
             @Contextual override val title: AndroidStringText = androidText(R.string.settings_tab_playtime)
