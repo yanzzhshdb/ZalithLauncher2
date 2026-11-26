@@ -63,6 +63,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -600,29 +601,56 @@ private fun ProductBanner(
     modifier: Modifier = Modifier,
     compact: Boolean = false
 ) {
-    Row(
+    Column(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(
-            space = if (compact) 10.dp else 16.dp,
-            alignment = if (compact) Alignment.CenterHorizontally else Alignment.Start
-        )
+        verticalArrangement = Arrangement.spacedBy(if (compact) 6.dp else 10.dp),
+        horizontalAlignment = if (compact) Alignment.CenterHorizontally else Alignment.Start
     ) {
-        Image(
-            modifier = Modifier.size(if (compact) 36.dp else 52.dp),
-            painter = painterResource(R.drawable.img_launcher),
-            contentDescription = null
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(
+                space = if (compact) 10.dp else 16.dp,
+                alignment = if (compact) Alignment.CenterHorizontally else Alignment.Start
+            )
+        ) {
+            Image(
+                modifier = Modifier.size(if (compact) 36.dp else 52.dp),
+                painter = painterResource(R.drawable.img_launcher),
+                contentDescription = null
+            )
+
+            Text(
+                text = BuildKeys.LAUNCHER_NAME,
+                style = if (compact) {
+                    MaterialTheme.typography.titleSmall
+                } else {
+                    MaterialTheme.typography.headlineSmall
+                },
+                fontWeight = FontWeight.Bold
+            )
+        }
 
         Text(
-            text = BuildKeys.LAUNCHER_NAME,
+            text = stringResource(R.string.welcome_screen_brand_tagline),
             style = if (compact) {
-                MaterialTheme.typography.titleSmall
+                MaterialTheme.typography.labelSmall
             } else {
-                MaterialTheme.typography.headlineSmall
+                MaterialTheme.typography.labelLarge
             },
-            fontWeight = FontWeight.Bold
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+
+        Surface(
+            shape = RoundedCornerShape(12.dp),
+            color = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+        ) {
+            Text(
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                text = stringResource(R.string.welcome_screen_unofficial_notice),
+                style = MaterialTheme.typography.labelSmall
+            )
+        }
     }
 }
 
@@ -693,6 +721,10 @@ private fun WelcomeIntroduction(
                 )
             }
 
+            if (!compact) {
+                WelcomeFeatureHighlights(modifier = Modifier.fillMaxWidth())
+            }
+
             if (documents.isNotEmpty()) {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Column(
@@ -739,6 +771,89 @@ private fun WelcomeIntroduction(
             document = document,
             onDismissRequest = { selectedDocument = null }
         )
+    }
+}
+
+@Composable
+private fun WelcomeFeatureHighlights(modifier: Modifier = Modifier) {
+    Surface(
+        modifier = modifier,
+        shape = RoundedCornerShape(24.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.welcome_screen_features_title),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
+            WelcomeFeatureRow(
+                badge = "01",
+                accent = MaterialTheme.colorScheme.primary,
+                title = stringResource(R.string.welcome_screen_feature_accounts_title),
+                text = stringResource(R.string.welcome_screen_feature_accounts_text)
+            )
+            WelcomeFeatureRow(
+                badge = "02",
+                accent = MaterialTheme.colorScheme.secondary,
+                title = stringResource(R.string.welcome_screen_feature_versions_title),
+                text = stringResource(R.string.welcome_screen_feature_versions_text)
+            )
+            WelcomeFeatureRow(
+                badge = "03",
+                accent = MaterialTheme.colorScheme.tertiary,
+                title = stringResource(R.string.welcome_screen_feature_controls_title),
+                text = stringResource(R.string.welcome_screen_feature_controls_text)
+            )
+        }
+    }
+}
+
+@Composable
+private fun WelcomeFeatureRow(
+    badge: String,
+    accent: Color,
+    title: String,
+    text: String
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(34.dp)
+                .background(accent.copy(alpha = 0.16f), RoundedCornerShape(11.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = badge,
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Bold,
+                color = accent
+            )
+        }
+
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                text = text,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
     }
 }
 

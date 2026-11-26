@@ -30,7 +30,7 @@ sealed interface GuideKeys : GuideKey {
 
     /** 主界面引导 */
     data object Main : Keys {
-        override val version = 1
+        override val version = 2
 
         sealed interface Step : GuideKey {
             /** 添加账号入口 */
@@ -46,7 +46,7 @@ sealed interface GuideKeys : GuideKey {
 
     /** 控制布局编辑器的引导 */
     data object Editor : Keys {
-        override val version = 2
+        override val version = 3
 
         sealed interface Step : GuideKey {
             /** 悬浮菜单 */
@@ -70,7 +70,7 @@ sealed interface GuideKeys : GuideKey {
 
     /** 控制布局编辑器摇杆方向事件 */
     data object JoystickEvents : Keys {
-        override val version = 1
+        override val version = 2
 
         sealed interface Step : GuideKey {
             /** 摇杆8个方向 */

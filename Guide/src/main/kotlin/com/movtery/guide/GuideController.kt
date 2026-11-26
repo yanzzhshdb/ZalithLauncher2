@@ -46,6 +46,11 @@ class GuideController internal constructor(
     val state: StateFlow<GuideState> = _state.asStateFlow()
 
     /**
+     * 引导流总步骤数
+     */
+    val stepCount: Int get() = entries.size
+
+    /**
      * 从第一个步骤启动引导流
      * @return 已有其他引导流激活时返回 false
      */

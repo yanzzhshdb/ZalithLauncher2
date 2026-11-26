@@ -180,8 +180,16 @@ internal fun GuideOverlay(
                 if (overlay != null) {
                     val stepNodes = remember(stepEntry.key, version) { registry.nodesFor(stepEntry.key) }
                     val stepAnchors = stepNodes.map(GuideNode::bounds)
-                    val scope = remember(stepAnchors, containerSize, controller) {
-                        GuideScope(stepAnchors, containerSize, sideState, controller, animations)
+                    val scope = remember(stepEntry, stepAnchors, containerSize, controller) {
+                        GuideScope(
+                            anchors = stepAnchors,
+                            containerSize = containerSize,
+                            sideState = sideState,
+                            controller = controller,
+                            animations = animations,
+                            stepIndex = controller.entries.indexOf(stepEntry),
+                            stepCount = controller.stepCount
+                        )
                     }
                     if (stepEntry.isIntro || stepAnchors.isNotEmpty()) overlay(scope)
                 }
@@ -597,8 +605,16 @@ private fun GuideCardContainer(
             else -> resolvePlacement(placement, sideHint, anchors)
         }
 
-        val scope = remember(anchors, containerSize, controller) {
-            GuideScope(anchors, containerSize, sideState, controller, animations)
+        val scope = remember(anchors, containerSize, controller, state.index) {
+            GuideScope(
+                anchors = anchors,
+                containerSize = containerSize,
+                sideState = sideState,
+                controller = controller,
+                animations = animations,
+                stepIndex = state.index,
+                stepCount = controller.stepCount
+            )
         }
         val animatedOffset = targetState.value?.let { target ->
             animateIntOffsetAsState(

@@ -18,29 +18,41 @@
 
 package com.movtery.zalithlauncher.ui.guide
 
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.LocalTextStyle
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.movtery.guide.GuideController
+import com.movtery.guide.GuideScope
 import com.movtery.guide.NextTip
 import com.movtery.guide.NodeClickMode
 import com.movtery.guide.rememberGuide
@@ -117,16 +129,18 @@ fun rememberAppGuides(
 
 @Composable
 private fun rememberMainGuides() = rememberGuide(holeShape = MaterialTheme.shapes.extraLarge) {
-    intro {
-        GuideCard {
-            Text(stringResource(R.string.guide_main_welcome_title, BuildKeys.LAUNCHER_NAME))
-            Text(stringResource(R.string.guide_main_welcome_text))
-        }
+    intro { scope ->
+        GuideCard(
+            scope = scope,
+            title = stringResource(R.string.guide_main_welcome_title, BuildKeys.LAUNCHER_NAME),
+            body = stringResource(R.string.guide_main_welcome_text)
+        )
     }
-    entry(GuideKeys.Main.Step.Account) {
-        GuideCard {
-            Text(stringResource(R.string.guide_main_account))
-        }
+    entry(GuideKeys.Main.Step.Account) { scope ->
+        GuideCard(
+            scope = scope,
+            body = stringResource(R.string.guide_main_account)
+        )
     }
     entry(
         key = GuideKeys.Main.Step.VersionList,
@@ -135,116 +149,134 @@ private fun rememberMainGuides() = rememberGuide(holeShape = MaterialTheme.shape
         },
         content = {}
     )
-    entry(GuideKeys.Main.Step.CardDrag) {
-        GuideCard {
-            Text(stringResource(R.string.guide_main_card_drag_title))
-            Text(stringResource(R.string.guide_main_card_drag_text))
-        }
+    entry(GuideKeys.Main.Step.CardDrag) { scope ->
+        GuideCard(
+            scope = scope,
+            title = stringResource(R.string.guide_main_card_drag_title),
+            body = stringResource(R.string.guide_main_card_drag_text)
+        )
     }
-    entry(GuideKeys.Main.Step.CardTip) {
-        GuideCard {
-            Text(stringResource(R.string.guide_main_card_tip_title))
-            Text(stringResource(
+    entry(GuideKeys.Main.Step.CardTip) { scope ->
+        GuideCard(
+            scope = scope,
+            title = stringResource(R.string.guide_main_card_tip_title),
+            body = stringResource(
                 R.string.guide_main_card_tip_text,
                 stringResource(R.string.home_add_version_card)
-            ))
-        }
+            )
+        )
     }
 }
 
 @Composable
 private fun rememberEditorGuides() = rememberGuide {
-    intro {
-        GuideCard {
-            Text(stringResource(R.string.guide_editor_welcome_title))
-            Text(stringResource(R.string.guide_editor_welcome_text))
-        }
+    intro { scope ->
+        GuideCard(
+            scope = scope,
+            title = stringResource(R.string.guide_editor_welcome_title),
+            body = stringResource(R.string.guide_editor_welcome_text)
+        )
     }
     entry(
         key = GuideKeys.Editor.Step.MenuBall,
         nodeClick = NodeClickMode.PassThrough,
         advanceOnScrimClick = false
-    ) {
-        GuideCard {
-            Text(stringResource(R.string.guide_editor_menu_ball_title))
-            Text(stringResource(R.string.guide_editor_menu_ball_text))
-        }
+    ) { scope ->
+        GuideCard(
+            scope = scope,
+            title = stringResource(R.string.guide_editor_menu_ball_title),
+            body = stringResource(R.string.guide_editor_menu_ball_text)
+        )
     }
-    entry(GuideKeys.Editor.Step.LayerList) {
-        GuideCard {
-            Text(stringResource(R.string.guide_editor_layer_list_title))
-            Text(stringResource(R.string.guide_editor_layer_list_text))
-            Text(stringResource(R.string.guide_editor_layer_list_note))
-        }
+    entry(GuideKeys.Editor.Step.LayerList) { scope ->
+        GuideCard(
+            scope = scope,
+            title = stringResource(R.string.guide_editor_layer_list_title),
+            body = stringResource(R.string.guide_editor_layer_list_text),
+            note = stringResource(R.string.guide_editor_layer_list_note)
+        )
     }
-    entry(GuideKeys.Editor.Step.CreateLayer) {
-        GuideCard {
-            Text(stringResource(R.string.guide_editor_create_layer))
-        }
+    entry(GuideKeys.Editor.Step.CreateLayer) { scope ->
+        GuideCard(
+            scope = scope,
+            body = stringResource(R.string.guide_editor_create_layer)
+        )
     }
-    entry(GuideKeys.Editor.Step.AddButtons) {
-        GuideCard {
-            Text(stringResource(R.string.guide_editor_add_widgets_title))
-            Text(stringResource(R.string.guide_editor_add_widgets_text))
-        }
+    entry(GuideKeys.Editor.Step.AddButtons) { scope ->
+        GuideCard(
+            scope = scope,
+            title = stringResource(R.string.guide_editor_add_widgets_title),
+            body = stringResource(R.string.guide_editor_add_widgets_text)
+        )
     }
-    entry(GuideKeys.Editor.Step.AddStyles) {
-        GuideCard {
-            Text(stringResource(R.string.guide_editor_styles_title))
-            Text(stringResource(R.string.guide_editor_styles_text))
-        }
+    entry(GuideKeys.Editor.Step.AddStyles) { scope ->
+        GuideCard(
+            scope = scope,
+            title = stringResource(R.string.guide_editor_styles_title),
+            body = stringResource(R.string.guide_editor_styles_text)
+        )
     }
-    entry(GuideKeys.Editor.Step.StyleCabinet) {
-        GuideCard {
-            Text(stringResource(R.string.guide_editor_style_cabinet_title))
-            Text(stringResource(R.string.guide_editor_style_cabinet_text))
-            Text(stringResource(R.string.guide_editor_style_cabinet_note))
-        }
+    entry(GuideKeys.Editor.Step.StyleCabinet) { scope ->
+        GuideCard(
+            scope = scope,
+            title = stringResource(R.string.guide_editor_style_cabinet_title),
+            body = stringResource(R.string.guide_editor_style_cabinet_text),
+            note = stringResource(R.string.guide_editor_style_cabinet_note)
+        )
     }
-    entry(GuideKeys.Editor.Step.Preview) {
-        GuideCard {
-            Text(stringResource(R.string.guide_editor_preview))
-        }
+    entry(GuideKeys.Editor.Step.Preview) { scope ->
+        GuideCard(
+            scope = scope,
+            body = stringResource(R.string.guide_editor_preview)
+        )
     }
-    entry(GuideKeys.Editor.Step.Save) {
-        GuideCard {
-            Text(stringResource(R.string.guide_editor_save))
-        }
+    entry(GuideKeys.Editor.Step.Save) { scope ->
+        GuideCard(
+            scope = scope,
+            body = stringResource(R.string.guide_editor_save)
+        )
     }
 }
 
 @Composable
 private fun rememberJoystickEventsGuides() = rememberGuide {
-    intro {
-        GuideCard {
-            Text(stringResource(R.string.guide_joystick_events_welcome_title))
-            Text(stringResource(R.string.guide_joystick_events_welcome_text))
-        }
+    intro { scope ->
+        GuideCard(
+            scope = scope,
+            title = stringResource(R.string.guide_joystick_events_welcome_title),
+            body = stringResource(R.string.guide_joystick_events_welcome_text)
+        )
     }
-    entry(GuideKeys.JoystickEvents.Step.Direction) {
-        GuideCard {
-            Text(stringResource(R.string.guide_joystick_events_direction_title))
-            Text(stringResource(R.string.guide_joystick_events_direction_text))
-        }
+    entry(GuideKeys.JoystickEvents.Step.Direction) { scope ->
+        GuideCard(
+            scope = scope,
+            title = stringResource(R.string.guide_joystick_events_direction_title),
+            body = stringResource(R.string.guide_joystick_events_direction_text)
+        )
     }
     entry(
         key = GuideKeys.JoystickEvents.Step.Lock,
         nodeClick = NodeClickMode.PassThrough,
         advanceOnScrimClick = false
-    ) {
-        GuideCard {
-            Text(stringResource(R.string.guide_joystick_events_lock_text1))
-            Text(stringResource(R.string.guide_joystick_events_lock_text2))
-            Spacer(Modifier.height(8.dp))
-            Text(stringResource(R.string.guide_joystick_events_lock_text3))
-            Text(stringResource(R.string.guide_joystick_events_lock_text4))
-        }
+    ) { scope ->
+        GuideCard(
+            scope = scope,
+            body = listOf(
+                stringResource(R.string.guide_joystick_events_lock_text1),
+                stringResource(R.string.guide_joystick_events_lock_text2),
+                stringResource(R.string.guide_joystick_events_lock_text3)
+            ).joinToString("\n\n"),
+            note = stringResource(R.string.guide_joystick_events_lock_text4)
+        )
     }
-    entry(GuideKeys.JoystickEvents.Step.Events) {
-        GuideCard {
-            Text(stringResource(R.string.guide_joystick_events_events_text1))
-            Text(stringResource(R.string.guide_joystick_events_events_text2))
-        }
+    entry(GuideKeys.JoystickEvents.Step.Events) { scope ->
+        GuideCard(
+            scope = scope,
+            body = listOf(
+                stringResource(R.string.guide_joystick_events_events_text1),
+                stringResource(R.string.guide_joystick_events_events_text2)
+            ).joinToString("\n\n")
+        )
     }
 }
 
@@ -262,23 +294,53 @@ fun EventViewModel.sendStartGuideOnce(group: GuideKeys.Keys) {
     sendEvent(EventViewModel.Event.Guide.StartGuideOnce(group))
 }
 
+/**
+ * 引导卡片的步骤进度条
+ */
 @Composable
-fun NextTipLabel(tip: NextTip) {
-    Box(
-        modifier = Modifier
-            .widthIn(max = 360.dp)
-            .clip(MaterialTheme.shapes.large)
-            .background(Color.Black.copy(alpha = 0.4f))
-            .alpha(0.8f)
-    ) {
-        Text(
-            modifier = Modifier.padding(all = 8.dp),
-            text = when (tip) {
-                NextTip.TapBlank -> stringResource(R.string.guide_tip_blank)
-                NextTip.Finish -> stringResource(R.string.guide_tip_finish)
-            },
-            style = MaterialTheme.typography.bodySmall
-        )
+private fun GuideStepBar(
+    fraction: Float,
+    stepIndex: Int,
+    stepCount: Int,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(
+                    R.string.guide_step_progress,
+                    stepIndex + 1,
+                    stepCount
+                ),
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Text(
+                text = stringResource(R.string.guide_step_tap_hint),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(4.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(fraction)
+                    .height(4.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primary)
+            )
+        }
     }
 }
 
@@ -287,23 +349,107 @@ fun NextTipLabel(tip: NextTip) {
  */
 @Composable
 private fun GuideCard(
+    scope: GuideScope,
     modifier: Modifier = Modifier,
-    text: @Composable ColumnScope.() -> Unit,
+    title: String? = null,
+    body: String? = null,
+    note: String? = null,
 ) {
-    Box(
-        modifier = modifier
-            .widthIn(max = 360.dp)
-            .background(Color.Black.copy(alpha = 0.4f))
+    Surface(
+        modifier = modifier.widthIn(max = 360.dp),
+        shape = RoundedCornerShape(24.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        tonalElevation = 3.dp,
+        shadowElevation = 10.dp,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
     ) {
         Column(
-            modifier = Modifier.padding(all = 18.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            modifier = Modifier.padding(all = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            CompositionLocalProvider(
-                LocalTextStyle provides MaterialTheme.typography.bodyMedium
-            ) {
-                text()
+            if (scope.stepCount > 1) {
+                GuideStepBar(
+                    fraction = ((scope.stepIndex + 1).toFloat() / scope.stepCount).coerceIn(0f, 1f),
+                    stepIndex = scope.stepIndex,
+                    stepCount = scope.stepCount
+                )
             }
+
+            if (title != null) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            if (body != null) {
+                Text(
+                    text = body,
+                    style = MaterialTheme.typography.bodyMedium,
+                    lineHeight = 22.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            if (note != null) {
+                Surface(
+                    shape = RoundedCornerShape(14.dp),
+                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.7f),
+                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                ) {
+                    Text(
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
+                        text = note,
+                        style = MaterialTheme.typography.bodySmall,
+                        lineHeight = 18.sp
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun NextTipLabel(tip: NextTip) {
+    val transition = rememberInfiniteTransition(label = "GuideNextTip")
+    val pulse by transition.animateFloat(
+        initialValue = 0.35f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 900),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "GuideNextTipPulse"
+    )
+
+    Surface(
+        modifier = Modifier.widthIn(max = 360.dp),
+        shape = CircleShape,
+        color = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+        shadowElevation = 6.dp
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 9.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(8.dp)
+                    .graphicsLayer { alpha = pulse }
+                    .background(MaterialTheme.colorScheme.onPrimary, CircleShape)
+            )
+            Text(
+                text = when (tip) {
+                    NextTip.TapBlank -> stringResource(R.string.guide_tip_blank)
+                    NextTip.Finish -> stringResource(R.string.guide_tip_finish)
+                },
+                style = MaterialTheme.typography.labelLarge
+            )
         }
     }
 }

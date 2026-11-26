@@ -68,8 +68,10 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.entryProvider
@@ -345,6 +347,8 @@ private fun <E: TitledNavKey> TopBar(
                         Text(
                             text = BuildKeys.LAUNCHER_IDENTIFIER,
                             style = style,
+                            fontWeight = FontWeight.SemiBold,
+                            letterSpacing = 0.2.sp,
                             softWrap = softWarp,
                             maxLines = maxLines
                         )

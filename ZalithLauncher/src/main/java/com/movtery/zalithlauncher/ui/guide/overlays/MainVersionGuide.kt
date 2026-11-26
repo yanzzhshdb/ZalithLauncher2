@@ -18,11 +18,9 @@
 
 package com.movtery.zalithlauncher.ui.guide.overlays
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -33,22 +31,22 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.movtery.guide.GuideCallout
 import com.movtery.guide.GuideCalloutOverlay
 import com.movtery.guide.GuideScope
@@ -77,18 +75,19 @@ fun MainVersionGuideOverlay(scope: GuideScope) {
             GuideCallout(
                 target = Rect(anchor.left, anchor.top, iconRight, anchor.bottom),
             ) {
-                CalloutLabel {
-                    Text(stringResource(R.string.guide_main_version_icon_title))
-                    Text(stringResource(R.string.guide_main_version_icon_text))
-                }
+                CalloutLabel(
+                    title = stringResource(R.string.guide_main_version_icon_title),
+                    body = stringResource(R.string.guide_main_version_icon_text)
+                )
             },
             GuideCallout(
                 target = Rect(secondLeft, anchor.top, anchor.right, anchor.bottom),
             ) {
-                CalloutLabel {
-                    Text(stringResource(R.string.guide_main_version_list))
-                    Text(stringResource(R.string.guide_main_version_launch))
-                }
+                CalloutLabel(
+                    title = stringResource(R.string.guide_main_version_list_title),
+                    body = stringResource(R.string.guide_main_version_list) +
+                            " " + stringResource(R.string.guide_main_version_launch)
+                )
             },
         ),
     ) {
@@ -182,22 +181,37 @@ private fun VersionManagerDemo(modifier: Modifier = Modifier) {
 
 @Composable
 private fun CalloutLabel(
-    content: @Composable ColumnScope.() -> Unit,
+    title: String? = null,
+    body: String? = null,
 ) {
-    Box(
-        modifier = Modifier
-            .widthIn(max = 320.dp)
-            .clip(MaterialTheme.shapes.large)
-            .background(Color.Black.copy(alpha = 0.65f)),
+    Surface(
+        modifier = Modifier.widthIn(max = 320.dp),
+        shape = RoundedCornerShape(18.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        tonalElevation = 3.dp,
+        shadowElevation = 8.dp
     ) {
-        CompositionLocalProvider(
-            LocalTextStyle provides MaterialTheme.typography.bodyMedium
+        Column(
+            modifier = Modifier.padding(14.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            Column(
-                modifier = Modifier.padding(all = 12.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                content = content,
-            )
+            if (title != null) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+            if (body != null) {
+                Text(
+                    text = body,
+                    style = MaterialTheme.typography.bodySmall,
+                    lineHeight = 18.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
     }
 }

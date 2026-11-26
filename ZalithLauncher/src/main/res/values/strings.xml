@@ -231,6 +231,24 @@
     <string name="welcome_screen_intro_primary">Welcome to %1$s, a third-party Minecraft: Java Edition launcher designed for Android devices.</string>
     <!-- Second introduction paragraph describing the PojavLauncher core -->
     <string name="welcome_screen_intro_core">Powered by PojavLauncher, it provides a modern game launch and management experience.</string>
+    <!-- Short brand tagline shown under the launcher name on the welcome screen -->
+    <string name="welcome_screen_brand_tagline">Minecraft: Java Edition, made for Android</string>
+    <!-- Heading of the feature highlights block on the welcome screen -->
+    <string name="welcome_screen_features_title">What you can do</string>
+    <!-- Feature highlight title for account management on the welcome screen -->
+    <string name="welcome_screen_feature_accounts_title">Accounts</string>
+    <!-- Feature highlight description for account management on the welcome screen -->
+    <string name="welcome_screen_feature_accounts_text">Sign in once and switch profiles whenever you like.</string>
+    <!-- Feature highlight title for version management on the welcome screen -->
+    <string name="welcome_screen_feature_versions_title">Versions</string>
+    <!-- Feature highlight description for version management on the welcome screen -->
+    <string name="welcome_screen_feature_versions_text">Install any game version and tune it separately.</string>
+    <!-- Feature highlight title for touch controls on the welcome screen -->
+    <string name="welcome_screen_feature_controls_title">Touch controls</string>
+    <!-- Feature highlight description for touch controls on the welcome screen -->
+    <string name="welcome_screen_feature_controls_text">Build a control layout that fits your hands.</string>
+    <!-- Notice marking this build as an unofficial modified version of the original project -->
+    <string name="welcome_screen_unofficial_notice">Unofficial modified build - based on Zalith Launcher 2</string>
     <!-- Heading of the agreement links on the welcome screen -->
     <string name="welcome_screen_agreement_title">User Agreements</string>
     <!-- Checkbox label for explicitly accepting the displayed agreements -->
@@ -2593,6 +2611,8 @@
     <string name="about_launcher_title">About Launcher</string>
     <!-- Line under the launcher name on the About page; %s is the version number -->
     <string name="about_launcher_version">Launcher Version: %s</string>
+    <!-- Notice on the About page marking this as an unofficial modified build -->
+    <string name="about_unofficial_build_notice">This is an unofficial modified build based on Zalith Launcher 2. It is not affiliated with or endorsed by the original project.</string>
     <!-- Name of the launcher author shown as an item title on the About page -->
     <string name="about_launcher_author_movtery_title">MovTery</string>
     <!-- Description under the author name on the About page; %s is the launcher name -->
@@ -3014,81 +3034,87 @@
     <!-- Welcome card shown centered on the screen at the very start of the main-screen guide; %s is the launcher name -->
     <string name="guide_main_welcome_title">Welcome to %s!</string>
     <!-- Second line of the centered welcome card that opens the main-screen guide -->
-    <string name="guide_main_welcome_text">Let\'s take a quick look at what the main screen can do.</string>
+    <string name="guide_main_welcome_text">Here is a quick tour of the main screen. It only takes a moment.</string>
     <!-- Guide text next to the account avatar on the action menu card; tapping it opens the account manager -->
-    <string name="guide_main_account">Tap here to open the account manager, where you can add or manage your Minecraft accounts</string>
+    <string name="guide_main_account">Tap here to open your accounts. Add a Minecraft account once and it is ready for every launch.</string>
+    <!-- Title of the callout pointing to the version list and its launch button -->
+    <string name="guide_main_version_list_title">Version list and launch</string>
     <!-- Guide text next to the version entry on the action menu card; tapping it opens the version list -->
-    <string name="guide_main_version_list">Tap here to open the version list, where every game version you install will be listed</string>
+    <string name="guide_main_version_list">Tap here to open the version list and see every game version you have installed.</string>
     <!-- Title of the callout pointing to the version icon and its settings shortcut -->
-    <string name="guide_main_version_icon_title">Version icon and settings shortcut</string>
-    <!-- Body of the version-icon callout; tapping opens settings specific to the current game version -->
-    <string name="guide_main_version_icon_text">Tap here to open the current version\'s settings and adjust its version-specific options</string>
-    <!-- Body of the version-list callout explaining that the right-side button launches the current version -->
-    <string name="guide_main_version_launch">The launch button on the right directly starts the current version</string>
+    <string name="guide_main_version_icon_title">Version settings</string>
+    <!-- Body of the callout explaining that the version icon opens settings for that version -->
+    <string name="guide_main_version_icon_text">Tap the version icon to open settings for this version only.</string>
+    <!-- Callout text for the launch button on the right side of the version entry -->
+    <string name="guide_main_version_launch">The button on the right launches this version right away.</string>
     <!-- Title of the guide card for the draggable action menu card -->
-    <string name="guide_main_card_drag_title">Not happy with where the action menu is?</string>
+    <string name="guide_main_card_drag_title">Prefer the menu on the other side?</string>
     <!-- Body of the guide card explaining how to move the action menu card to the other side -->
-    <string name="guide_main_card_drag_text">Long-press the card to pick it up, then drag and drop it to dock on the other side</string>
+    <string name="guide_main_card_drag_text">Long-press the card to pick it up, then drag it to the opposite edge.</string>
     <!-- Title of the guide card suggesting to pin content onto the main screen as cards -->
-    <string name="guide_main_card_tip_title">Looking a bit empty here?</string>
+    <string name="guide_main_card_tip_title">Make this space your own</string>
     <!-- Body of the guide card about pinning contents as cards on the main screen; %s is the name of the pin-to-home option -->
-    <string name="guide_main_card_tip_text">Don\'t worry! You can pin content here as cards and arrange it freely, as long as it provides the \"%s\" option</string>
+    <string name="guide_main_card_tip_text">Pin anything that offers the \"%s\" option and arrange the cards however you like.</string>
     <!-- Welcome card shown centered on the screen at the very start of the control-editor guide -->
     <string name="guide_editor_welcome_title">Welcome to the control layout editor!</string>
     <!-- Second line of the centered welcome card that opens the control-editor guide -->
-    <string name="guide_editor_welcome_text">Let\'s take a quick look at how to use it.</string>
+    <string name="guide_editor_welcome_text">Here is a quick tour of the tools you will use the most.</string>
     <!-- Title of the guide card for the floating menu button of the control-editor screen -->
-    <string name="guide_editor_menu_ball_title">This is the control layout editor\'s floating menu button</string>
-    <!-- Body of the guide card about the floating menu button; dragging repositions it, tapping opens the editor menu with the control layer list -->
-    <string name="guide_editor_menu_ball_text">Drag it to reposition it! Tap it to open the editor menu and the control layer list</string>
+    <string name="guide_editor_menu_ball_title">Floating menu button</string>
+    <!-- Body of the guide card about the floating menu button; dragging repositions it, tapping opens the editor menu -->
+    <string name="guide_editor_menu_ball_text">Drag it to move it out of the way. Tap it to open the editor menu and the control layer list.</string>
     <!-- Title of the guide card for the control layer list in the right-hand editor menu card -->
-    <string name="guide_editor_layer_list_title">This is the control layer list</string>
-    <!-- Body explaining the concept: a control layer works like a graphics layer and acts as a container for controls -->
-    <string name="guide_editor_layer_list_text">A control layer works like a graphics layer: it is a container that holds controls. You can organize the controls you add by placing them on separate layers</string>
+    <string name="guide_editor_layer_list_title">Control layers</string>
+    <!-- Body of the guide card explaining that a control layer is a container for controls -->
+    <string name="guide_editor_layer_list_text">A control layer is a container for controls, just like a graphics layer. Use separate layers to keep your controls organized.</string>
     <!-- Closing line of the control-layer-list guide card; all created layers appear in this list -->
-    <string name="guide_editor_layer_list_note">Every control layer you add will be listed here</string>
-    <!-- Guide card for the button at the bottom of the control layer list that creates a new control layer -->
-    <string name="guide_editor_create_layer">Tap this button to create a new control layer</string>
+    <string name="guide_editor_layer_list_note">Every layer you create appears in this list.</string>
+    <!-- Guide text pointing to the button that creates a new control layer -->
+    <string name="guide_editor_create_layer">Tap this button to create a new control layer.</string>
     <!-- Title of the guide card for the add-control buttons at the top of the editor menu -->
-    <string name="guide_editor_add_widgets_title">Add controls here!</string>
-    <!-- Body explaining that controls are added to the currently selected control layer -->
-    <string name="guide_editor_add_widgets_text">Once a control layer is selected, you can add any type of control to it</string>
+    <string name="guide_editor_add_widgets_title">Add controls</string>
+    <!-- Body of the guide card explaining that controls are added to the selected layer -->
+    <string name="guide_editor_add_widgets_text">Select a control layer first, then add any type of control to it.</string>
     <!-- Title of the guide card for the control and joystick appearance lists in the editor menu -->
-    <string name="guide_editor_styles_title">Want to change how your controls look?</string>
-    <!-- Body explaining control appearances, which can be created once and reused across controls -->
-    <string name="guide_editor_styles_text">You can create appearances for your controls so they can be quickly reused and switched between</string>
+    <string name="guide_editor_styles_title">Change how controls look</string>
+    <!-- Body of the guide card about creating reusable control appearances -->
+    <string name="guide_editor_styles_text">Save control appearances as styles so you can reuse and switch them in a tap.</string>
     <!-- Title of the guide card introducing the style cabinet in the control editor -->
-    <string name="guide_editor_style_cabinet_title">You can also add your favorite styles to the shared style cabinet!</string>
+    <string name="guide_editor_style_cabinet_title">Reuse styles anywhere</string>
     <!-- Body of the guide card explaining that the style cabinet is shared across all control layouts -->
-    <string name="guide_editor_style_cabinet_text">The style cabinet is global: no matter which control layout you are editing, the styles inside are always there~</string>
-    <!-- Closing note of the style cabinet guide card about adding favorited styles to the current layout -->
-    <string name="guide_editor_style_cabinet_note">From here, you can add the favorited styles to the current control layout for use~</string>
-    <!-- Guide card for the preview option in the editor menu; preview mode lets the user test the control layout -->
-    <string name="guide_editor_preview">Use the preview mode to test out your control layout</string>
-    <!-- Final guide card reminding the user to save the control layout -->
-    <string name="guide_editor_save">Once you\'re done editing, remember to save your control layout!</string>
-    <!-- Next-step hint shown near a screen corner during non-final guide steps; tapping any blank area advances to the next step -->
-    <string name="guide_tip_blank">Tap any blank area to continue to the next step</string>
-    <!-- Next-step hint shown near a screen corner during the final guide step; tapping any blank area finishes the whole guide -->
-    <string name="guide_tip_finish">Tap any blank area to finish the guide</string>
-    <!-- Title of the centered welcome card that opens the joystick direction-events editing guide -->
-    <string name="guide_joystick_events_welcome_title">Editing the joystick\'s direction events</string>
-    <!-- Second line of the welcome card explaining that every joystick direction has its own events -->
-    <string name="guide_joystick_events_welcome_text">Every direction of the joystick can be set up with its own trigger events</string>
-    <!-- Title of the guide card introducing the 8 triggerable directions of the joystick -->
-    <string name="guide_joystick_events_direction_title">The joystick has 8 directions that can be triggered</string>
-    <!-- Body of the guide card about pushing the joystick into an area to trigger its bound events -->
-    <string name="guide_joystick_events_direction_text">When you push the joystick into the matching area, the events bound to that direction will be triggered</string>
-    <!-- Body of the guide card about the detection area above the joystick that triggers Forward Lock -->
-    <string name="guide_joystick_events_lock_text1">There is a detection area right above the joystick: while pushing the joystick, slide your finger into that area to trigger \"Forward Lock\"</string>
-    <!-- Body of the guide card about toggling Forward Lock and its trigger distance in Joystick Config -->
-    <string name="guide_joystick_events_lock_text2">\"Forward Lock\" can be toggled in \"Joystick Config\", where you can also adjust the distance of this trigger area</string>
-    <!-- Body of the guide card explaining that entering the lockable area triggers the lock events -->
-    <string name="guide_joystick_events_lock_text3">As long as your finger enters the lockable area, the joystick will trigger \"Lock Events\"; it has no effect when \"Forward Lock\" is off</string>
-    <!-- Closing line of the guide card instructing the user to tap the button to edit trigger events -->
-    <string name="guide_joystick_events_lock_text4">Tap the button to edit its trigger events</string>
-    <!-- Body of the guide card explaining that triggerable events are the same as regular buttons -->
-    <string name="guide_joystick_events_events_text1">The triggerable events are the same as those of regular buttons, so you have plenty of freedom here</string>
-    <!-- Closing line of the guide card about editing actual key bindings in the Key section -->
-    <string name="guide_joystick_events_events_text2">If you only want to control the game, just edit the actual key bindings in the \"Key\" section</string>
+    <string name="guide_editor_style_cabinet_text">The style cabinet is shared across the whole launcher, so your favorite styles follow you into every layout.</string>
+    <!-- Note of the style cabinet guide card about adding a saved style to the current layout -->
+    <string name="guide_editor_style_cabinet_note">Add a saved style to the current layout right from here.</string>
+    <!-- Guide text pointing to the preview mode of the control editor -->
+    <string name="guide_editor_preview">Preview mode lets you test the layout before you launch.</string>
+    <!-- Guide text reminding the user to save the control layout after editing -->
+    <string name="guide_editor_save">Remember to save the layout when you are done.</string>
+    <!-- Step counter shown at the top of guide cards; %1$d is the current step, %2$d is the total -->
+    <string name="guide_step_progress">Step %1$d of %2$d</string>
+    <!-- Hint shown next to the step counter in guide cards -->
+    <string name="guide_step_tap_hint">Tap to continue</string>
+    <!-- Hint shown at the bottom of the screen to continue the guide -->
+    <string name="guide_tip_blank">Tap anywhere to continue</string>
+    <!-- Hint shown at the bottom of the screen to finish the guide -->
+    <string name="guide_tip_finish">Tap anywhere to finish</string>
+    <!-- Welcome card shown centered at the start of the joystick direction-events guide -->
+    <string name="guide_joystick_events_welcome_title">Joystick direction events</string>
+    <!-- Second line of the centered welcome card that opens the joystick direction-events guide -->
+    <string name="guide_joystick_events_welcome_text">Each direction of the joystick can trigger its own events.</string>
+    <!-- Title of the guide card about the triggerable directions of the joystick -->
+    <string name="guide_joystick_events_direction_title">8 triggerable directions</string>
+    <!-- Body of the guide card explaining how pushing the joystick triggers direction events -->
+    <string name="guide_joystick_events_direction_text">Push the joystick into a direction area to trigger the events bound to it.</string>
+    <!-- First paragraph about the forward-lock detection area above the joystick -->
+    <string name="guide_joystick_events_lock_text1">There is a detection area above the joystick. While pushing the joystick, slide your finger into it to trigger Forward Lock.</string>
+    <!-- Second paragraph about enabling forward lock and adjusting the detection area -->
+    <string name="guide_joystick_events_lock_text2">Turn Forward Lock on or off in Joystick Config, where you can also adjust the size of this area.</string>
+    <!-- Third paragraph about what happens when the finger enters the lock area -->
+    <string name="guide_joystick_events_lock_text3">When your finger enters the lock area, the joystick fires its lock events. This does nothing while Forward Lock is off.</string>
+    <!-- Guide text pointing to the button that edits the trigger events of a direction -->
+    <string name="guide_joystick_events_lock_text4">Tap the button to edit its trigger events.</string>
+    <!-- First paragraph explaining that joystick events match regular button events -->
+    <string name="guide_joystick_events_events_text1">Joystick events work just like button events, so you have plenty of freedom.</string>
+    <!-- Second paragraph pointing to the Key section for real key bindings -->
+    <string name="guide_joystick_events_events_text2">If you only want to control the game, edit the real key bindings under Key.</string>
 </resources>

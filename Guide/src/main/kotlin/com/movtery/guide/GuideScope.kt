@@ -28,6 +28,16 @@ class GuideScope internal constructor(
      * 引导层动画配置，自定义内容应复用同一组动画参数
      */
     val animations: GuideAnimations,
+
+    /**
+     * 当前步骤序号，从 0 开始
+     */
+    val stepIndex: Int = 0,
+
+    /**
+     * 引导流总步骤数
+     */
+    val stepCount: Int = 0,
 ) {
     /**
      * 全部锚点的包围盒
