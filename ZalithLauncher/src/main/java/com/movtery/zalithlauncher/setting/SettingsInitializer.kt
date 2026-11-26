@@ -38,6 +38,7 @@ fun loadAllSettings(context: Context, reloadAll: Boolean = false) {
         LauncherSettings.reloadAll()
         GameUiSettings.reloadAll()
         MiscSettings.reloadAll()
+        MusicSettings.reloadAll()
         return
     }
 

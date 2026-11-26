@@ -1492,4 +1492,36 @@
     <string name="welcome_screen_feature_controls_text">Buat tata letak kontrol yang nyaman untuk tanganmu.</string>
     <string name="welcome_screen_unofficial_notice">Build modifikasi tidak resmi - berbasis Zalith Launcher 2</string>
     <string name="about_unofficial_build_notice">Ini build modifikasi tidak resmi berbasis Zalith Launcher 2. Build ini tidak berafiliasi dengan atau didukung oleh proyek aslinya.</string>
+
+    <!-- Music library and player -->
+    <string name="settings_tab_music">Musik</string>
+    <string name="music_library_title">Perpustakaan musik</string>
+    <plurals name="music_library_count">
+        <item quantity="one">%1$d lagu</item>
+        <item quantity="other">%1$d lagu</item>
+    </plurals>
+    <string name="music_add">Tambah musik</string>
+    <string name="music_empty_title">Belum ada musik</string>
+    <string name="music_empty_summary">Tambahkan file audio dari perangkatmu. File akan disalin ke launcher agar musik tetap bisa diputar saat bermain Minecraft.</string>
+    <string name="music_now_playing">Sedang diputar</string>
+    <string name="music_nothing_playing">Tidak ada yang diputar</string>
+    <string name="music_nothing_playing_summary">Pilih lagu dari perpustakaan untuk mulai memutar.</string>
+    <string name="music_unknown_artist">Artis tidak diketahui</string>
+    <string name="music_action_play">Putar</string>
+    <string name="music_action_pause">Jeda</string>
+    <string name="music_action_previous">Sebelumnya</string>
+    <string name="music_action_next">Berikutnya</string>
+    <string name="music_action_stop">Hentikan</string>
+    <string name="music_action_shuffle">Acak</string>
+    <string name="music_action_repeat">Ulangi</string>
+    <string name="music_action_delete">Hapus</string>
+    <string name="music_volume">Volume</string>
+    <string name="music_volume_value">%1$d%%</string>
+    <string name="music_importing">Mengimpor %1$d dari %2$d</string>
+    <string name="music_import_result">%1$d lagu ditambahkan, %2$d gagal</string>
+    <string name="music_import_empty">Tidak ada file audio yang dipilih</string>
+    <string name="music_delete_title">Hapus lagu</string>
+    <string name="music_delete_message">Hapus %1$s? File yang tersimpan juga dihapus dari launcher.</string>
+    <string name="music_notification_channel">Pemutaran musik</string>
+    <string name="music_notification_channel_description">Menampilkan lagu yang sedang diputar dan kontrolnya</string>
 </resources>

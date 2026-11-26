@@ -31,10 +31,12 @@ import com.movtery.zalithlauncher.game.account.auth_server.data.AuthServer
 import com.movtery.zalithlauncher.game.account.auth_server.data.AuthServerDao
 import com.movtery.zalithlauncher.game.path.GamePath
 import com.movtery.zalithlauncher.game.path.GamePathDao
+import com.movtery.zalithlauncher.music.MusicTrack
+import com.movtery.zalithlauncher.music.MusicTrackDao
 
 @Database(
-    entities = [Account::class, AuthServer::class, GamePath::class],
-    version = 2,
+    entities = [Account::class, AuthServer::class, GamePath::class, MusicTrack::class],
+    version = 3,
     exportSchema = false //默认不支持导出
 )
 @TypeConverters(Converters::class)
@@ -54,6 +56,11 @@ abstract class AppDatabase : RoomDatabase() {
      */
     abstract fun gamePathDao(): GamePathDao
 
+    /**
+     * 音乐库
+     */
+    abstract fun musicTrackDao(): MusicTrackDao
+
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
@@ -61,6 +68,21 @@ abstract class AppDatabase : RoomDatabase() {
         val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE accounts ADD COLUMN expiresAt INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `musicTracks` (" +
+                            "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                            "`title` TEXT NOT NULL, " +
+                            "`artist` TEXT, " +
+                            "`fileName` TEXT NOT NULL, " +
+                            "`durationMs` INTEGER NOT NULL, " +
+                            "`sizeBytes` INTEGER NOT NULL, " +
+                            "`addedAt` INTEGER NOT NULL)"
+                )
             }
         }
 
@@ -74,7 +96,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "launcher_data.db"
                 )
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                 .build()
                 INSTANCE = instance
                 instance

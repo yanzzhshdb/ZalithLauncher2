@@ -3117,4 +3117,36 @@
     <string name="guide_joystick_events_events_text1">Joystick events work just like button events, so you have plenty of freedom.</string>
     <!-- Second paragraph pointing to the Key section for real key bindings -->
     <string name="guide_joystick_events_events_text2">If you only want to control the game, edit the real key bindings under Key.</string>
+
+    <!-- Music library and player -->
+    <string name="settings_tab_music">Music</string>
+    <string name="music_library_title">Music library</string>
+    <plurals name="music_library_count">
+        <item quantity="one">%1$d song</item>
+        <item quantity="other">%1$d songs</item>
+    </plurals>
+    <string name="music_add">Add music</string>
+    <string name="music_empty_title">No music yet</string>
+    <string name="music_empty_summary">Add audio files from your device. They are copied into the launcher, so playback keeps working while you play Minecraft.</string>
+    <string name="music_now_playing">Now playing</string>
+    <string name="music_nothing_playing">Nothing is playing</string>
+    <string name="music_nothing_playing_summary">Pick a song from your library to start playback.</string>
+    <string name="music_unknown_artist">Unknown artist</string>
+    <string name="music_action_play">Play</string>
+    <string name="music_action_pause">Pause</string>
+    <string name="music_action_previous">Previous</string>
+    <string name="music_action_next">Next</string>
+    <string name="music_action_stop">Stop</string>
+    <string name="music_action_shuffle">Shuffle</string>
+    <string name="music_action_repeat">Repeat</string>
+    <string name="music_action_delete">Delete</string>
+    <string name="music_volume">Volume</string>
+    <string name="music_volume_value">%1$d%%</string>
+    <string name="music_importing">Importing %1$d of %2$d</string>
+    <string name="music_import_result">Added %1$d songs, %2$d failed</string>
+    <string name="music_import_empty">No audio files were selected</string>
+    <string name="music_delete_title">Delete song</string>
+    <string name="music_delete_message">Delete %1$s? The saved file is removed from the launcher too.</string>
+    <string name="music_notification_channel">Music playback</string>
+    <string name="music_notification_channel_description">Shows the current song and playback controls</string>
 </resources>
