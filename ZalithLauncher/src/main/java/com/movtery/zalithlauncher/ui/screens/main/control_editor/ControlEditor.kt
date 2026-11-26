@@ -72,6 +72,7 @@ import com.movtery.zalithlauncher.ui.guide.GuideKeys
 import com.movtery.zalithlauncher.ui.guide.NextTipLabel
 import com.movtery.zalithlauncher.ui.guide.rememberAppGuides
 import com.movtery.zalithlauncher.ui.screens.main.control_editor.edit_widget.EditWidgetDialog
+import com.movtery.zalithlauncher.ui.screens.main.control_editor.preset.ControlPreset
 import com.movtery.zalithlauncher.ui.screens.main.control_editor.preset.ControlPresets
 import com.movtery.zalithlauncher.ui.screens.main.control_editor.preset.ControlPresetCatalogDialog
 import com.movtery.zalithlauncher.ui.screens.main.control_editor.preset.StarterPackPlacements
@@ -334,30 +335,18 @@ fun BoxWithConstraintsScope.ControlEditor(
             onAddPreset = { preset, label ->
                 val step = presetAddCount++
                 val offset = (step % 5 - 2) * 600
+                val widget = createPresetWidget(
+                    preset = preset,
+                    label = label,
+                    position = ButtonPosition(
+                        x = (5000 + offset).coerceIn(0, 10000),
+                        y = (5000 + offset / 2).coerceIn(0, 10000)
+                    ),
+                    referenceLength = screenSize.height,
+                    density = density.density
+                )
                 viewModel.addWidget(layers) { layer ->
-                    layer.addNormalButton(
-                        ObservableNormalData(
-                            NormalData(
-                                text = createTranslatable(default = label),
-                                uuid = createWidgetWithUUID { uuid -> uuid },
-                                position = ButtonPosition(
-                                    x = (5000 + offset).coerceIn(0, 10000),
-                                    y = (5000 + offset / 2).coerceIn(0, 10000)
-                                ),
-                                buttonSize = createAdaptiveButtonSize(
-                                    referenceLength = screenSize.height,
-                                    density = density.density,
-                                    targetDpSize = preset.sizeDp
-                                ),
-                                visibilityType = VisibilityType.ALWAYS,
-                                isSwipple = false,
-                                isPenetrable = false,
-                                isToggleable = preset.toggleable
-                            )
-                        ).apply {
-                            clickEvents = preset.clickEvents
-                        }
-                    )
+                    layer.addNormalButton(widget)
                 }
             },
             onAddStarterPack = {
@@ -365,26 +354,13 @@ fun BoxWithConstraintsScope.ControlEditor(
                     StarterPackPlacements.forEach { placement ->
                         val preset = findPreset(placement.presetId) ?: return@forEach
                         layer.addNormalButton(
-                            ObservableNormalData(
-                                NormalData(
-                                    text = createTranslatable(
-                                        default = presetLabels[preset.id] ?: ""
-                                    ),
-                                    uuid = createWidgetWithUUID { uuid -> uuid },
-                                    position = ButtonPosition(placement.x, placement.y),
-                                    buttonSize = createAdaptiveButtonSize(
-                                        referenceLength = screenSize.height,
-                                        density = density.density,
-                                        targetDpSize = preset.sizeDp
-                                    ),
-                                    visibilityType = VisibilityType.ALWAYS,
-                                    isSwipple = false,
-                                    isPenetrable = false,
-                                    isToggleable = preset.toggleable
-                                )
-                            ).apply {
-                                clickEvents = preset.clickEvents
-                            }
+                            createPresetWidget(
+                                preset = preset,
+                                label = presetLabels[preset.id] ?: "",
+                                position = ButtonPosition(placement.x, placement.y),
+                                referenceLength = screenSize.height,
+                                density = density.density
+                            )
                         )
                     }
                 }
@@ -394,6 +370,41 @@ fun BoxWithConstraintsScope.ControlEditor(
         //全部对话框
         EditorDialogHost(viewModel)
     }
+}
+
+/**
+ * 把预设控件转换为可编辑的控件实例
+ * @param preset 预设定义
+ * @param label 控件默认显示文本
+ * @param position 控件位置
+ * @param referenceLength 参考屏幕边长(px)，用于换算自适应尺寸
+ * @param density 屏幕密度
+ */
+private fun createPresetWidget(
+    preset: ControlPreset,
+    label: String,
+    position: ButtonPosition,
+    referenceLength: Int,
+    density: Float
+): ObservableNormalData = ObservableNormalData(
+    createWidgetWithUUID { uuid ->
+        NormalData(
+            text = createTranslatable(default = label),
+            uuid = uuid,
+            position = position,
+            buttonSize = createAdaptiveButtonSize(
+                referenceLength = referenceLength,
+                density = density,
+                targetDpSize = preset.sizeDp
+            ),
+            visibilityType = VisibilityType.ALWAYS,
+            isSwipple = false,
+            isPenetrable = false,
+            isToggleable = preset.toggleable
+        )
+    }
+).apply {
+    clickEvents = preset.clickEvents
 }
 
 @Composable
