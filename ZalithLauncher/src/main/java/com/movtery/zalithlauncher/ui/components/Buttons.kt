@@ -142,7 +142,7 @@ fun ScalingIconButton(
                 scaleY = scale.value
             },
         enabled = enabled,
-        shape = CircleShape,
+        shape = MaterialTheme.shapes.medium,
         colors = colors,
         elevation = elevation,
         border = border,

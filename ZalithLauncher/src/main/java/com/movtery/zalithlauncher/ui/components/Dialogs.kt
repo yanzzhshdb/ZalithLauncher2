@@ -107,22 +107,17 @@ private fun GlassAlertDialog(
     title: (@Composable () -> Unit)? = null,
     text: (@Composable () -> Unit)? = null,
 ) {
-    val shape: Shape = RoundedCornerShape(32.dp)
+    val shape: Shape = RoundedCornerShape(20.dp)
     AlertDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = confirmButton,
-        modifier = modifier.liquidGlass(
-            shape = shape,
-            spec = rememberGlassSpec(GlassLayer.Thick),
-            backdropBlur = false,
-            shadow = false
-        ),
+        modifier = modifier,
         dismissButton = dismissButton,
         icon = icon,
         title = title,
         text = text,
         shape = shape,
-        containerColor = Color.Transparent,
+        containerColor = cardColor(influencedByBackground = false),
         iconContentColor = MaterialTheme.colorScheme.onSurface,
         titleContentColor = MaterialTheme.colorScheme.onSurface,
         textContentColor = MaterialTheme.colorScheme.onSurfaceVariant

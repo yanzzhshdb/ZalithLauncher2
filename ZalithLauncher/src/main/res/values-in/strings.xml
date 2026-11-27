@@ -1640,11 +1640,11 @@
     <!-- What's new -->
     <string name="whats_new_title">Yang baru</string>
     <string name="whats_new_confirm">Oke</string>
-    <string name="whats_new_body">• NorxLauncher 2.0: halaman baru Norx Tools di Pengaturan, isinya 10 alat yang beneran kepake.
-• Bersihkan penyimpanan, lihat pemakaian per instance, temukan file besar, dan rapikan log lama.
-• Auto-tune RAM dan JVM sesuai perangkat, bisa langsung ke global atau ke semua instance.
-• Cek kesehatan instance, detektor mod duplikat, catatan per instance.
-• Backup/impor setelan launcher dan paket laporan siap kirim ke support.
+    <string name="whats_new_body">• Tampilan baru total: tipografi Space Grotesk, panel rata bergaris tipis, sudut lebih tegas.
+• Navigasi Pengaturan pindah ke tab horizontal, bukan rail samping lagi.
+• Top bar baru dengan logo Norx dan garis aksen gradien.
+• Latar grid + glow menggantikan gradien aurora lama.
+• Halaman Norx Tools dengan 10 alat offline: bersihkan storage, cek ukuran instance, cari file besar, rapikan log, auto-tune RAM/JVM, cek kesehatan instance, detektor mod duplikat, backup setelan, paket laporan, catatan instance.
 • Asisten AI tetap maintenance dan tidak ada kunci API di dalam aplikasi.</string>
 
     <!-- Power saver -->

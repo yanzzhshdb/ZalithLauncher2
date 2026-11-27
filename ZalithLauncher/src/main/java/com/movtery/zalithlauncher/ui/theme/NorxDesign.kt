@@ -19,13 +19,18 @@
 package com.movtery.zalithlauncher.ui.theme
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.movtery.zalithlauncher.setting.enums.isLauncherInDarkTheme
 
 /**
  * NorxLauncher 设计令牌。
@@ -79,6 +84,28 @@ fun norxPanelColor(elevated: Boolean = false): Color {
 /** 面板上的次级块（条目、输入框底）颜色 */
 @Composable
 fun norxInsetColor(): Color = MaterialTheme.colorScheme.surfaceContainerHighest
+
+/**
+ * 垂直强调条：贴在卡片左侧的渐变条，NorxLauncher 的标志性元素
+ */
+@Composable
+fun NorxAccentStripe(
+    modifier: Modifier = Modifier,
+    width: Dp = 4.dp
+) {
+    Box(
+        modifier = modifier
+            .width(width)
+            .background(
+                Brush.verticalGradient(
+                    listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.tertiary
+                    )
+                )
+            )
+    )
+}
 
 @Composable
 fun norxCardShape(corner: Dp = NorxTokens.CardCorner) =
