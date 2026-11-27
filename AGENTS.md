@@ -8,8 +8,17 @@
   `curl -sL -H "Authorization: Bearer $GITHUB_TOKEN" .../actions/jobs/<id>/logs`.
 
 ## UI conventions
-- Liquid glass design system: `ui/theme/glass/GlassSpec.kt` + `LiquidGlass.kt`
-  (`Modifier.liquidGlass`, `LiquidGlassCard`, `LiquidGlassSurface`, `rememberGlassSpec`).
+- **Norx design system** (`ui/theme/NorxDesign.kt`): flat bordered panels, hairline
+  outlines, gradient accent lines, medium geometric corners (6/10/14/18/24dp in
+  `AppShapes`). Use `cardColor()`/`norxPanelColor()`, `norxCardBorder()`,
+  `norxAccentBrush()`, `NorxAccentStripe` and `NorxTokens` for new surfaces.
+- Typography is Space Grotesk (`ui/theme/Type.kt`, `NorxFontFamily`) for every text
+  style; titles use negative tracking, labels positive tracking.
+- Legacy glass helpers still exist for opt-in overlays: `ui/theme/glass/GlassSpec.kt` +
+  `LiquidGlass.kt` (`Modifier.liquidGlass`, `LiquidGlassCard`, `LiquidGlassSurface`,
+  `rememberGlassSpec`). `BackgroundCard` and `GlassAlertDialog` no longer use them.
+- Settings navigation is a horizontal tab strip (`TabStrip` in `SettingsScreen.kt`);
+  the content below it must use `Modifier.weight(1f)`, not `fillMaxHeight()`.
 - `Modifier.backgroundGlass()` silently draws nothing when no launcher background is
   available, so always draw the glass tint separately (`Modifier.background`).
 - Use `Modifier.border(brush = ...)` instead of `drawOutline` for the glass edge ring.

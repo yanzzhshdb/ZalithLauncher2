@@ -116,7 +116,7 @@ fun SettingsScreen(
                 openLicenseScreen = openLicenseScreen,
                 eventViewModel = eventViewModel,
                 submitError = submitError,
-                modifier = Modifier.fillMaxHeight()
+                modifier = Modifier.weight(1f)
             )
         }
     }
