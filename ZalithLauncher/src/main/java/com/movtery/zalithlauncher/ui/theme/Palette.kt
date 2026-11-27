@@ -19,12 +19,9 @@
 package com.movtery.zalithlauncher.ui.theme
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.movtery.zalithlauncher.setting.enums.isLauncherInDarkTheme
-import com.movtery.zalithlauncher.ui.components.influencedByBackgroundColor
 
 /** 应用整体背景的颜色 */
 @Composable
@@ -43,12 +40,12 @@ fun onBackgroundColor(): Color = MaterialTheme.colorScheme.onSurfaceVariant
 fun cardColor(
     influencedByBackground: Boolean = true
 ): Color {
-    val color = MaterialTheme.colorScheme.surfaceBright
+    val color = norxPanelColor()
     return if (influencedByBackground) {
-        influencedByBackgroundColor(color = color, enabled = true)
+        color
     } else {
-        //不受背景影响时（如对话框、浮层）保留一点通透感，配合遮罩形成磨砂效果
-        color.copy(alpha = 0.88f)
+        //浮层（对话框、菜单）保留一点点通透感，配合遮罩形成层次
+        color.copy(alpha = 0.96f)
     }
 }
 @Composable
@@ -70,14 +67,7 @@ fun itemColor(
     influencedByBackground: Boolean = true,
     isDark: Boolean = isLauncherInDarkTheme()
 ): Color {
-    return influencedByBackgroundColor(
-        color = if (isDark) {
-            MaterialTheme.colorScheme.surfaceVariant
-        } else {
-            MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)
-        },
-        enabled = influencedByBackground
-    )
+    return norxInsetColor()
 }
 @Composable
 fun onItemColor() = MaterialTheme.colorScheme.onSurface

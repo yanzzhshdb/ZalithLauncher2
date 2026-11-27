@@ -18,9 +18,12 @@
 
 package com.movtery.zalithlauncher.ui.screens.content
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -29,17 +32,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.entryProvider
 import com.movtery.zalithlauncher.R
@@ -69,6 +76,7 @@ import com.movtery.zalithlauncher.ui.screens.content.settings.PlaytimeScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.ToolsScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.RecordingsScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.RendererSettingsScreen
+import com.movtery.zalithlauncher.ui.theme.norxCardBorder
 import com.movtery.zalithlauncher.ui.screens.navigateOnce
 import com.movtery.zalithlauncher.ui.screens.onBack
 import com.movtery.zalithlauncher.ui.screens.rememberTransitionSpec
@@ -89,9 +97,9 @@ fun SettingsScreen(
         currentKey = backStackViewModel.mainScreen.currentKey
     ) { isVisible ->
 
-        Row(modifier = Modifier.fillMaxSize()) {
-            TabMenu(
-                modifier = Modifier.fillMaxHeight(),
+        Column(modifier = Modifier.fillMaxSize()) {
+            TabStrip(
+                modifier = Modifier.fillMaxWidth(),
                 isVisible = isVisible,
                 settingsScreenKey = backStackViewModel.settingsScreen.currentKey,
                 navigateTo = { settingKey ->
@@ -132,53 +140,70 @@ private val settingItems = listOf(
 )
 
 @Composable
-private fun TabMenu(
+private fun TabStrip(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
     settingsScreenKey: TitledNavKey?,
     navigateTo: (TitledNavKey) -> Unit
 ) {
     val ctx = rememberAnimatedContext(isVisible = isVisible)
+    val listState = rememberLazyListState()
 
-    val scrollState = rememberScrollState()
-    Column(
+    LaunchedEffect(settingsScreenKey) {
+        val index = settingItems.indexOfFirst { it.key == settingsScreenKey }
+        if (index >= 0) {
+            listState.animateScrollToItem(index)
+        }
+    }
+
+    LazyRow(
         modifier = modifier
-            .fadeEdge(scrollState)
-            .width(IntrinsicSize.Min)
-            .padding(start = 8.dp)
-            .animated(ctx, from = AnimatedDirection.Left)
-            .verticalScroll(scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .animated(ctx, from = AnimatedDirection.Top),
+        state = listState,
+        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Spacer(modifier = Modifier.height(12.dp))
-        settingItems.forEach { item ->
-            if (item.division) {
-                HorizontalDivider(
-                    modifier = Modifier
-                        .padding(vertical = 12.dp)
-                        .fillMaxWidth(0.4f)
-                        .alpha(0.4f),
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
-
-            NavigationRailItem(
-                selected = settingsScreenKey == item.key,
-                onClick = {
-                    navigateTo(item.key)
+        items(settingItems.size) { index ->
+            val item = settingItems[index]
+            val selected = settingsScreenKey == item.key
+            val containerColor by animateColorAsState(
+                targetValue = if (selected) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.surfaceContainerLow
                 },
-                icon = {
-                    item.icon()
+                label = "TabContainer"
+            )
+            val contentColor by animateColorAsState(
+                targetValue = if (selected) {
+                    MaterialTheme.colorScheme.onPrimary
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
                 },
-                label = {
-                    MarqueeText(
-                        text = stringResource(item.textRes),
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                }
+                label = "TabContent"
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Surface(
+                onClick = { navigateTo(item.key) },
+                shape = MaterialTheme.shapes.small,
+                color = containerColor,
+                contentColor = contentColor,
+                border = if (selected) null else norxCardBorder()
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    item.icon()
+                    Text(
+                        text = stringResource(item.textRes),
+                        style = MaterialTheme.typography.labelMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
         }
     }
 }

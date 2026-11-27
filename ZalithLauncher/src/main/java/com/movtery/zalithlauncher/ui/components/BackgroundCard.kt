@@ -19,13 +19,15 @@
 package com.movtery.zalithlauncher.ui.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -35,12 +37,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import com.movtery.zalithlauncher.setting.LauncherSettings
-import com.movtery.zalithlauncher.ui.screens.content.elements.backgroundGlass
 import com.movtery.zalithlauncher.ui.theme.cardColor
 import com.movtery.zalithlauncher.ui.theme.cardTitleColor
-import com.movtery.zalithlauncher.ui.theme.glass.GlassSpec
-import com.movtery.zalithlauncher.ui.theme.glass.LiquidGlassCard
-import com.movtery.zalithlauncher.ui.theme.glass.rememberGlassSpec
+import com.movtery.zalithlauncher.ui.theme.NorxTokens
+import com.movtery.zalithlauncher.ui.theme.norxAccentBrush
+import com.movtery.zalithlauncher.ui.theme.norxCardBorder
 import com.movtery.zalithlauncher.ui.theme.onCardColor
 
 @Composable
@@ -71,15 +72,15 @@ fun BackgroundCard(
     border: BorderStroke? = null,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    LiquidGlassCard(
+    Surface(
         modifier = modifier,
         shape = shape,
-        spec = rememberCardGlassSpec(colors.containerColor, influencedByBackground, blur),
-        backdropBlur = influencedByBackground,
-        shadow = false,
+        color = colors.containerColor,
         contentColor = colors.contentColor,
-        content = content
-    )
+        border = border ?: norxCardBorder()
+    ) {
+        Column(content = content)
+    }
 }
 
 /**
@@ -103,41 +104,16 @@ fun BackgroundCard(
     enabled: Boolean = true,
     content: @Composable @UiComposable ColumnScope.() -> Unit
 ) {
-    LiquidGlassCard(
+    Surface(
         modifier = modifier,
         shape = shape,
-        spec = rememberCardGlassSpec(colors.containerColor, influencedByBackground, blur),
-        backdropBlur = influencedByBackground,
-        shadow = false,
-        enabled = enabled,
+        color = colors.containerColor,
         contentColor = colors.contentColor,
-        onClick = onClick,
-        content = content
-    )
-}
-
-/**
- * 卡片使用的玻璃参数：默认跟随全局玻璃设置，
- * 若调用方指定了自定义卡片颜色，则以该颜色作为玻璃底色，保持原有配色语义
- */
-@Composable
-private fun rememberCardGlassSpec(
-    containerColor: Color,
-    influencedByBackground: Boolean,
-    blur: Int
-): GlassSpec {
-    val spec = rememberGlassSpec()
-    val defaultColor = cardColor(influencedByBackground)
-    return remember(spec, containerColor, defaultColor, blur) {
-        val base = if (spec.blurRadius == blur) spec else spec.copy(blurRadius = blur)
-        if (containerColor == defaultColor) {
-            base
-        } else {
-            base.copy(
-                tint = containerColor.copy(alpha = 1f),
-                tintAlpha = containerColor.alpha.coerceAtLeast(base.tintAlpha)
-            )
-        }
+        border = border ?: norxCardBorder(),
+        enabled = enabled,
+        onClick = onClick
+    ) {
+        Column(content = content)
     }
 }
 
@@ -166,11 +142,13 @@ fun CardTitleLayout(
             color = color,
             contentColor = contentColor,
         ) {
-            Column(
-                modifier = Modifier.backgroundGlass(blur, color, influencedByBackground),
-                content = content
-            )
+            Column(content = content)
         }
-        HorizontalDivider(modifier = Modifier.fillMaxWidth())
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(NorxTokens.AccentHeight)
+                .background(norxAccentBrush())
+        )
     }
 }

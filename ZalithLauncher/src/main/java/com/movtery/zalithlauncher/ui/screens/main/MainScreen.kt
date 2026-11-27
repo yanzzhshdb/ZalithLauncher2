@@ -27,6 +27,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -63,6 +64,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -73,6 +75,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -121,10 +124,14 @@ import com.movtery.zalithlauncher.ui.screens.onBack
 import com.movtery.zalithlauncher.ui.screens.rememberTransitionSpec
 import com.movtery.zalithlauncher.ui.theme.backgroundColor
 import com.movtery.zalithlauncher.ui.theme.cardColor
+import com.movtery.zalithlauncher.ui.theme.NorxTokens
 import com.movtery.zalithlauncher.ui.theme.glass.GlassLayer
 import com.movtery.zalithlauncher.ui.theme.glass.LiquidGlassSurface
 import com.movtery.zalithlauncher.ui.theme.glass.rememberGlassSpec
 import com.movtery.zalithlauncher.ui.theme.festivals.FestivalTitleText
+import com.movtery.zalithlauncher.ui.theme.norxAccentBrush
+import com.movtery.zalithlauncher.ui.theme.norxCardBorder
+import com.movtery.zalithlauncher.ui.theme.norxPanelColor
 import com.movtery.zalithlauncher.ui.theme.onBackgroundColor
 import com.movtery.zalithlauncher.ui.theme.onCardColor
 import com.movtery.zalithlauncher.utils.animation.getAnimateTween
@@ -181,31 +188,17 @@ fun MainScreen(
         backgroundColor().copy(alpha = launcherBackgroundOpacity)
     } else backgroundColor()
 
-    //无自定义背景时，用主题色铺一层极光渐变，让液态玻璃有可折射的底色
-    val colorScheme = MaterialTheme.colorScheme
-    val backgroundBrush = remember(backgroundColor, isBackgroundValid, colorScheme) {
-        if (isBackgroundValid) {
-            Brush.linearGradient(listOf(backgroundColor, backgroundColor))
-        } else {
-            Brush.linearGradient(
-                colors = listOf(
-                    colorScheme.primary.copy(alpha = 0.20f).compositeOver(backgroundColor),
-                    backgroundColor,
-                    colorScheme.tertiary.copy(alpha = 0.16f).compositeOver(backgroundColor),
-                    colorScheme.secondary.copy(alpha = 0.12f).compositeOver(backgroundColor)
-                )
-            )
-        }
-    }
-
     Surface(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(backgroundBrush),
-        color = Color.Transparent,
+        modifier = Modifier.fillMaxSize(),
+        color = backgroundColor,
         contentColor = onBackgroundColor()
     ) {
         WhatsNewDialog()
+
+        Box(modifier = Modifier.fillMaxSize()) {
+            if (!isBackgroundValid) {
+                NorxBackdrop(modifier = Modifier.fillMaxSize())
+            }
 
         Column(
             modifier = Modifier
@@ -214,18 +207,19 @@ fun MainScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 6.dp)
+                    .padding(horizontal = 10.dp, vertical = 8.dp)
             ) {
-                LiquidGlassSurface(
+                Surface(
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(22.dp),
-                    spec = rememberGlassSpec(GlassLayer.Thin),
-                    shadow = false
+                    shape = MaterialTheme.shapes.medium,
+                    color = norxPanelColor(elevated = true).copy(alpha = 0.96f),
+                    border = norxCardBorder()
                 ) {
+                    Column {
                     TopBar(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(40.dp),
+                            .height(44.dp),
                         mainScreenKey = mainScreenKey,
                         inLauncherScreen = inLauncherScreen,
                         taskRunning = taskRunning,
@@ -267,6 +261,13 @@ fun MainScreen(
                             changeTasksExpandedState()
                         },
                     )
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(NorxTokens.AccentHeight)
+                            .background(norxAccentBrush())
+                    )
+                    }
                 }
             }
 
@@ -313,6 +314,7 @@ fun MainScreen(
                 }
             }
         }
+        }
     }
 }
 
@@ -355,8 +357,11 @@ private fun <E: TitledNavKey> TopBar(
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
                     }
-                    .fillMaxHeight()
+                    .fillMaxHeight(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
+                Spacer(modifier = Modifier.width(10.dp))
+                NorxBrandMark()
                 AnimatedVisibility(
                     visible = !inLauncherScreen
                 ) {
@@ -928,5 +933,75 @@ private fun TaskItem(
                 }
             }
         }
+    }
+}
+
+/**
+ * 品牌标记：渐变方块 + 字母 N，出现在顶栏左侧
+ */
+@Composable
+private fun NorxBrandMark(
+    modifier: Modifier = Modifier,
+    size: Dp = 24.dp
+) {
+    Box(
+        modifier = modifier
+            .size(size)
+            .clip(RoundedCornerShape(size * 0.28f))
+            .background(norxAccentBrush()),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "N",
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}
+
+/**
+ * 默认背景：细网格 + 两团主题色辉光，替代旧版的极光渐变
+ */
+@Composable
+private fun NorxBackdrop(modifier: Modifier = Modifier) {
+    val scheme = MaterialTheme.colorScheme
+    val gridColor = scheme.onSurface.copy(alpha = 0.045f)
+    val topGlow = scheme.primary.copy(alpha = 0.22f)
+    val bottomGlow = scheme.tertiary.copy(alpha = 0.16f)
+    Canvas(modifier = modifier) {
+        val step = 26.dp.toPx()
+        var x = step
+        while (x < size.width) {
+            drawLine(gridColor, Offset(x, 0f), Offset(x, size.height), strokeWidth = 1f)
+            x += step
+        }
+        var y = step
+        while (y < size.height) {
+            drawLine(gridColor, Offset(0f, y), Offset(size.width, y), strokeWidth = 1f)
+            y += step
+        }
+
+        val topRadius = size.minDimension * 0.85f
+        drawCircle(
+            brush = Brush.radialGradient(
+                colors = listOf(topGlow, Color.Transparent),
+                center = Offset(size.width * 0.1f, 0f),
+                radius = topRadius
+            ),
+            radius = topRadius,
+            center = Offset(size.width * 0.1f, 0f)
+        )
+
+        val bottomRadius = size.minDimension * 0.7f
+        drawCircle(
+            brush = Brush.radialGradient(
+                colors = listOf(bottomGlow, Color.Transparent),
+                center = Offset(size.width, size.height),
+                radius = bottomRadius
+            ),
+            radius = bottomRadius,
+            center = Offset(size.width, size.height)
+        )
     }
 }

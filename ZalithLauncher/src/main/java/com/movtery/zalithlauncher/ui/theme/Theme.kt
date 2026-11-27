@@ -584,14 +584,14 @@ private val verdantDawnDark = darkColorScheme(
 )
 
 /**
- * 全局圆角：更大的连续圆角，配合液态玻璃呈现 iOS 27 的观感
+ * 全局圆角：中等圆角的硬朗几何风，取代旧版的大圆角玻璃观感
  */
 private val AppShapes = Shapes(
-    extraSmall = RoundedCornerShape(10.dp),
-    small = RoundedCornerShape(14.dp),
-    medium = RoundedCornerShape(20.dp),
-    large = RoundedCornerShape(26.dp),
-    extraLarge = RoundedCornerShape(34.dp)
+    extraSmall = RoundedCornerShape(6.dp),
+    small = RoundedCornerShape(10.dp),
+    medium = RoundedCornerShape(14.dp),
+    large = RoundedCornerShape(18.dp),
+    extraLarge = RoundedCornerShape(24.dp)
 )
 
 /**
