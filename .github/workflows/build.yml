@@ -93,15 +93,18 @@ jobs:
       - name: Build APK for ${{ matrix.arch }}
         run: |
           chmod +x gradlew
-          #Maven Central 偶尔返回 429，重试几次避免整条流水线失败
-          for attempt in 1 2 3; do
+          #Maven Central 偶尔返回 429，退避重试避免整条流水线失败
+          delay=60
+          for attempt in 1 2 3 4; do
             if ./gradlew ZalithLauncher:assemble${{ inputs.variant }} -Darch=${{ matrix.arch }}; then
               exit 0
             fi
-            echo "::warning::build attempt $attempt for ${{ matrix.arch }} failed, retrying in 45s"
-            sleep 45
+            if [ "$attempt" -eq 4 ]; then break; fi
+            echo "::warning::build attempt $attempt for ${{ matrix.arch }} failed, retrying in ${delay}s"
+            sleep "$delay"
+            delay=$((delay * 2))
           done
-          echo "::error::build for ${{ matrix.arch }} failed after 3 attempts"
+          echo "::error::build for ${{ matrix.arch }} failed after 4 attempts"
           exit 1
 
       - name: Verify Release APK for ${{ matrix.arch }}

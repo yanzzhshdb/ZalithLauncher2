@@ -12,6 +12,9 @@ buildscript {
     repositories {
         maven { url = uri("https://jitpack.io") }
         google()
+        maven("https://maven-central.storage-download.googleapis.com/maven2/") {
+            name = "MavenCentralMirror"
+        }
         mavenCentral()
     }
     dependencies {
