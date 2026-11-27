@@ -102,6 +102,7 @@ import com.movtery.zalithlauncher.ui.screens.NestedNavKey
 import com.movtery.zalithlauncher.ui.screens.NormalNavKey
 import com.movtery.zalithlauncher.ui.screens.TitledNavKey
 import com.movtery.zalithlauncher.ui.screens.content.elements.DisabledAlpha
+import com.movtery.zalithlauncher.ui.activities.showFirstRelease
 import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.CardPosition
 import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.EnumSettingsCard
 import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.IntSliderSettingsCard
@@ -110,6 +111,7 @@ import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.SettingsCa
 import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.SettingsCardColumn
 import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.SwitchSettingsCard
 import com.movtery.zalithlauncher.ui.systemLocaleStringResource
+import com.movtery.zalithlauncher.event.FirstReleaseEvent
 import com.movtery.zalithlauncher.ui.theme.ColorThemeType
 import com.movtery.zalithlauncher.ui.theme.cardColor
 import com.movtery.zalithlauncher.ui.theme.onCardColor
@@ -171,11 +173,14 @@ fun LauncherSettingsScreen(
                         summary = stringResource(R.string.settings_launcher_color_theme_summary),
                         entries = ColorThemeType.entries,
                         getRadioEnable = { enum ->
-                            enum != ColorThemeType.DYNAMIC || Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+                            (enum != ColorThemeType.DYNAMIC || Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) &&
+                                (enum != ColorThemeType.NORX_AURORA || FirstReleaseEvent.isUiAvailable())
                         },
                         getRadioText = { enum ->
                             when (enum) {
                                 ColorThemeType.DYNAMIC -> stringResource(R.string.theme_color_dynamic)
+                                ColorThemeType.NORX_PURPLE -> stringResource(R.string.theme_color_norx_purple)
+                                ColorThemeType.NORX_AURORA -> stringResource(R.string.theme_color_norx_aurora)
                                 ColorThemeType.EMBERMIRE -> stringResource(R.string.theme_color_embermire)
                                 ColorThemeType.VELVET_ROSE -> stringResource(R.string.theme_color_velvet_rose)
                                 ColorThemeType.MISTWAVE -> stringResource(R.string.theme_color_mistwave)
@@ -191,6 +196,29 @@ fun LauncherSettingsScreen(
                             if (enum == ColorThemeType.CUSTOM) customColorOperation = CustomColorOperation.Dialog
                         }
                     )
+
+                    if (FirstReleaseEvent.isUiAvailable()) {
+                        SettingsCard(
+                            modifier = Modifier.fillMaxWidth(),
+                            position = CardPosition.Middle,
+                            onClick = { showFirstRelease(context) }
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+                                verticalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.event_title),
+                                    style = MaterialTheme.typography.titleSmall
+                                )
+                                Text(
+                                    text = stringResource(R.string.event_settings_summary),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+                    }
 
                     ListSettingsCard(
                         modifier = Modifier.fillMaxWidth(),

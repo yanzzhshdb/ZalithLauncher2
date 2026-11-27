@@ -1640,10 +1640,10 @@
     <!-- What's new -->
     <string name="whats_new_title">Yang baru</string>
     <string name="whats_new_confirm">Oke</string>
-    <string name="whats_new_body">• Asisten AI bawaan (GPT-5 Nano via AxAPI): chat soal crash, mod, renderer, dan performa langsung dari launcher.
-• Crash langsung bisa dianalisis: tombol \"Analisis dengan AI\" di layar crash, AI membaca log terakhir plus daftar mod dan info instance kamu.
-• Perekam layar dan preset performa dari 1.5.0 tetap ada.
-• API key bisa diganti di Pengaturan → Asisten AI kalau key global sedang penuh.</string>
+    <string name="whats_new_body">• UI baru serba ungu, nyesuaiin logo NorxLauncher. Tema lama masih bisa dipilih di Pengaturan.
+• Event First Release: tema Norx Aurora + banner event cuma 6 hari. Main atau AFK 15 menit buat simpen permanen.
+• Banner event di home nampilin hitung mundur, progres, dan tombol klaim.
+• Asisten AI sekarang bisa bagikan jawaban, dan layar event nampilin total waktu main plus streak harian.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Mode Hemat Daya</string>
@@ -1786,5 +1786,51 @@
     <string name="ai_welcome_body">Tanya soal crash, mod bentrok, masalah renderer, atau performa. Kalau kamu buka dari layar crash, log-nya kubaca otomatis.</string>
     <string name="ai_context_info">Konteks: %1$s · %2$d mod</string>
     <string name="crash_analyze_ai">Analisis dengan AI</string>
+
+    <!-- First release event -->
+    <string name="theme_color_norx_purple">Norx Purple</string>
+    <string name="theme_color_norx_aurora">Norx Aurora (event)</string>
+    <string name="event_badge">FIRST RELEASE</string>
+    <string name="event_title">First Release</string>
+    <string name="event_subtitle">Perayaan NLauncher %1$s - tampilan ungu baru buat launcher kamu.</string>
+    <string name="event_status_permanent">Permanen punyamu. Makasih sudah main!</string>
+    <string name="event_status_limited">Event terbatas - cuma 6 hari</string>
+    <string name="event_countdown_title">Event berakhir dalam</string>
+    <string name="event_unit_day">hari</string>
+    <string name="event_unit_hour">jam</string>
+    <string name="event_unit_minute">mnt</string>
+    <string name="event_unit_second">dtk</string>
+    <string name="event_progress_title">Waktu main menuju unlock permanen</string>
+    <string name="event_progress_done">Target tercapai. Klaim unlock permanennya di bawah.</string>
+    <string name="event_progress_hint">Main atau AFK di dalam game selama 15 menit biar UI ini permanen.</string>
+    <string name="event_claim_button">Klaim unlock permanen</string>
+    <string name="event_permanent_title">Unlock permanen aktif</string>
+    <string name="event_permanent_body">Diklaim pada %1$s. Tema Aurora dan banner event tetap ada walau event sudah selesai.</string>
+    <string name="event_ended_title">Event sudah berakhir</string>
+    <string name="event_ended_body">Masa 6 hari sudah habis dan unlock belum diklaim, jadi Aurora terkunci. Tema Norx Purple tetap tersedia.</string>
+    <string name="event_ended_claimable">Kamu sudah mencapai target waktu main, jadi masih bisa klaim unlock permanen.</string>
+    <string name="event_rewards_title">Yang kamu dapat</string>
+    <string name="event_reward_theme">Tema Norx Aurora</string>
+    <string name="event_reward_theme_body">Palet ungu terang khusus event, versi terang dan gelap.</string>
+    <string name="event_reward_banner">Banner event di home</string>
+    <string name="event_reward_banner_body">Hitung mundur dan progres langsung di layar utama.</string>
+    <string name="event_reward_permanent">Unlock permanen</string>
+    <string name="event_reward_permanent_body">Capai 15 menit waktu main biar semuanya jadi permanen.</string>
+    <string name="event_apply_theme">Pakai tema Aurora</string>
+    <string name="event_ask_ai">Tanya AI</string>
+    <string name="event_theme_applied">Tema Aurora diterapkan</string>
+    <string name="event_aurora_applied">Tema Aurora sudah otomatis dipakai.</string>
+    <string name="event_footer">AFK dihitung. Jalankan instance apa saja dan biarkan 15 menit.</string>
+    <string name="event_banner_permanent">Permanen</string>
+    <string name="event_banner_time_left">Sisa %1$s</string>
+    <string name="event_banner_claim">Klaim unlock permanen</string>
+    <string name="event_banner_unlocked">Aurora permanen</string>
+    <string name="event_banner_progress">Progres %1$s / 15:00</string>
+    <string name="event_settings_summary">UI terbatas, cuma 6 hari. Main 15 menit biar permanen.</string>
+    <string name="ai_share_answer">Bagikan jawaban</string>
+    <string name="ai_nothing_to_share">Belum ada yang bisa dibagikan</string>
+    <string name="event_stat_total">total waktu main</string>
+    <string name="event_stat_streak">streak harian</string>
+    <string name="event_stat_streak_value">%1$d hari</string>
 </resources>
 

@@ -142,3 +142,20 @@
   `AiChatActivity` with the log path, the crash message and `versionName` (from
   `VMViewModel.gameVersionName`, set when a session is created). With
   `AiSettings.autoAnalyzeCrash` on, the analysis starts as soon as the chat opens.
+
+## Purple brand theme
+- The launcher now defaults to `ColorThemeType.NORX_PURPLE` (seed `0xFF7C3AED`), generated at runtime with
+  `customLight`/`customDark` + materialkolor, so no new `ColorTheme` fields are needed.
+- `NORX_AURORA` is the First Release event skin (seed `0xFF9B4DFF`). `Theme.kt` silently falls back to
+  `NORX_PURPLE` when the event is over and the unlock was never claimed, and the theme picker disables the
+  radio through `getRadioEnable`.
+
+## First Release event
+- `event/FirstReleaseEvent` keeps everything in MMKV: start timestamp, playtime baseline, unlocked flag and
+  claim time. The 6 day window starts on the first launch after install (`loadAllSettings` calls
+  `ensureStarted()`), and the permanent unlock needs 15 minutes of playtime measured as
+  `PlaytimeTracker.snapshot().totalMillis - baseline + pendingSessionMillis()` (AFK in game counts).
+- Claiming is allowed after the event ends as long as the goal was reached; only the exclusive UI locks.
+- UI: `ui/screens/event/FirstReleaseScreen` (countdown, live progress, claim, rewards, playtime stats) inside
+  `FirstReleaseActivity`, plus `ui/screens/content/home/FirstReleaseBanner` registered as the
+  `system_first_release` home card while the event is available.

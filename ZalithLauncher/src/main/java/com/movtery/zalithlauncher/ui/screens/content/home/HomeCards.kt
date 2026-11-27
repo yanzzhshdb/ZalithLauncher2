@@ -36,6 +36,7 @@ import com.movtery.cardgrid.model.CardLimits
 import com.movtery.cardgrid.model.CardType
 import com.movtery.zalithlauncher.BuildConfig
 import com.movtery.zalithlauncher.BuildKeys
+import com.movtery.zalithlauncher.event.FirstReleaseEvent
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.ui.components.BackgroundCard
 import com.movtery.zalithlauncher.ui.screens.content.home.server.ServerCardContent
@@ -97,10 +98,20 @@ object HomeCards {
 
     /** 系统卡片（不可变更） */
     fun systemCards(): List<SystemCard> = buildList {
+        if (FirstReleaseEvent.isUiAvailable()) {
+            add(firstReleaseCard())
+        }
         add(continuePlayingCard())
         if (BuildConfig.DEBUG) {
             add(debugWarningCard())
         }
+    }
+
+    /**
+     * First Release 活动横幅
+     */
+    private fun firstReleaseCard() = SystemCard(id = "system_first_release") {
+        FirstReleaseBanner()
     }
 
     /**

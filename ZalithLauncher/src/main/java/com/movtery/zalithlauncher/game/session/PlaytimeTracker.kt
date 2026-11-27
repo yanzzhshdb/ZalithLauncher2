@@ -120,6 +120,16 @@ object PlaytimeTracker {
         }
     }
 
+    /**
+     * 当前尚未结算的会话已经进行了多久，用于活动进度的实时展示
+     */
+    fun pendingSessionMillis(): Long {
+        val start = mmkv.getLong(KEY_PENDING_START, 0L)
+        if (start <= 0L) return 0L
+        val elapsed = System.currentTimeMillis() - start
+        return if (elapsed in 1..STALE_SESSION_MILLIS) elapsed else 0L
+    }
+
     fun snapshot(): Snapshot {
         val store = mmkv
         val names = store.allKeys()

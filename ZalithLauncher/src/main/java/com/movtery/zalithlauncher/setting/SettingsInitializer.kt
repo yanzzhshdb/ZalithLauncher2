@@ -20,6 +20,7 @@ package com.movtery.zalithlauncher.setting
 
 import android.content.Context
 import com.movtery.zalithlauncher.ai.AiSettings
+import com.movtery.zalithlauncher.event.FirstReleaseEvent
 import com.movtery.zalithlauncher.utils.device.Architecture
 import com.movtery.zalithlauncher.utils.platform.bytesToMB
 import com.movtery.zalithlauncher.utils.platform.getTotalMemory
@@ -47,6 +48,8 @@ fun loadAllSettings(context: Context, reloadAll: Boolean = false) {
         CommunitySettings.reloadAll()
         return
     }
+
+    FirstReleaseEvent.ensureStarted()
 
     if (GameSettings.ramAllocation.getValue() == null) {
         val ram = findBestRAMAllocation(context)

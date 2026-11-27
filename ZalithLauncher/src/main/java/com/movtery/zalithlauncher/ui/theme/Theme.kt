@@ -41,6 +41,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamicColorScheme
+import com.movtery.zalithlauncher.event.FirstReleaseEvent
 import com.movtery.zalithlauncher.setting.LauncherSettings
 import com.movtery.zalithlauncher.setting.enums.isLauncherInDarkTheme
 import com.movtery.zalithlauncher.ui.theme.components.activeMaskView
@@ -593,6 +594,18 @@ private val AppShapes = Shapes(
     extraLarge = RoundedCornerShape(34.dp)
 )
 
+/**
+ * 品牌紫，随 logo 配色
+ */
+private val norxPurpleLight = customLight(Color(0xFF7C3AED), PaletteStyle.TonalSpot)
+private val norxPurpleDark = customDark(Color(0xFF7C3AED), PaletteStyle.TonalSpot)
+
+/**
+ * First Release 活动限定配色，更亮的极光紫
+ */
+private val norxAuroraLight = customLight(Color(0xFF9B4DFF), PaletteStyle.TonalSpot)
+private val norxAuroraDark = customDark(Color(0xFFB07CFF), PaletteStyle.TonalSpot)
+
 private fun customLight(
     color: Color,
     style: PaletteStyle,
@@ -624,7 +637,15 @@ fun ZalithLauncherTheme(
     festivals: List<Festival> = emptyList(),
     content: @Composable () -> Unit
 ) {
-    val colorTheme = LauncherSettings.launcherColorTheme.state
+    val selectedColorTheme = LauncherSettings.launcherColorTheme.state
+    val colorTheme = if (
+        selectedColorTheme == ColorThemeType.NORX_AURORA && !FirstReleaseEvent.isUiAvailable()
+    ) {
+        //活动结束后未解锁时回退到品牌紫
+        ColorThemeType.NORX_PURPLE
+    } else {
+        selectedColorTheme
+    }
     val customColorInt = LauncherSettings.launcherCustomColor.state
     val customColor = Color(customColorInt)
     val customPaletteStyle = LauncherSettings.launcherCustomPaletteStyle.state
@@ -638,6 +659,8 @@ fun ZalithLauncherTheme(
             }
 
             darkTheme -> when (colorTheme) {
+                ColorThemeType.NORX_PURPLE -> norxPurpleDark
+                ColorThemeType.NORX_AURORA -> norxAuroraDark
                 ColorThemeType.EMBERMIRE -> embermireDark
                 ColorThemeType.VELVET_ROSE -> velvetRoseDark
                 ColorThemeType.MISTWAVE -> mistwaveDark
@@ -653,6 +676,8 @@ fun ZalithLauncherTheme(
             }
 
             else -> when (colorTheme) {
+                ColorThemeType.NORX_PURPLE -> norxPurpleLight
+                ColorThemeType.NORX_AURORA -> norxAuroraLight
                 ColorThemeType.EMBERMIRE -> embermireLight
                 ColorThemeType.VELVET_ROSE -> velvetRoseLight
                 ColorThemeType.MISTWAVE -> mistwaveLight

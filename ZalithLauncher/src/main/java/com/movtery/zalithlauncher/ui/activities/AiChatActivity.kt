@@ -21,6 +21,7 @@ package com.movtery.zalithlauncher.ui.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -81,7 +82,13 @@ class AiChatActivity : BaseAppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     containerColor = backgroundColor(),
                     contentColor = onBackgroundColor(),
-                    topBar = { ChatTopBar(busy = busy, onClose = { finish() }) }
+                    topBar = {
+                        ChatTopBar(
+                            busy = busy,
+                            onShare = { shareLastAnswer(this@AiChatActivity) },
+                            onClose = { finish() }
+                        )
+                    }
                 ) { innerPadding ->
                     Column(
                         modifier = Modifier
@@ -107,7 +114,7 @@ class AiChatActivity : BaseAppCompatActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ChatTopBar(busy: Boolean, onClose: () -> Unit) {
+private fun ChatTopBar(busy: Boolean, onShare: () -> Unit, onClose: () -> Unit) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainer,
@@ -129,6 +136,12 @@ private fun ChatTopBar(busy: Boolean, onClose: () -> Unit) {
             }
         },
         actions = {
+            IconButton(onClick = onShare) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_share_filled),
+                    contentDescription = stringResource(R.string.ai_share_answer)
+                )
+            }
             IconButton(
                 onClick = { if (!busy) AiChatSession.clear() },
                 enabled = !busy
@@ -140,6 +153,21 @@ private fun ChatTopBar(busy: Boolean, onClose: () -> Unit) {
             }
         }
     )
+}
+
+private fun shareLastAnswer(context: Context) {
+    val answer = AiChatSession.messages.value
+        .lastOrNull { it.role == com.movtery.zalithlauncher.ai.AiMessage.Role.ASSISTANT && !it.isError }
+        ?.text
+    if (answer.isNullOrBlank()) {
+        Toast.makeText(context, context.getString(R.string.ai_nothing_to_share), Toast.LENGTH_SHORT).show()
+        return
+    }
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, answer)
+    }
+    context.startActivity(Intent.createChooser(intent, context.getString(R.string.ai_share_answer)))
 }
 
 /**

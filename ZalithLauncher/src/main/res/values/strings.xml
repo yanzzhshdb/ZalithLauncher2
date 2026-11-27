@@ -3265,10 +3265,10 @@
     <!-- What's new -->
     <string name="whats_new_title">What\'s new</string>
     <string name="whats_new_confirm">Got it</string>
-    <string name="whats_new_body">• Asisten AI bawaan (GPT-5 Nano via AxAPI): chat soal crash, mod, renderer, dan performa langsung dari launcher.
-• Crash langsung bisa dianalisis: tombol \"Analisis dengan AI\" di layar crash, AI membaca log terakhir plus daftar mod dan info instance kamu.
-• Perekam layar dan preset performa dari 1.5.0 tetap ada.
-• API key bisa diganti di Pengaturan → Asisten AI kalau key global sedang penuh.</string>
+    <string name="whats_new_body">• UI baru serba ungu, nyesuaiin logo NorxLauncher. Tema lama masih bisa dipilih di Pengaturan.
+• Event First Release: tema Norx Aurora + banner event cuma 6 hari. Main atau AFK 15 menit buat simpen permanen.
+• Banner event di home nampilin hitung mundur, progres, dan tombol klaim.
+• Asisten AI sekarang bisa bagikan jawaban, dan layar event nampilin total waktu main plus streak harian.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Power saver mode</string>
@@ -3414,5 +3414,51 @@
     <string name="ai_welcome_body">Ask about crashes, mod conflicts, renderer problems or performance. If you open me from a crash screen, I will read the log automatically.</string>
     <string name="ai_context_info">Context: %1$s · %2$d mods</string>
     <string name="crash_analyze_ai">Analyze with AI</string>
+
+    <!-- First release event -->
+    <string name="theme_color_norx_purple">Norx Purple</string>
+    <string name="theme_color_norx_aurora">Norx Aurora (event)</string>
+    <string name="event_badge">FIRST RELEASE</string>
+    <string name="event_title">First Release</string>
+    <string name="event_subtitle">NLauncher %1$s celebration - a fresh purple look for the launcher.</string>
+    <string name="event_status_permanent">Yours forever. Thanks for playing!</string>
+    <string name="event_status_limited">Limited event - available for 6 days</string>
+    <string name="event_countdown_title">Event ends in</string>
+    <string name="event_unit_day">days</string>
+    <string name="event_unit_hour">hours</string>
+    <string name="event_unit_minute">min</string>
+    <string name="event_unit_second">sec</string>
+    <string name="event_progress_title">Playtime toward permanent unlock</string>
+    <string name="event_progress_done">Goal reached. Claim your permanent unlock below.</string>
+    <string name="event_progress_hint">Play or stay AFK in game for 15 minutes to keep this UI permanently.</string>
+    <string name="event_claim_button">Claim permanent unlock</string>
+    <string name="event_permanent_title">Permanent unlock active</string>
+    <string name="event_permanent_body">Claimed on %1$s. Aurora theme and the event banner stay with you even after the event ends.</string>
+    <string name="event_ended_title">Event has ended</string>
+    <string name="event_ended_body">The 6 day window is over and the unlock was not claimed, so Aurora is locked. The Norx Purple theme stays available.</string>
+    <string name="event_ended_claimable">You reached the playtime goal, so you can still claim the permanent unlock.</string>
+    <string name="event_rewards_title">What you get</string>
+    <string name="event_reward_theme">Norx Aurora theme</string>
+    <string name="event_reward_theme_body">Vivid purple palette exclusive to the event, in light and dark.</string>
+    <string name="event_reward_banner">Event banner on home</string>
+    <string name="event_reward_banner_body">Live countdown and progress right on the home screen.</string>
+    <string name="event_reward_permanent">Permanent unlock</string>
+    <string name="event_reward_permanent_body">Reach 15 minutes of playtime to keep everything forever.</string>
+    <string name="event_apply_theme">Apply Aurora theme</string>
+    <string name="event_ask_ai">Ask AI</string>
+    <string name="event_theme_applied">Aurora theme applied</string>
+    <string name="event_aurora_applied">Aurora theme has been applied for you.</string>
+    <string name="event_footer">AFK counts. Launch any instance and leave it running for 15 minutes.</string>
+    <string name="event_banner_permanent">Permanent</string>
+    <string name="event_banner_time_left">%1$s left</string>
+    <string name="event_banner_claim">Claim your permanent unlock</string>
+    <string name="event_banner_unlocked">Aurora unlocked forever</string>
+    <string name="event_banner_progress">Progress %1$s / 15:00</string>
+    <string name="event_settings_summary">Limited UI, 6 days only. Play 15 minutes to keep it forever.</string>
+    <string name="ai_share_answer">Share answer</string>
+    <string name="ai_nothing_to_share">Nothing to share yet</string>
+    <string name="event_stat_total">total playtime</string>
+    <string name="event_stat_streak">day streak</string>
+    <string name="event_stat_streak_value">%1$d days</string>
 </resources>
 
