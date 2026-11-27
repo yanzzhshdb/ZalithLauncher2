@@ -125,10 +125,14 @@
   before the version has been launched once.
 
 ## Built-in AI assistant
-- `ai/AxAiClient` talks to `https://api.axai.my.id/api/ai/gpt-5-nano`. The endpoint is GET only:
-  `prompt` and `apikey` go in the query string, so keep prompts short (`MAX_PROMPT_CHARS`, 2400)
+- `ai/AiAssistant` holds the maintenance switch (`MAINTENANCE = true`). While it is on, no AI request is
+  sent and every AI entry point shows the maintenance UI.
+- `ai/AxAiClient` has an empty `PROXY_URL` on purpose: the API key must live on a server-side proxy, never in
+  the APK, `BuildConfig`, `gradle.properties` or the settings UI. Prompts go in the query string of the
+  proxy call, so keep them short (`MAX_PROMPT_CHARS`, 2400). Only the exception type is logged, never the URL.
   or the gateway answers 414. The response is `{status, msg, result:{model, text}}`.
-- `AiSettings` stores the AxAPI key (defaults to the shared `AxAPI` key), the context/log toggles
+- `AiSettings` stores only the context/log/auto-crash toggles and the target version. It keeps no key:
+  `clearLegacySecrets()` wipes the old `aiApiKey` entry on startup.
   and the instance used for context; `SettingsInitializer` reloads it with the other registries.
 - `ai/AiContextBuilder` turns local state into prompt text: instance summary (version, loader,
   renderer, RAM, resolution, mod list capped at 20 names) plus a keyword-filtered log digest

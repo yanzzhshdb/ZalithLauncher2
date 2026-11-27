@@ -32,13 +32,14 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 /**
- * AxAPI 的 GPT-5 Nano 客户端
+ * AI 客户端
  *
- * 该接口只支持 GET：提示词通过 `prompt` 参数传入，密钥通过 `apikey` 参数传入。
+ * 密钥只允许保存在服务端代理里，客户端不内置、不读取、也不记录任何密钥。
+ * 代理地址为空时代表后端还没准备好，调用会直接返回维护提示。
  */
 object AxAiClient {
     private const val TAG = "AxAiClient"
-    private const val BASE_URL = "https://api.axai.my.id/api/ai/gpt-5-nano"
+    private const val PROXY_URL = ""
 
     /**
      * 提示词上限。接口走 URL 查询参数，太长会被网关拒绝（一般限制 8KB 请求行）
@@ -50,6 +51,7 @@ object AxAiClient {
     sealed interface AiResult {
         data class Success(val text: String, val model: String) : AiResult
         data class Failure(val message: String) : AiResult
+        data object Maintenance : AiResult
     }
 
     private data class ApiResponse(
@@ -64,23 +66,24 @@ object AxAiClient {
         val text: String?
     )
 
-    suspend fun ask(prompt: String, apiKey: String = AiSettings.effectiveApiKey()): AiResult =
-        withContext(Dispatchers.IO) {
-            val trimmed = prompt.trim().take(MAX_PROMPT_CHARS)
-            if (trimmed.isBlank()) return@withContext AiResult.Failure("Pertanyaan masih kosong")
+    suspend fun ask(prompt: String): AiResult = withContext(Dispatchers.IO) {
+        if (!AiAssistant.isAvailable() || PROXY_URL.isBlank()) return@withContext AiResult.Maintenance
 
-            runCatching {
-                val body = GLOBAL_CLIENT.get(BASE_URL) {
-                    parameter("prompt", trimmed)
-                    parameter("apikey", apiKey)
-                    timeout { requestTimeoutMillis = 120_000 }
-                }.bodyAsText()
-                parse(body)
-            }.getOrElse { throwable ->
-                Logger.error(TAG, "Failed to ask AI", throwable)
-                AiResult.Failure(describeFailure(throwable))
-            }
+        val trimmed = prompt.trim().take(MAX_PROMPT_CHARS)
+        if (trimmed.isBlank()) return@withContext AiResult.Failure("Pertanyaan masih kosong")
+
+        runCatching {
+            val body = GLOBAL_CLIENT.get(PROXY_URL) {
+                parameter("prompt", trimmed)
+                timeout { requestTimeoutMillis = 120_000 }
+            }.bodyAsText()
+            parse(body)
+        }.getOrElse { throwable ->
+            //只记录异常类型，避免把提示词或地址写进日志
+            Logger.error(TAG, "Failed to ask AI: ${throwable.javaClass.simpleName}")
+            AiResult.Failure(describeFailure(throwable))
         }
+    }
 
     private fun parse(body: String): AiResult {
         val parsed = runCatching { gson.fromJson(body, ApiResponse::class.java) }.getOrNull()
@@ -98,7 +101,7 @@ object AxAiClient {
 
     private fun describeFailure(throwable: Throwable): String = when {
         throwable is ClientRequestException -> when (throwable.response.status.value) {
-            401, 403 -> "API key AI tidak valid atau limit habis. Cek di Pengaturan → Asisten AI."
+            401, 403 -> "Server AI menolak permintaan, coba lagi nanti"
             404 -> "Endpoint AI tidak ditemukan"
             414 -> "Pertanyaan terlalu panjang, coba lebih singkat"
             else -> "Server AI menolak permintaan (HTTP ${throwable.response.status.value})"

@@ -56,6 +56,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.movtery.zalithlauncher.R
+import com.movtery.zalithlauncher.ai.AiAssistant
 import com.movtery.zalithlauncher.ai.AiChatSession
 import com.movtery.zalithlauncher.ai.AiContextBuilder
 import com.movtery.zalithlauncher.ai.AiMessage
@@ -141,6 +142,10 @@ fun AiChatPanel(
             contentPadding = PaddingValues(all = 12.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            if (!AiAssistant.isAvailable()) {
+                item { MaintenanceCard() }
+            }
+
             if (messages.isEmpty()) {
                 item {
                     WelcomeCard(
@@ -180,6 +185,18 @@ fun AiChatPanel(
                 .padding(horizontal = 12.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
+            if (!AiAssistant.isAvailable()) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp),
+                    text = stringResource(R.string.ai_maintenance_short),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                return@Column
+            }
+
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 FilterChip(
                     selected = includeContext,
@@ -251,6 +268,30 @@ fun AiChatPanel(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun MaintenanceCard() {
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.secondaryContainer
+    ) {
+        Column(
+            modifier = Modifier.padding(all = 14.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.ai_maintenance_title),
+                style = MaterialTheme.typography.titleSmall
+            )
+            Text(
+                text = stringResource(R.string.ai_maintenance_body),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         }
     }
 }

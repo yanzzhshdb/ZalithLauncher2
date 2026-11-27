@@ -55,6 +55,13 @@ object AiChatSession {
         _messages.value = emptyList()
     }
 
+    /** AI 维护中时，直接在会话里给出提示，不发任何请求 */
+    private fun maintenanceNotice() {
+        _messages.update {
+            it + AiMessage(AiMessage.Role.SYSTEM, AiAssistant.MAINTENANCE_MESSAGE)
+        }
+    }
+
     fun addSystem(text: String) {
         _messages.update { it + AiMessage(AiMessage.Role.SYSTEM, text) }
     }
@@ -70,6 +77,10 @@ object AiChatSession {
     ) {
         val prompt = userText.trim()
         if (prompt.isEmpty() || _busy.value) return
+        if (!AiAssistant.isAvailable()) {
+            maintenanceNotice()
+            return
+        }
 
         _messages.update { it + AiMessage(AiMessage.Role.USER, prompt) }
         _busy.value = true
@@ -91,6 +102,7 @@ object AiChatSession {
                     _messages.update {
                         it + AiMessage(AiMessage.Role.ASSISTANT, result.message, isError = true)
                     }
+                AxAiClient.AiResult.Maintenance -> maintenanceNotice()
             }
         } finally {
             _busy.value = false
@@ -106,6 +118,10 @@ object AiChatSession {
         crashMessage: String? = null
     ) {
         if (_busy.value) return
+        if (!AiAssistant.isAvailable()) {
+            maintenanceNotice()
+            return
+        }
 
         _messages.update {
             it + AiMessage(
@@ -128,6 +144,7 @@ object AiChatSession {
                     _messages.update {
                         it + AiMessage(AiMessage.Role.ASSISTANT, result.message, isError = true)
                     }
+                AxAiClient.AiResult.Maintenance -> maintenanceNotice()
             }
         } finally {
             _busy.value = false

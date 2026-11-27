@@ -81,7 +81,7 @@ private val AuroraSky = Color(0xFF38BDF8)
 fun FirstReleaseScreen(
     modifier: Modifier = Modifier,
     onApplyAurora: () -> Unit = {},
-    onAskAi: () -> Unit = {}
+    onAskAi: (() -> Unit)? = null
 ) {
     val state by produceState(initialValue = FirstReleaseEvent.state()) {
         while (true) {
@@ -172,11 +172,13 @@ fun FirstReleaseScreen(
             ) {
                 Text(text = stringResource(R.string.event_apply_theme))
             }
-            OutlinedButton(
-                modifier = Modifier.weight(1f),
-                onClick = onAskAi
-            ) {
-                Text(text = stringResource(R.string.event_ask_ai))
+            if (onAskAi != null) {
+                OutlinedButton(
+                    modifier = Modifier.weight(1f),
+                    onClick = onAskAi
+                ) {
+                    Text(text = stringResource(R.string.event_ask_ai))
+                }
             }
         }
 

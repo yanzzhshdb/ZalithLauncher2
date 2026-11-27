@@ -19,15 +19,14 @@
 package com.movtery.zalithlauncher.ai
 
 import com.movtery.zalithlauncher.setting.SettingsRegistry
+import com.movtery.zalithlauncher.setting.launcherMMKV
 
 /**
  * 内置 AI 助手的设置
  */
 object AiSettings : SettingsRegistry() {
-    /** AxAPI 提供的全局密钥，用户可以换成自己的 */
-    const val DEFAULT_API_KEY = "AxAPI"
-
-    val apiKey = stringSetting("aiApiKey", DEFAULT_API_KEY)
+    /** 旧版本把共享密钥存在这里，升级时清掉，客户端不再保留任何密钥 */
+    private const val LEGACY_API_KEY = "aiApiKey"
 
     /** 发送问题时附带当前实例的版本信息与模组列表 */
     val includeMods = boolSetting("aiIncludeMods", true)
@@ -41,5 +40,7 @@ object AiSettings : SettingsRegistry() {
     /** 分析崩溃时默认使用的版本名，空表示自动选择最近游玩的版本 */
     val targetVersion = stringSetting("aiTargetVersion", "")
 
-    fun effectiveApiKey(): String = apiKey.getValue().ifBlank { DEFAULT_API_KEY }
+    fun clearLegacySecrets() {
+        launcherMMKV().remove(LEGACY_API_KEY)
+    }
 }

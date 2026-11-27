@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.movtery.zalithlauncher.R
+import com.movtery.zalithlauncher.ai.AiAssistant
 import com.movtery.zalithlauncher.event.FirstReleaseEvent
 import com.movtery.zalithlauncher.setting.LauncherSettings
 import com.movtery.zalithlauncher.ui.base.BaseAppCompatActivity
@@ -86,11 +87,15 @@ class FirstReleaseActivity : BaseAppCompatActivity() {
                                 ).show()
                                 finish()
                             },
-                            onAskAi = {
-                                showAiChat(
-                                    context = this@FirstReleaseActivity,
-                                    initialPrompt = "Apa itu event First Release NLauncher dan apa saja hadiahnya?"
-                                )
+                            onAskAi = if (AiAssistant.isAvailable()) {
+                                {
+                                    showAiChat(
+                                        context = this@FirstReleaseActivity,
+                                        initialPrompt = "Apa itu event First Release NLauncher dan apa saja hadiahnya?"
+                                    )
+                                }
+                            } else {
+                                null
                             }
                         )
                     }

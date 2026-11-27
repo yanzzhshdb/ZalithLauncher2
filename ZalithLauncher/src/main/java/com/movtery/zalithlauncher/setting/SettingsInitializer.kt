@@ -50,6 +50,7 @@ fun loadAllSettings(context: Context, reloadAll: Boolean = false) {
     }
 
     FirstReleaseEvent.ensureStarted()
+    AiSettings.clearLegacySecrets()
 
     if (GameSettings.ramAllocation.getValue() == null) {
         val ram = findBestRAMAllocation(context)

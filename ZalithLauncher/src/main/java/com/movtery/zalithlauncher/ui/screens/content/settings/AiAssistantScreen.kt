@@ -19,6 +19,7 @@
 package com.movtery.zalithlauncher.ui.screens.content.settings
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -26,15 +27,18 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.movtery.zalithlauncher.R
+import com.movtery.zalithlauncher.ai.AiAssistant
 import com.movtery.zalithlauncher.ai.AiContextBuilder
 import com.movtery.zalithlauncher.ai.AiSettings
 import com.movtery.zalithlauncher.game.version.installed.VersionsManager
@@ -51,10 +55,11 @@ import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.ListSettin
 import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.SettingsCard
 import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.SettingsCardColumn
 import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.SwitchSettingsCard
-import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.TextInputSettingsCard
 
 /**
- * AI 助手设置页面：密钥、上下文开关与快捷入口
+ * AI 助手设置页面
+ *
+ * 维护期间只展示状态说明，不提供密钥输入，也不会向服务端发送任何内容。
  */
 @Composable
 fun AiAssistantScreen(
@@ -75,6 +80,77 @@ fun AiAssistantScreen(
                 .fillMaxWidth(),
             isVisible = isVisible
         ) {
+            if (!AiAssistant.isAvailable()) {
+                AnimatedItem { ctx ->
+                    SettingsCard(
+                        modifier = Modifier.animated(ctx),
+                        position = CardPosition.Single
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(all = 16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.ai_maintenance_title),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                            Surface(
+                                color = MaterialTheme.colorScheme.secondaryContainer,
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                Text(
+                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                                    text = stringResource(R.string.ai_maintenance_chip),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                                )
+                            }
+                            Text(
+                                text = stringResource(R.string.ai_maintenance_body),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                }
+
+                AnimatedItem { ctx ->
+                    SettingsCard(
+                        modifier = Modifier.animated(ctx),
+                        position = CardPosition.Single
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(all = 16.dp),
+                            verticalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.ai_maintenance_paused_title),
+                                style = MaterialTheme.typography.titleSmall
+                            )
+                            PausedFeature(stringResource(R.string.ai_maintenance_paused_chat))
+                            PausedFeature(stringResource(R.string.ai_maintenance_paused_crash))
+                            PausedFeature(stringResource(R.string.ai_maintenance_paused_context))
+                        }
+                    }
+                }
+
+                AnimatedItem { ctx ->
+                    SettingsCard(
+                        modifier = Modifier.animated(ctx),
+                        position = CardPosition.Single
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(all = 16.dp),
+                            text = stringResource(R.string.ai_maintenance_privacy),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+                return@AnimatedColumn
+            }
+
             AnimatedItem { ctx ->
                 SettingsCard(
                     modifier = Modifier.animated(ctx),
@@ -93,13 +169,6 @@ fun AiAssistantScreen(
                 SettingsCardColumn(
                     modifier = Modifier.animated(ctx)
                 ) {
-                    TextInputSettingsCard(
-                        unit = AiSettings.apiKey,
-                        title = stringResource(R.string.ai_api_key_title),
-                        summary = stringResource(R.string.ai_api_key_summary),
-                        position = CardPosition.Single
-                    )
-
                     SwitchSettingsCard(
                         checked = AiSettings.includeMods.state,
                         onCheckedChange = { AiSettings.includeMods.save(it) },
@@ -179,5 +248,24 @@ fun AiAssistantScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun PausedFeature(text: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(
+            text = "•",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }

@@ -3265,10 +3265,10 @@
     <!-- What's new -->
     <string name="whats_new_title">What\'s new</string>
     <string name="whats_new_confirm">Got it</string>
-    <string name="whats_new_body">• UI baru serba ungu, nyesuaiin logo NorxLauncher. Tema lama masih bisa dipilih di Pengaturan.
-• Event First Release: tema Norx Aurora + banner event cuma 6 hari. Main atau AFK 15 menit buat simpen permanen.
-• Banner event di home nampilin hitung mundur, progres, dan tombol klaim.
-• Asisten AI sekarang bisa bagikan jawaban, dan layar event nampilin total waktu main plus streak harian.</string>
+    <string name="whats_new_body">• UI sekarang ungu biar nyambung sama logo NorxLauncher.
+• Event First Release: tema Aurora + banner cuma 6 hari, main atau AFK 15 menit buat permanen.
+• Asisten AI dimatikan sementara (maintenance). Nggak ada kunci API di dalam aplikasi.
+• Build release sekarang tersedia semua ABI: all, arm, arm64, x86, x86_64.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Power saver mode</string>
@@ -3389,8 +3389,6 @@
     <string name="settings_tab_ai">AI Assistant</string>
     <string name="ai_assistant_title">AI Assistant</string>
     <string name="ai_settings_intro">Ask about crashes, mods, FPS and settings. The AI can see the instance info and your mod list, so its answers match what you actually installed.</string>
-    <string name="ai_api_key_title">AxAPI key</string>
-    <string name="ai_api_key_summary">Global key is filled in by default. Paste your own key if the shared one is busy.</string>
     <string name="ai_setting_context_title">Send instance and mod list</string>
     <string name="ai_setting_context_summary">The AI gets version, loader, renderer, RAM and installed mods so it can name the culprit.</string>
     <string name="ai_setting_log_title">Send log excerpt</string>
@@ -3460,5 +3458,14 @@
     <string name="event_stat_total">total playtime</string>
     <string name="event_stat_streak">day streak</string>
     <string name="event_stat_streak_value">%1$d days</string>
+    <string name="ai_maintenance_title">AI assistant is in maintenance</string>
+    <string name="ai_maintenance_chip">MAINTENANCE</string>
+    <string name="ai_maintenance_body">The AI assistant is temporarily unavailable while we move it to a new backend. Chat, crash analysis and automatic analysis are paused until it is back.</string>
+    <string name="ai_maintenance_short">AI is in maintenance. Chat is disabled for now.</string>
+    <string name="ai_maintenance_paused_title">Paused for now</string>
+    <string name="ai_maintenance_paused_chat">Chat and quick questions</string>
+    <string name="ai_maintenance_paused_crash">Crash log analysis</string>
+    <string name="ai_maintenance_paused_context">Automatic analysis after a crash</string>
+    <string name="ai_maintenance_privacy">No API key is stored in this app. When the assistant returns, requests go through our own server so no secret ever ships inside the APK.</string>
 </resources>
 

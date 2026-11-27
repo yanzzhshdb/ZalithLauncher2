@@ -1640,10 +1640,10 @@
     <!-- What's new -->
     <string name="whats_new_title">Yang baru</string>
     <string name="whats_new_confirm">Oke</string>
-    <string name="whats_new_body">• UI baru serba ungu, nyesuaiin logo NorxLauncher. Tema lama masih bisa dipilih di Pengaturan.
-• Event First Release: tema Norx Aurora + banner event cuma 6 hari. Main atau AFK 15 menit buat simpen permanen.
-• Banner event di home nampilin hitung mundur, progres, dan tombol klaim.
-• Asisten AI sekarang bisa bagikan jawaban, dan layar event nampilin total waktu main plus streak harian.</string>
+    <string name="whats_new_body">• UI sekarang ungu biar nyambung sama logo NorxLauncher.
+• Event First Release: tema Aurora + banner cuma 6 hari, main atau AFK 15 menit buat permanen.
+• Asisten AI dimatikan sementara (maintenance). Nggak ada kunci API di dalam aplikasi.
+• Build release sekarang tersedia semua ABI: all, arm, arm64, x86, x86_64.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Mode Hemat Daya</string>
@@ -1761,8 +1761,6 @@
     <string name="settings_tab_ai">Asisten AI</string>
     <string name="ai_assistant_title">Asisten AI</string>
     <string name="ai_settings_intro">Tanya soal crash, mod, FPS, atau setting. AI bisa lihat info instance dan daftar mod kamu, jadi jawabannya nyambung sama yang kamu pasang.</string>
-    <string name="ai_api_key_title">API key AxAPI</string>
-    <string name="ai_api_key_summary">Key global sudah otomatis terisi. Ganti pakai key sendiri kalau key bersama sedang penuh.</string>
     <string name="ai_setting_context_title">Kirim info instance &amp; daftar mod</string>
     <string name="ai_setting_context_summary">AI dapat versi, loader, renderer, RAM, dan mod terpasang supaya bisa nunjuk biang keroknya.</string>
     <string name="ai_setting_log_title">Kirim potongan log</string>
@@ -1832,5 +1830,14 @@
     <string name="event_stat_total">total waktu main</string>
     <string name="event_stat_streak">streak harian</string>
     <string name="event_stat_streak_value">%1$d hari</string>
+    <string name="ai_maintenance_title">Asisten AI sedang maintenance</string>
+    <string name="ai_maintenance_chip">MAINTENANCE</string>
+    <string name="ai_maintenance_body">Asisten AI sementara tidak bisa dipakai karena backend-nya sedang dipindah. Chat, analisis crash, dan analisis otomatis dimatikan sampai siap lagi.</string>
+    <string name="ai_maintenance_short">AI sedang maintenance. Chat dimatikan sementara.</string>
+    <string name="ai_maintenance_paused_title">Sementara dimatikan</string>
+    <string name="ai_maintenance_paused_chat">Chat dan pertanyaan cepat</string>
+    <string name="ai_maintenance_paused_crash">Analisis log crash</string>
+    <string name="ai_maintenance_paused_context">Analisis otomatis setelah crash</string>
+    <string name="ai_maintenance_privacy">Tidak ada kunci API yang disimpan di aplikasi ini. Nanti saat asisten aktif lagi, permintaan lewat server sendiri supaya tidak ada rahasia yang ikut masuk ke APK.</string>
 </resources>
 

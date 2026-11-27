@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.movtery.zalithlauncher.R
+import com.movtery.zalithlauncher.ai.AiAssistant
 import com.movtery.zalithlauncher.ai.AiSettings
 import com.movtery.zalithlauncher.context.COPY_LABEL_LINK
 import com.movtery.zalithlauncher.path.PathManager
@@ -168,14 +169,18 @@ class ErrorActivity : BaseAppCompatActivity() {
                             ProcessPhoenix.triggerRebirth(this@ErrorActivity)
                         },
                         onExitClick = { finish() },
-                        onAnalyzeAiClick = {
-                            showAiChat(
-                                context = this@ErrorActivity,
-                                versionName = errorMessage.versionName,
-                                crashLogPath = logFile.absolutePath,
-                                crashMessage = errorMessage.messageBody,
-                                autoAnalyze = AiSettings.autoAnalyzeCrash.getValue()
-                            )
+                        onAnalyzeAiClick = if (AiAssistant.isAvailable()) {
+                            {
+                                showAiChat(
+                                    context = this@ErrorActivity,
+                                    versionName = errorMessage.versionName,
+                                    crashLogPath = logFile.absolutePath,
+                                    crashMessage = errorMessage.messageBody,
+                                    autoAnalyze = AiSettings.autoAnalyzeCrash.getValue()
+                                )
+                            }
+                        } else {
+                            null
                         },
                         onOrientationChanged = {
                             this@ErrorActivity.requestedOrientation = it
