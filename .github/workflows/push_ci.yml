@@ -28,3 +28,29 @@ jobs:
       OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
       LEGAL_DOCS_TOKEN: ${{ secrets.LEGAL_DOCS_TOKEN }}
+
+  Report:
+    needs: [Build, Release]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Summarize release artifacts
+        run: |
+          run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID#artifacts"
+          {
+            echo "### Release artifacts"
+            echo
+            echo "Every ABI is built as its own artifact, plus the universal \"all\" build:"
+            echo
+            echo "| Artifact | ABI |"
+            echo "| --- | --- |"
+            echo "| release apk (all) | universal (all ABIs in one APK) |"
+            echo "| release apk (arm) | armeabi-v7a |"
+            echo "| release apk (arm64) | arm64-v8a |"
+            echo "| release apk (x86) | x86 |"
+            echo "| release apk (x86_64) | x86_64 |"
+            echo
+            echo "[Download artifacts]($run_url)"
+            echo
+            echo "For a single download with all five APKs, run the **Release CI** workflow (workflow_dispatch)."
+          } >> "$GITHUB_STEP_SUMMARY"
