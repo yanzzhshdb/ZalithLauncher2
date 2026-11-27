@@ -123,3 +123,22 @@
 - `PerformanceSettingsScreen` (Settings → Performance) picks the target version from
   `VersionsManager.versions`; it warns when `options.txt` is missing, which only happens
   before the version has been launched once.
+
+## Built-in AI assistant
+- `ai/AxAiClient` talks to `https://api.axai.my.id/api/ai/gpt-5-nano`. The endpoint is GET only:
+  `prompt` and `apikey` go in the query string, so keep prompts short (`MAX_PROMPT_CHARS`, 2400)
+  or the gateway answers 414. The response is `{status, msg, result:{model, text}}`.
+- `AiSettings` stores the AxAPI key (defaults to the shared `AxAPI` key), the context/log toggles
+  and the instance used for context; `SettingsInitializer` reloads it with the other registries.
+- `ai/AiContextBuilder` turns local state into prompt text: instance summary (version, loader,
+  renderer, RAM, resolution, mod list capped at 20 names) plus a keyword-filtered log digest
+  (900 chars). Never send whole logs - the API is URL based.
+- `AiChatSession` is a singleton holding the conversation and `busy` state so the chat survives
+  navigation; it builds prompts and calls the client on `Dispatchers.IO`.
+- UI: `ui/screens/main/ai/AiChatPanel` (bubbles, chips, input) is embedded by
+  `AiChatActivity` (standalone chat, also used by the crash flow) and by
+  `AiAssistantScreen` (Settings → AI Assistant, key + toggles + shortcuts).
+- Crash flow: `ErrorActivity` passes `onAnalyzeAiClick` into `ErrorScreen`; the button opens
+  `AiChatActivity` with the log path, the crash message and `versionName` (from
+  `VMViewModel.gameVersionName`, set when a session is created). With
+  `AiSettings.autoAnalyzeCrash` on, the analysis starts as soon as the chat opens.

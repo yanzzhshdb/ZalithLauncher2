@@ -64,6 +64,7 @@ import com.movtery.zalithlauncher.ui.screens.content.settings.JavaManageScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.LauncherSettingsScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.MusicScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.PerformanceSettingsScreen
+import com.movtery.zalithlauncher.ui.screens.content.settings.AiAssistantScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.PlaytimeScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.RecordingsScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.RendererSettingsScreen
@@ -120,6 +121,7 @@ private val settingItems = listOf(
     CategoryItem(NormalNavKey.Settings.Launcher, { CategoryIcon(R.drawable.ic_setting_launcher, R.string.settings_tab_launcher) }, R.string.settings_tab_launcher),
     CategoryItem(NormalNavKey.Settings.Music, { CategoryIcon(R.drawable.ic_music_note_filled, R.string.settings_tab_music) }, R.string.settings_tab_music),
     CategoryItem(NormalNavKey.Settings.Performance, { CategoryIcon(R.drawable.ic_arrow_cool_down, R.string.settings_tab_performance) }, R.string.settings_tab_performance),
+    CategoryItem(NormalNavKey.Settings.Ai, { CategoryIcon(R.drawable.ic_lightbulb, R.string.settings_tab_ai) }, R.string.settings_tab_ai),
     CategoryItem(NormalNavKey.Settings.Recordings, { CategoryIcon(R.drawable.ic_movie_filled, R.string.settings_tab_recordings) }, R.string.settings_tab_recordings),
     CategoryItem(NormalNavKey.Settings.Playtime, { CategoryIcon(R.drawable.ic_schedule_outlined, R.string.settings_tab_playtime) }, R.string.settings_tab_playtime),
     CategoryItem(NormalNavKey.Settings.JavaManager, { CategoryIcon(R.drawable.ic_java, R.string.settings_tab_java_manage) }, R.string.settings_tab_java_manage, division = true),
@@ -238,6 +240,9 @@ private fun NavigationUI(
                 }
                 entry<NormalNavKey.Settings.Performance> {
                     PerformanceSettingsScreen(key, settingsScreenKey, mainScreenKey)
+                }
+                entry<NormalNavKey.Settings.Ai> {
+                    AiAssistantScreen(key, settingsScreenKey, mainScreenKey)
                 }
                 entry<NormalNavKey.Settings.Recordings> {
                     RecordingsScreen(key, settingsScreenKey, mainScreenKey)

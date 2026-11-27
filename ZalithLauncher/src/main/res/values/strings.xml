@@ -3265,10 +3265,10 @@
     <!-- What's new -->
     <string name="whats_new_title">What\'s new</string>
     <string name="whats_new_confirm">Got it</string>
-    <string name="whats_new_body">• Perekam layar bawaan: rekam gameplay langsung dari menu dalam game, lengkap dengan pilihan kualitas, FPS, dan mikrofon.
-• Preset performa: satu ketuk mengatur options.txt plus pengaturan renderer supaya game tidak lag tapi grafik tetap bagus.
-• Rekaman bisa langsung dibuka atau dibagikan dari notifikasi.
-• Fitur 1.4.0 (waktu bermain, statistik, branding NORX) tetap ada.</string>
+    <string name="whats_new_body">• Asisten AI bawaan (GPT-5 Nano via AxAPI): chat soal crash, mod, renderer, dan performa langsung dari launcher.
+• Crash langsung bisa dianalisis: tombol \"Analisis dengan AI\" di layar crash, AI membaca log terakhir plus daftar mod dan info instance kamu.
+• Perekam layar dan preset performa dari 1.5.0 tetap ada.
+• API key bisa diganti di Pengaturan → Asisten AI kalau key global sedang penuh.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Power saver mode</string>
@@ -3384,5 +3384,35 @@
     <string name="record_action_play">Play</string>
     <string name="record_play_failed">No video player available</string>
     <string name="record_share_failed">Could not share the recording</string>
+
+    <!-- AI assistant -->
+    <string name="settings_tab_ai">AI Assistant</string>
+    <string name="ai_assistant_title">AI Assistant</string>
+    <string name="ai_settings_intro">Ask about crashes, mods, FPS and settings. The AI can see the instance info and your mod list, so its answers match what you actually installed.</string>
+    <string name="ai_api_key_title">AxAPI key</string>
+    <string name="ai_api_key_summary">Global key is filled in by default. Paste your own key if the shared one is busy.</string>
+    <string name="ai_setting_context_title">Send instance and mod list</string>
+    <string name="ai_setting_context_summary">The AI gets version, loader, renderer, RAM and installed mods so it can name the culprit.</string>
+    <string name="ai_setting_log_title">Send log excerpt</string>
+    <string name="ai_setting_log_summary">Crash analysis includes the important lines of the latest log. Turn off to keep the log local.</string>
+    <string name="ai_setting_auto_crash_title">Analyze immediately from the crash screen</string>
+    <string name="ai_setting_auto_crash_summary">When you open the AI from a crash screen, the analysis starts right away without extra taps.</string>
+    <string name="ai_setting_version_title">Instance used for context</string>
+    <string name="ai_setting_version_summary">Which instance\'s info and mods are attached to your questions.</string>
+    <string name="ai_setting_version_auto">Automatic (last played)</string>
+    <string name="ai_open_chat">Open chat</string>
+    <string name="ai_analyze_crash">Analyze last crash</string>
+    <string name="ai_thinking">AI is thinking…</string>
+    <string name="ai_context_chip">Include mods &amp; instance</string>
+    <string name="ai_chip_crash">Analyze crash</string>
+    <string name="ai_chip_fps">My game is lagging, how do I raise FPS without ruining the graphics?</string>
+    <string name="ai_chip_fps_title">Fix lag</string>
+    <string name="ai_input_hint">Ask anything about your game…</string>
+    <string name="ai_send">Send</string>
+    <string name="ai_clear_chat">Clear chat</string>
+    <string name="ai_welcome_title">Hi, I\'m the NLauncher assistant</string>
+    <string name="ai_welcome_body">Ask about crashes, mod conflicts, renderer problems or performance. If you open me from a crash screen, I will read the log automatically.</string>
+    <string name="ai_context_info">Context: %1$s · %2$d mods</string>
+    <string name="crash_analyze_ai">Analyze with AI</string>
 </resources>
 

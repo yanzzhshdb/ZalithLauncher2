@@ -77,6 +77,7 @@ fun ErrorScreen(
     onUploadClick: () -> Unit = {},
     onRestartClick: () -> Unit = {},
     onExitClick: () -> Unit = {},
+    onAnalyzeAiClick: (() -> Unit)? = null,
     onOrientationChanged: (Int) -> Unit = {},
     body: @Composable ColumnScope.() -> Unit
 ) {
@@ -94,6 +95,7 @@ fun ErrorScreen(
             onUploadClick = onUploadClick,
             onRestartClick = onRestartClick,
             onExitClick = onExitClick,
+            onAnalyzeAiClick = onAnalyzeAiClick,
             onRotateClick = {
                 onOrientationChanged(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
             },
@@ -109,6 +111,7 @@ fun ErrorScreen(
             onUploadClick = onUploadClick,
             onRestartClick = onRestartClick,
             onExitClick = onExitClick,
+            onAnalyzeAiClick = onAnalyzeAiClick,
             onRotateClick = {
                 onOrientationChanged(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE)
             },
@@ -130,6 +133,7 @@ private fun ErrorScreenLandscape(
     onUploadClick: () -> Unit,
     onRestartClick: () -> Unit,
     onExitClick: () -> Unit,
+    onAnalyzeAiClick: (() -> Unit)?,
     onRotateClick: () -> Unit,
     body: @Composable ColumnScope.() -> Unit
 ) {
@@ -192,7 +196,8 @@ private fun ErrorScreenLandscape(
                 onShareLogsClick = onShareLogsClick,
                 onUploadClick = onUploadClick,
                 onRestartClick = onRestartClick,
-                onExitClick = onExitClick
+                onExitClick = onExitClick,
+                onAnalyzeAiClick = onAnalyzeAiClick
             )
         }
     }
@@ -211,6 +216,7 @@ private fun ErrorScreenPortrait(
     onUploadClick: () -> Unit,
     onRestartClick: () -> Unit,
     onExitClick: () -> Unit,
+    onAnalyzeAiClick: (() -> Unit)?,
     onRotateClick: () -> Unit,
     body: @Composable ColumnScope.() -> Unit
 ) {
@@ -254,6 +260,17 @@ private fun ErrorScreenPortrait(
                             expanded = showMenu,
                             onDismissRequest = { showMenu = false }
                         ) {
+                            if (onAnalyzeAiClick != null) {
+                                DropdownMenuItem(
+                                    text = {
+                                        MarqueeText(text = stringResource(R.string.crash_analyze_ai))
+                                    },
+                                    onClick = {
+                                        showMenu = false
+                                        onAnalyzeAiClick()
+                                    }
+                                )
+                            }
                             if (canUpload) {
                                 DropdownMenuItem(
                                     text = {
@@ -369,7 +386,8 @@ private fun ActionLayout(
     onShareLogsClick: () -> Unit = {},
     onUploadClick: () -> Unit = {},
     onRestartClick: () -> Unit = {},
-    onExitClick: () -> Unit = {}
+    onExitClick: () -> Unit = {},
+    onAnalyzeAiClick: (() -> Unit)? = null
 ) {
     Column(modifier = modifier) {
         Column(
@@ -388,6 +406,14 @@ private fun ActionLayout(
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp, Alignment.Bottom)
         ) {
+            if (onAnalyzeAiClick != null) {
+                ScalingActionButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = onAnalyzeAiClick
+                ) {
+                    MarqueeText(text = stringResource(R.string.crash_analyze_ai))
+                }
+            }
             if (canUpload) {
                 ScalingActionButton(
                     modifier = Modifier.fillMaxWidth(),

@@ -19,6 +19,7 @@
 package com.movtery.zalithlauncher.setting
 
 import android.content.Context
+import com.movtery.zalithlauncher.ai.AiSettings
 import com.movtery.zalithlauncher.utils.device.Architecture
 import com.movtery.zalithlauncher.utils.platform.bytesToMB
 import com.movtery.zalithlauncher.utils.platform.getTotalMemory
@@ -41,6 +42,7 @@ fun loadAllSettings(context: Context, reloadAll: Boolean = false) {
         MusicSettings.reloadAll()
         RecorderSettings.reloadAll()
         PerformanceSettings.reloadAll()
+        AiSettings.reloadAll()
         GlassSettings.reloadAll()
         CommunitySettings.reloadAll()
         return

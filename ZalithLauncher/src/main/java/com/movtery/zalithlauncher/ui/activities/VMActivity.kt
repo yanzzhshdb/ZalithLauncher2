@@ -221,6 +221,9 @@ class VMViewModel : ViewModel() {
         _onConfigurationChanged.update { value }
     }
 
+    /** 本次启动的版本名，崩溃时提供给 AI 分析 */
+    var gameVersionName: String? = null
+
     var sender: CharacterSenderStrategy = LWJGLCharSender
         private set
 
@@ -261,6 +264,7 @@ class VMViewModel : ViewModel() {
 
                 //登记本次游玩会话，退出时结算时长
                 PlaytimeTracker.start(config.version.getVersionName(), config.version.getGameHome())
+                gameVersionName = config.version.getVersionName()
 
                 val launcher = GameLauncher(
                     activity = activity,
@@ -714,7 +718,8 @@ class VMActivity : BaseAppCompatActivity(), SurfaceTextureListener {
                 this@VMActivity,
                 exitCode,
                 isSignal,
-                session.launcher.getLogFile().absolutePath
+                session.launcher.getLogFile().absolutePath,
+                versionName = vmViewModel.gameVersionName
             )
         } else {
             //重启启动器

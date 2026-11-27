@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import com.jakewharton.processphoenix.ProcessPhoenix
 import com.movtery.zalithlauncher.R
+import com.movtery.zalithlauncher.ai.AiSettings
 import com.movtery.zalithlauncher.context.COPY_LABEL_LINK
 import com.movtery.zalithlauncher.path.PathManager
 import com.movtery.zalithlauncher.ui.base.BaseAppCompatActivity
@@ -61,13 +62,14 @@ fun showExitMessage(
     context: Context,
     code: Int,
     isSignal: Boolean,
-    logPath: String
+    logPath: String,
+    versionName: String? = null
 ) {
     val intent = Intent(context, ErrorActivity::class.java).apply {
         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         putExtra(BUNDLE_EXIT_TYPE, EXIT_JVM)
-        putExtra(BUNDLE_JVM_CRASH, JvmCrash(code, isSignal, logPath))
+        putExtra(BUNDLE_JVM_CRASH, JvmCrash(code, isSignal, logPath, versionName))
     }
     context.startActivity(intent)
 }
@@ -76,7 +78,8 @@ fun showExitMessage(
 private data class JvmCrash(
     val code: Int,
     val isSignal: Boolean,
-    val logPath: String
+    val logPath: String,
+    val versionName: String? = null
 ): Parcelable
 
 @AndroidEntryPoint
@@ -108,7 +111,8 @@ class ErrorActivity : BaseAppCompatActivity() {
                     logFile = File(jvmCrash.logPath).also { file ->
                         //检查日志文件是否适合上传
                         viewModel.check(file)
-                    }
+                    },
+                    versionName = jvmCrash.versionName
                 )
             }
             else -> {
@@ -164,6 +168,15 @@ class ErrorActivity : BaseAppCompatActivity() {
                             ProcessPhoenix.triggerRebirth(this@ErrorActivity)
                         },
                         onExitClick = { finish() },
+                        onAnalyzeAiClick = {
+                            showAiChat(
+                                context = this@ErrorActivity,
+                                versionName = errorMessage.versionName,
+                                crashLogPath = logFile.absolutePath,
+                                crashMessage = errorMessage.messageBody,
+                                autoAnalyze = AiSettings.autoAnalyzeCrash.getValue()
+                            )
+                        },
                         onOrientationChanged = {
                             this@ErrorActivity.requestedOrientation = it
                         },
@@ -186,7 +199,8 @@ class ErrorActivity : BaseAppCompatActivity() {
         val message: String,
         val messageBody: String,
         val crashType: CrashType,
-        val logFile: File
+        val logFile: File,
+        val versionName: String? = null
     )
 }
 
