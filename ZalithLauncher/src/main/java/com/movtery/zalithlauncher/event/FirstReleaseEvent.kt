@@ -42,6 +42,7 @@ object FirstReleaseEvent {
     private const val KEY_BASELINE = "event.firstRelease.baseline"
     private const val KEY_UNLOCKED = "event.firstRelease.unlocked"
     private const val KEY_CLAIMED_AT = "event.firstRelease.claimedAt"
+    private const val KEY_GOAL_REACHED = "event.firstRelease.goalReached"
 
     private val mmkv get() = launcherMMKV()
 
@@ -82,6 +83,10 @@ object FirstReleaseEvent {
 
         val played = (PlaytimeTracker.snapshot().totalMillis - baseline).coerceAtLeast(0L) +
             PlaytimeTracker.pendingSessionMillis()
+        if (played >= GOAL_MILLIS && !store.getBoolean(KEY_GOAL_REACHED, false)) {
+            store.putBoolean(KEY_GOAL_REACHED, true)
+            store.apply()
+        }
 
         return State(
             startedAt = startedAt,
@@ -93,13 +98,24 @@ object FirstReleaseEvent {
         )
     }
 
-    /** 活动是否仍在进行 */
-    fun isActive(): Boolean = !state().expired
+    /**
+     * 活动是否仍在进行
+     *
+     * 只读取时间戳，不统计游玩时长，可以在组合期间频繁调用
+     */
+    fun isActive(): Boolean {
+        val startedAt = mmkv.getLong(KEY_STARTED_AT, 0L)
+        if (startedAt <= 0L) return true
+        return System.currentTimeMillis() < startedAt + DURATION_MILLIS
+    }
 
     /**
      * 专属 UI 是否可用：活动期间可用，或已经永久解锁
      */
-    fun isUiAvailable(): Boolean = state().let { it.permanent || !it.expired }
+    fun isUiAvailable(): Boolean = isPermanent() || isGoalReached() || isActive()
+
+    /** 是否已经达成过游玩时长目标（即使还没领取） */
+    fun isGoalReached(): Boolean = mmkv.getBoolean(KEY_GOAL_REACHED, false)
 
     fun isPermanent(): Boolean = mmkv.getBoolean(KEY_UNLOCKED, false)
 

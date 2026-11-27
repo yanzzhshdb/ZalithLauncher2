@@ -65,7 +65,7 @@ fun FirstReleaseBanner(modifier: Modifier = Modifier) {
     val state by produceState(initialValue = FirstReleaseEvent.state()) {
         while (true) {
             value = FirstReleaseEvent.state()
-            delay(5_000L)
+            delay(10_000L)
         }
     }
 
