@@ -66,6 +66,7 @@ import com.movtery.zalithlauncher.ui.screens.content.settings.MusicScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.PerformanceSettingsScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.AiAssistantScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.PlaytimeScreen
+import com.movtery.zalithlauncher.ui.screens.content.settings.ToolsScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.RecordingsScreen
 import com.movtery.zalithlauncher.ui.screens.content.settings.RendererSettingsScreen
 import com.movtery.zalithlauncher.ui.screens.navigateOnce
