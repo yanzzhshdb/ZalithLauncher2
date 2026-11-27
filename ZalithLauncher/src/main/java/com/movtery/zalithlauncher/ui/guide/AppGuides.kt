@@ -29,6 +29,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -59,6 +61,10 @@ import com.movtery.guide.rememberGuide
 import com.movtery.zalithlauncher.BuildKeys
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.ui.guide.overlays.MainVersionGuideOverlay
+import com.movtery.zalithlauncher.ui.theme.NorxAccentStripe
+import com.movtery.zalithlauncher.ui.theme.NorxTokens
+import com.movtery.zalithlauncher.ui.theme.norxCardBorder
+import com.movtery.zalithlauncher.ui.theme.norxPanelColor
 import com.movtery.zalithlauncher.utils.logging.Logger
 import com.movtery.zalithlauncher.viewmodel.EventViewModel
 
@@ -299,7 +305,6 @@ fun EventViewModel.sendStartGuideOnce(group: GuideKeys.Keys) {
  */
 @Composable
 private fun GuideStepBar(
-    fraction: Float,
     stepIndex: Int,
     stepCount: Int,
 ) {
@@ -316,7 +321,7 @@ private fun GuideStepBar(
                     stepCount
                 ),
                 style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
             Text(
@@ -326,20 +331,22 @@ private fun GuideStepBar(
             )
         }
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(4.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.surfaceVariant)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(fraction)
-                    .height(4.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.primary)
-            )
+            repeat(stepCount) { index ->
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(3.dp)
+                        .clip(RoundedCornerShape(2.dp))
+                        .background(
+                            if (index <= stepIndex) MaterialTheme.colorScheme.primary
+                            else MaterialTheme.colorScheme.surfaceVariant
+                        )
+                )
+            }
         }
     }
 }
@@ -357,20 +364,19 @@ private fun GuideCard(
 ) {
     Surface(
         modifier = modifier.widthIn(max = 360.dp),
-        shape = RoundedCornerShape(24.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        shape = RoundedCornerShape(NorxTokens.CardCorner),
+        color = norxPanelColor(elevated = true),
         contentColor = MaterialTheme.colorScheme.onSurface,
-        tonalElevation = 3.dp,
-        shadowElevation = 10.dp,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+        border = norxCardBorder()
     ) {
+        Row(modifier = Modifier.height(IntrinsicSize.Min)) {
+        NorxAccentStripe(modifier = Modifier.fillMaxHeight())
         Column(
-            modifier = Modifier.padding(all = 20.dp),
+            modifier = Modifier.padding(all = 18.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             if (scope.stepCount > 1) {
                 GuideStepBar(
-                    fraction = ((scope.stepIndex + 1).toFloat() / scope.stepCount).coerceIn(0f, 1f),
                     stepIndex = scope.stepIndex,
                     stepCount = scope.stepCount
                 )
@@ -396,9 +402,10 @@ private fun GuideCard(
 
             if (note != null) {
                 Surface(
-                    shape = RoundedCornerShape(14.dp),
-                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.7f),
-                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                    shape = RoundedCornerShape(10.dp),
+                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.55f),
+                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    border = norxCardBorder()
                 ) {
                     Text(
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
@@ -408,6 +415,7 @@ private fun GuideCard(
                     )
                 }
             }
+        }
         }
     }
 }
@@ -427,10 +435,9 @@ fun NextTipLabel(tip: NextTip) {
 
     Surface(
         modifier = Modifier.widthIn(max = 360.dp),
-        shape = CircleShape,
+        shape = RoundedCornerShape(NorxTokens.ChipCorner),
         color = MaterialTheme.colorScheme.primary,
-        contentColor = MaterialTheme.colorScheme.onPrimary,
-        shadowElevation = 6.dp
+        contentColor = MaterialTheme.colorScheme.onPrimary
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 14.dp, vertical = 9.dp),

@@ -58,6 +58,10 @@ import com.movtery.zalithlauncher.ui.components.ScalingIconButton
 import com.movtery.zalithlauncher.ui.screens.content.elements.VersionIconImage
 import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.CardPosition
 import com.movtery.zalithlauncher.ui.screens.content.settings.layouts.rememberSettingsCardShape
+import com.movtery.zalithlauncher.ui.theme.NorxAccentStripe
+import com.movtery.zalithlauncher.ui.theme.NorxTokens
+import com.movtery.zalithlauncher.ui.theme.norxCardBorder
+import com.movtery.zalithlauncher.ui.theme.norxPanelColor
 import kotlin.math.roundToInt
 
 @Composable
@@ -186,12 +190,13 @@ private fun CalloutLabel(
 ) {
     Surface(
         modifier = Modifier.widthIn(max = 320.dp),
-        shape = RoundedCornerShape(18.dp),
-        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        shape = RoundedCornerShape(NorxTokens.CardCorner),
+        color = norxPanelColor(elevated = true),
         contentColor = MaterialTheme.colorScheme.onSurface,
-        tonalElevation = 3.dp,
-        shadowElevation = 8.dp
+        border = norxCardBorder()
     ) {
+        Row(modifier = Modifier.height(IntrinsicSize.Min)) {
+        NorxAccentStripe(modifier = Modifier.fillMaxHeight())
         Column(
             modifier = Modifier.padding(14.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp)
@@ -212,6 +217,7 @@ private fun CalloutLabel(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
+        }
         }
     }
 }
