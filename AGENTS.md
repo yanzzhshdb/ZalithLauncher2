@@ -186,3 +186,16 @@
 - No API key ships in the client: `AiSettings` has no key field, `clearLegacySecrets()` wipes the old
   `aiApiKey` MMKV entry, `AxAiClient.PROXY_URL` is empty, and only the exception type is logged. When the
   assistant comes back, the key must stay on a server-side proxy.
+
+## Norx Tools (2.0.0)
+- New settings page `ui/screens/content/settings/ToolsScreen.kt`, key `NormalNavKey.Settings.Tools`,
+  strings prefixed `tools_` (English in `values/`, Indonesian in `values-in/`).
+- Logic lives in `tools/` next to `com.movtery.zalithlauncher`: `ToolsStorage` (size/clear helpers),
+  `InstanceTools` (instance sizes, health check, duplicate mod ids, big files), `LogTools` (log list and
+  retention cleanup), `RamTuner` (RAM/JVM recommendation + apply to global settings or `VersionConfig`),
+  `InstanceNotes` (MMKV per-instance note), `SettingsBackup` (SAF json export/import of `FILE_SETTINGS`),
+  `ReportBundler` (zip of device info + launcher logs + instance logs, shared via the existing FileProvider).
+- Everything runs offline; the report zip stays in `PathManager.DIR_CACHE` and is shared through
+  `cache-path` in `provider_paths.xml`.
+- Bumping `launcher_version_code` in `ZalithLauncher/gradle.properties` re-triggers `WhatsNewDialog`;
+  keep `whats_new_body` updated in both `values/` and `values-in/`.
