@@ -60,10 +60,10 @@ object AiContextBuilder {
         if (version == null) return "Tidak ada instance terpasang yang bisa dibaca."
 
         val info = version.getVersionInfo()
-        val loader = info.primaryLoader?.let { "${it.loader.name} ${it.version}" } ?: "Vanilla"
+        val loader = info?.primaryLoader?.let { "${it.loader.name} ${it.version}" } ?: "Vanilla"
         val builder = StringBuilder()
         builder.appendLine("Instance: ${version.getVersionName()}")
-        builder.appendLine("Versi Minecraft: ${info.minecraftVersion}")
+        builder.appendLine("Versi Minecraft: ${info?.minecraftVersion ?: "tidak diketahui"}")
         builder.appendLine("Loader: $loader")
         builder.appendLine("Renderer: ${version.getRenderer()}")
         builder.appendLine("RAM dialokasikan: ${version.getRamAllocation()} MB")

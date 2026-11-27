@@ -19,8 +19,6 @@
 package com.movtery.zalithlauncher.ai
 
 import com.movtery.zalithlauncher.setting.SettingsRegistry
-import com.movtery.zalithlauncher.setting.boolSetting
-import com.movtery.zalithlauncher.setting.stringSetting
 
 /**
  * 内置 AI 助手的设置
