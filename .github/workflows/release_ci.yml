@@ -1,9 +1,15 @@
-name: Android CI
+name: Release CI
 
 on:
   release:
     types:
       - published
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Attach the APKs to this tag (leave empty to only upload artifacts)"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -13,19 +19,18 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       variant: Release
-    secrets:
-      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-      STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-      OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
-      CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
-      LEGAL_DOCS_TOKEN: ${{ secrets.LEGAL_DOCS_TOKEN }}
+      archs: '["all", "arm", "arm64", "x86", "x86_64"]'
+    secrets: inherit
 
-  Upload-to-Release:
+  Bundle:
     needs: Build
     runs-on: ubuntu-latest
     if: success()
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
       - name: Download Files
         uses: actions/download-artifact@v8
         with:
@@ -33,14 +38,31 @@ jobs:
 
       - name: Organize Artifacts
         run: |
-          mkdir -p ./apks
+          set -euo pipefail
 
+          version=$(sed -n 's/^launcher_version_name=//p' ZalithLauncher/gradle.properties | tr -d '\r' | head -1)
+          echo "Launcher version: $version"
+
+          mkdir -p ./apks ./mappings
           find ./artifacts -name "*.apk" -type f -exec cp {} ./apks/ \;
+          ls -l ./apks
+
+          #每个 ABI 都必须产出 APK，否则直接失败，避免发布残缺的版本
+          for abi in armeabi-v7a arm64-v8a x86 x86_64; do
+            if ! ls ./apks/*-"$abi".apk >/dev/null 2>&1; then
+              echo "::error::missing release APK for $abi"
+              exit 1
+            fi
+          done
+
+          universal=$(find ./apks -maxdepth 1 -name "*.apk" ! -name "*-armeabi-v7a.apk" ! -name "*-arm64-v8a.apk" ! -name "*-x86.apk" ! -name "*-x86_64.apk")
+          if [ -z "$universal" ]; then
+            echo "::error::missing universal release APK"
+            exit 1
+          fi
 
           echo "Found $(ls ./apks/ | wc -l) APK file(s)"
 
-          mkdir -p ./mappings
-          version="${GITHUB_REF_NAME#v}"
           for dir in ./artifacts/mapping*; do
             [ -d "$dir" ] || continue
             arch="${dir##*mapping \(}"
@@ -51,13 +73,10 @@ jobs:
               arm64) abi="arm64-v8a" ;;
               *) abi="$arch" ;;
             esac
-            cp "$dir/mapping.txt" "./mappings/ZalithLauncher-mapping-${version}${abi:+-$abi}.txt"
+            cp "$dir/mapping.txt" "./mappings/NorxLauncher-mapping-${version}${abi:+-$abi}.txt"
           done
 
           echo "Found $(ls ./mappings/ | wc -l) mapping file(s)"
-
-      - name: Checkout
-        uses: actions/checkout@v6
 
       - name: Verify legal documents in release APKs
         run: |
@@ -74,10 +93,18 @@ jobs:
           done < ZalithLauncher/legal-docs.sha256
           exit $fail
 
+      - name: Upload APK bundle
+        uses: actions/upload-artifact@v7
+        with:
+          name: release apk (all abis)
+          path: ./apks/*.apk
+          if-no-files-found: error
+
       - name: Upload To Release
+        if: inputs.tag != '' || github.event.release.tag_name != ''
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: ${{ github.event.release.tag_name }}
+          tag_name: ${{ inputs.tag || github.event.release.tag_name }}
           files: |
             ./apks/*.apk
             ./mappings/*.txt

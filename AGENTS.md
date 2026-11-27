@@ -159,3 +159,13 @@
 - UI: `ui/screens/event/FirstReleaseScreen` (countdown, live progress, claim, rewards, playtime stats) inside
   `FirstReleaseActivity`, plus `ui/screens/content/home/FirstReleaseBanner` registered as the
   `system_first_release` home card while the event is available.
+
+## Release artifacts (all ABIs)
+- `build.yml` builds one ABI per matrix job with `-Darch=<arch>`; the "all" job is the universal APK
+  (`NorxLauncher-<version>.apk`), the others are ABI splits (`NorxLauncher-<version>-<abi>.apk`).
+- Uploads are strict now (`if-no-files-found: error`, no `continue-on-error`) and a `Verify Release APK`
+  step fails the job when the split APK is missing or still contains foreign `lib/<abi>` entries.
+- `Release CI` (`release_ci.yml`) runs on `release: published` and on `workflow_dispatch` (optional `tag`
+  input). Its `Bundle` job re-checks that universal + armeabi-v7a + arm64-v8a + x86 + x86_64 APKs all exist,
+  uploads them as the single artifact `release apk (all abis)`, and attaches them to the release when a tag
+  is given.
