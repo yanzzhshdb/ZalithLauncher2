@@ -20,6 +20,8 @@ package com.movtery.zalithlauncher.ui.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -72,9 +74,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.movtery.zalithlauncher.ui.screens.content.elements.DisabledAlpha
-import com.movtery.zalithlauncher.ui.theme.glass.GlassLayer
-import com.movtery.zalithlauncher.ui.theme.glass.liquidGlass
-import com.movtery.zalithlauncher.ui.theme.glass.rememberGlassSpec
+import com.movtery.zalithlauncher.ui.theme.itemColor
+import com.movtery.zalithlauncher.ui.theme.norxHairlineColor
 import kotlinx.coroutines.launch
 
 @Composable
@@ -227,11 +228,8 @@ fun BaseIconTextButton(
 ) {
     Row(
         modifier = modifier
-            .liquidGlass(
-                shape = shape,
-                spec = rememberGlassSpec(GlassLayer.Thin),
-                shadow = false
-            )
+            .background(color = itemColor(), shape = shape)
+            .border(width = 1.dp, color = norxHairlineColor(), shape = shape)
             .combinedClickable(enabled = enabled, onClick = onClick, onLongClick = onLongClick)
             .padding(PaddingValues(horizontal = 10.dp, vertical = 6.dp))
             .alpha(if (enabled) 1f else DisabledAlpha),

@@ -43,6 +43,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -58,9 +59,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.movtery.zalithlauncher.R
 import com.movtery.zalithlauncher.music.MusicPlayer
-import com.movtery.zalithlauncher.ui.theme.glass.GlassLayer
-import com.movtery.zalithlauncher.ui.theme.glass.LiquidGlassSurface
-import com.movtery.zalithlauncher.ui.theme.glass.rememberGlassSpec
+import com.movtery.zalithlauncher.ui.theme.norxCardBorder
+import com.movtery.zalithlauncher.ui.theme.norxPanelColor
+import com.movtery.zalithlauncher.ui.theme.onCardColor
 
 /**
  * 悬浮迷你播放器：有歌曲时显示在屏幕底部，点击信息区域可跳转到音乐页面
@@ -88,12 +89,16 @@ fun MiniMusicPlayer(
         exit = fadeOut(animationSpec = tween(150)) +
             slideOutVertically(animationSpec = tween(180), targetOffsetY = { it / 2 })
     ) {
-        LiquidGlassSurface(
+        Surface(
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(26.dp),
-            spec = rememberGlassSpec(GlassLayer.Regular),
-            contentPadding = PaddingValues(start = 14.dp, end = 6.dp, top = 6.dp, bottom = 6.dp)
+            shape = RoundedCornerShape(16.dp),
+            color = norxPanelColor(elevated = true).copy(alpha = 0.97f),
+            contentColor = onCardColor(),
+            border = norxCardBorder()
         ) {
+            Column(
+                modifier = Modifier.padding(start = 14.dp, end = 6.dp, top = 6.dp, bottom = 6.dp)
+            ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -173,6 +178,7 @@ fun MiniMusicPlayer(
                             .background(MaterialTheme.colorScheme.primary)
                     )
                 }
+            }
             }
         }
     }
