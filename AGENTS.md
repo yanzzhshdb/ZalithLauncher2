@@ -173,3 +173,16 @@
   input). Its `Bundle` job re-checks that universal + armeabi-v7a + arm64-v8a + x86 + x86_64 APKs all exist,
   uploads them as the single artifact `release apk (all abis)`, and attaches them to the release when a tag
   is given.
+
+## Dependency resolution in CI
+- `settings.gradle.kts` and the root `build.gradle.kts` list
+  `https://maven-central.storage-download.googleapis.com/maven2/` (Google's official Maven Central mirror)
+  before `mavenCentral()`, because Central regularly answers HTTP 429 to GitHub runners. `build.yml` also
+  retries `assemble<Variant>` four times with exponential backoff for the same reason.
+
+## AI assistant is in maintenance (1.7.1)
+- `AiAssistant.MAINTENANCE = true` gates every AI entry point: the settings page shows a maintenance card,
+  the chat panel hides its input, and the crash screen / event screen hide their AI buttons.
+- No API key ships in the client: `AiSettings` has no key field, `clearLegacySecrets()` wipes the old
+  `aiApiKey` MMKV entry, `AxAiClient.PROXY_URL` is empty, and only the exception type is logged. When the
+  assistant comes back, the key must stay on a server-side proxy.
