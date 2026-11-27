@@ -124,6 +124,7 @@ private val settingItems = listOf(
     CategoryItem(NormalNavKey.Settings.Ai, { CategoryIcon(R.drawable.ic_lightbulb, R.string.settings_tab_ai) }, R.string.settings_tab_ai),
     CategoryItem(NormalNavKey.Settings.Recordings, { CategoryIcon(R.drawable.ic_movie_filled, R.string.settings_tab_recordings) }, R.string.settings_tab_recordings),
     CategoryItem(NormalNavKey.Settings.Playtime, { CategoryIcon(R.drawable.ic_schedule_outlined, R.string.settings_tab_playtime) }, R.string.settings_tab_playtime),
+    CategoryItem(NormalNavKey.Settings.Tools, { CategoryIcon(R.drawable.ic_build_outlined, R.string.settings_tab_tools) }, R.string.settings_tab_tools),
     CategoryItem(NormalNavKey.Settings.JavaManager, { CategoryIcon(R.drawable.ic_java, R.string.settings_tab_java_manage) }, R.string.settings_tab_java_manage, division = true),
     CategoryItem(NormalNavKey.Settings.ControlManager, { CategoryIcon(R.drawable.ic_videogame_asset_outlined, R.string.settings_tab_control_manage) }, R.string.settings_tab_control_manage),
     CategoryItem(NormalNavKey.Settings.AboutInfo, { CategoryIcon(R.drawable.ic_info_outlined, R.string.settings_tab_info_about) }, R.string.settings_tab_info_about, division = true)
@@ -249,6 +250,9 @@ private fun NavigationUI(
                 }
                 entry<NormalNavKey.Settings.Playtime> {
                     PlaytimeScreen(key, settingsScreenKey, mainScreenKey)
+                }
+                entry<NormalNavKey.Settings.Tools> {
+                    ToolsScreen(key, settingsScreenKey, mainScreenKey)
                 }
                 entry<NormalNavKey.Settings.AboutInfo> {
                     AboutInfoScreen(

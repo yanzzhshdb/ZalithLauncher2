@@ -1640,10 +1640,12 @@
     <!-- What's new -->
     <string name="whats_new_title">Yang baru</string>
     <string name="whats_new_confirm">Oke</string>
-    <string name="whats_new_body">• UI sekarang ungu biar nyambung sama logo NorxLauncher.
-• Event First Release: tema Aurora + banner cuma 6 hari, main atau AFK 15 menit buat permanen.
-• Asisten AI dimatikan sementara (maintenance). Nggak ada kunci API di dalam aplikasi.
-• Build release sekarang tersedia semua ABI: all, arm, arm64, x86, x86_64.</string>
+    <string name="whats_new_body">• NorxLauncher 2.0: halaman baru Norx Tools di Pengaturan, isinya 10 alat yang beneran kepake.
+• Bersihkan penyimpanan, lihat pemakaian per instance, temukan file besar, dan rapikan log lama.
+• Auto-tune RAM dan JVM sesuai perangkat, bisa langsung ke global atau ke semua instance.
+• Cek kesehatan instance, detektor mod duplikat, catatan per instance.
+• Backup/impor setelan launcher dan paket laporan siap kirim ke support.
+• Asisten AI tetap maintenance dan tidak ada kunci API di dalam aplikasi.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Mode Hemat Daya</string>
@@ -1839,5 +1841,90 @@
     <string name="ai_maintenance_paused_crash">Analisis log crash</string>
     <string name="ai_maintenance_paused_context">Analisis otomatis setelah crash</string>
     <string name="ai_maintenance_privacy">Tidak ada kunci API yang disimpan di aplikasi ini. Nanti saat asisten aktif lagi, permintaan lewat server sendiri supaya tidak ada rahasia yang ikut masuk ke APK.</string>
+
+    <string name="settings_tab_tools">Norx Tools</string>
+    <string name="tools_summary_title">Ringkasan perangkat</string>
+    <string name="tools_summary_hint">Semua alat di sini bekerja offline dan tidak pernah mengunggah data kamu.</string>
+    <string name="tools_summary_ram">RAM perangkat</string>
+    <string name="tools_summary_ram_value">%1$d MB</string>
+    <string name="tools_summary_storage">Ruang kosong</string>
+    <string name="tools_summary_storage_value">%1$s dari %2$s</string>
+    <string name="tools_summary_instances">Instance</string>
+    <string name="tools_summary_mods">Mod terpasang</string>
+    <string name="tools_summary_count">%1$d</string>
+    <string name="tools_ram_title">Auto-tune RAM dan JVM</string>
+    <string name="tools_ram_summary">Menghitung saran ukuran heap dari RAM perangkat dan jumlah mod, lalu menerapkan argumen G1GC.</string>
+    <string name="tools_ram_recommend">Rekomendasi</string>
+    <string name="tools_ram_recommend_value">%1$d MB (batas %2$d MB)</string>
+    <string name="tools_ram_args">Argumen JVM: %1$s</string>
+    <string name="tools_ram_apply_global">Terapkan ke global</string>
+    <string name="tools_ram_apply_instances">Terapkan ke semua instance</string>
+    <string name="tools_ram_applied_global">RAM global diatur ke %1$d MB</string>
+    <string name="tools_ram_applied_instances">Diterapkan ke %1$d instance</string>
+    <string name="tools_clean_title">Pembersih penyimpanan</string>
+    <string name="tools_clean_summary">Membersihkan file sementara unduhan, cache gambar, dan log lama. Data game dan world tidak disentuh.</string>
+    <string name="tools_clean_cache">File sementara unduhan</string>
+    <string name="tools_clean_images">Cache gambar dan ikon</string>
+    <string name="tools_clean_logs">Log</string>
+    <string name="tools_clean_total">Bisa dibebaskan: %1$s</string>
+    <string name="tools_clean_button">Bersihkan</string>
+    <string name="tools_clean_confirm_title">Bersihkan penyimpanan</string>
+    <string name="tools_clean_confirm_message">Bebaskan sekitar %1$s dari file cache? Tidak ada isi instance yang dihapus.</string>
+    <string name="tools_clean_done">Membebaskan %1$s</string>
+    <string name="tools_storage_title">Penyimpanan instance</string>
+    <string name="tools_storage_summary">Ruang yang dipakai setiap instance, dari yang paling besar.</string>
+    <string name="tools_storage_empty">Belum ada instance terpasang.</string>
+    <string name="tools_storage_total">Total</string>
+    <string name="tools_big_title">File besar</string>
+    <string name="tools_big_summary">File di atas 50 MB di folder game. Hapus sisa file yang sudah tidak dipakai.</string>
+    <string name="tools_big_empty">Tidak ada file di atas 50 MB.</string>
+    <string name="tools_big_delete_title">Hapus file</string>
+    <string name="tools_big_delete_message">Hapus %1$s secara permanen?</string>
+    <string name="tools_big_deleted">File dihapus</string>
+    <string name="tools_big_failed">Gagal menghapus file</string>
+    <string name="tools_logs_title">Manajer log</string>
+    <string name="tools_logs_summary">Log launcher dan log game terbaru dari setiap instance.</string>
+    <string name="tools_logs_count">Jumlah file log</string>
+    <string name="tools_logs_clean_button">Hapus log lama (simpan %1$d)</string>
+    <string name="tools_logs_clean_title">Hapus log lama</string>
+    <string name="tools_logs_clean_message">Simpan %1$d log launcher terbaru dan hapus sisanya?</string>
+    <string name="tools_logs_clean_done">Menghapus %1$d log, membebaskan %2$s</string>
+    <string name="tools_health_title">Cek kesehatan instance</string>
+    <string name="tools_health_summary">Memeriksa json versi, jar klien, assets, konfigurasi, dan runtime Java setiap instance.</string>
+    <string name="tools_health_button">Periksa sekarang</string>
+    <string name="tools_health_ok">Tidak ada masalah di %1$d instance.</string>
+    <string name="tools_health_found">%1$d instance perlu diperiksa:</string>
+    <string name="tools_health_issue_json">Json versi tidak ada</string>
+    <string name="tools_health_issue_jar">Jar klien tidak ada</string>
+    <string name="tools_health_issue_assets">Folder assets tidak ada</string>
+    <string name="tools_health_issue_java">Runtime Java tidak tersedia</string>
+    <string name="tools_health_issue_config">Konfigurasi versi tidak bisa dibaca</string>
+    <string name="tools_health_issue_empty">Folder instance kosong</string>
+    <string name="tools_mods_title">Detektor mod duplikat</string>
+    <string name="tools_mods_summary">Mencari dua mod atau lebih dengan id yang sama dalam satu instance, penyebab umum game gagal dibuka.</string>
+    <string name="tools_mods_button">Pindai mod</string>
+    <string name="tools_mods_none">Tidak ada mod duplikat.</string>
+    <string name="tools_mods_found">%1$d grup duplikat ditemukan:</string>
+    <string name="tools_backup_title">Backup setelan</string>
+    <string name="tools_backup_summary">Ekspor setelan launcher ke file json, atau pulihkan di perangkat lain.</string>
+    <string name="tools_backup_export">Ekspor</string>
+    <string name="tools_backup_import">Impor</string>
+    <string name="tools_backup_export_done">Setelan berhasil diekspor.</string>
+    <string name="tools_backup_import_done">%1$d setelan diimpor. Mulai ulang launcher agar semua berlaku.</string>
+    <string name="tools_backup_import_confirm_title">Impor setelan</string>
+    <string name="tools_backup_import_confirm_message">Setelan saat ini akan diganti dengan file yang diimpor. Lanjutkan?</string>
+    <string name="tools_backup_failed">Gagal: %1$s</string>
+    <string name="tools_report_title">Paket laporan</string>
+    <string name="tools_report_summary">Menggabungkan info perangkat, log launcher, dan log instance menjadi satu zip untuk dibagikan.</string>
+    <string name="tools_report_button">Buat dan bagikan</string>
+    <string name="tools_report_share_title">Bagikan laporan</string>
+    <string name="tools_report_failed">Gagal: %1$s</string>
+    <string name="tools_notes_title">Catatan instance</string>
+    <string name="tools_notes_summary">Tulis catatan singkat untuk setiap instance, misalnya daftar mod atau akun yang dipakai.</string>
+    <string name="tools_notes_empty">Belum ada instance terpasang.</string>
+    <string name="tools_notes_none">Belum ada catatan</string>
+    <string name="tools_notes_edit">Ubah catatan</string>
+    <string name="tools_notes_edit_title">Catatan untuk %1$s</string>
+    <string name="tools_notes_saved">Catatan disimpan</string>
 </resources>
 

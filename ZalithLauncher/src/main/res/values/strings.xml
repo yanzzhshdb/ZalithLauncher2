@@ -3265,10 +3265,12 @@
     <!-- What's new -->
     <string name="whats_new_title">What\'s new</string>
     <string name="whats_new_confirm">Got it</string>
-    <string name="whats_new_body">• UI sekarang ungu biar nyambung sama logo NorxLauncher.
-• Event First Release: tema Aurora + banner cuma 6 hari, main atau AFK 15 menit buat permanen.
-• Asisten AI dimatikan sementara (maintenance). Nggak ada kunci API di dalam aplikasi.
-• Build release sekarang tersedia semua ABI: all, arm, arm64, x86, x86_64.</string>
+    <string name="whats_new_body">• NorxLauncher 2.0: halaman baru Norx Tools di Pengaturan, isinya 10 alat yang beneran kepake.
+• Bersihkan penyimpanan, lihat pemakaian per instance, temukan file besar, dan rapikan log lama.
+• Auto-tune RAM dan JVM sesuai perangkat, bisa langsung ke global atau ke semua instance.
+• Cek kesehatan instance, detektor mod duplikat, catatan per instance.
+• Backup/impor setelan launcher dan paket laporan siap kirim ke support.
+• Asisten AI tetap maintenance dan tidak ada kunci API di dalam aplikasi.</string>
 
     <!-- Power saver -->
     <string name="settings_power_saver_title">Power saver mode</string>
@@ -3467,5 +3469,90 @@
     <string name="ai_maintenance_paused_crash">Crash log analysis</string>
     <string name="ai_maintenance_paused_context">Automatic analysis after a crash</string>
     <string name="ai_maintenance_privacy">No API key is stored in this app. When the assistant returns, requests go through our own server so no secret ever ships inside the APK.</string>
+
+    <string name="settings_tab_tools">Norx Tools</string>
+    <string name="tools_summary_title">Device overview</string>
+    <string name="tools_summary_hint">Everything here runs offline and never uploads your data.</string>
+    <string name="tools_summary_ram">Device memory</string>
+    <string name="tools_summary_ram_value">%1$d MB</string>
+    <string name="tools_summary_storage">Free storage</string>
+    <string name="tools_summary_storage_value">%1$s free of %2$s</string>
+    <string name="tools_summary_instances">Instances</string>
+    <string name="tools_summary_mods">Installed mods</string>
+    <string name="tools_summary_count">%1$d</string>
+    <string name="tools_ram_title">Memory and JVM auto-tune</string>
+    <string name="tools_ram_summary">Suggests a heap size from the device memory and mod count, then applies a G1GC argument set.</string>
+    <string name="tools_ram_recommend">Recommendation</string>
+    <string name="tools_ram_recommend_value">%1$d MB (limit %2$d MB)</string>
+    <string name="tools_ram_args">JVM args: %1$s</string>
+    <string name="tools_ram_apply_global">Apply as global</string>
+    <string name="tools_ram_apply_instances">Apply to all instances</string>
+    <string name="tools_ram_applied_global">Global RAM set to %1$d MB</string>
+    <string name="tools_ram_applied_instances">Applied to %1$d instances</string>
+    <string name="tools_clean_title">Storage cleaner</string>
+    <string name="tools_clean_summary">Clears download temp files, image cache and old logs. Game data and worlds are untouched.</string>
+    <string name="tools_clean_cache">Download temp files</string>
+    <string name="tools_clean_images">Image and icon cache</string>
+    <string name="tools_clean_logs">Logs</string>
+    <string name="tools_clean_total">Reclaimable: %1$s</string>
+    <string name="tools_clean_button">Clean</string>
+    <string name="tools_clean_confirm_title">Clean storage</string>
+    <string name="tools_clean_confirm_message">Free about %1$s of cached files? Nothing in your instances will be deleted.</string>
+    <string name="tools_clean_done">Freed %1$s</string>
+    <string name="tools_storage_title">Instance storage</string>
+    <string name="tools_storage_summary">Space used by every installed instance, biggest first.</string>
+    <string name="tools_storage_empty">No instances installed yet.</string>
+    <string name="tools_storage_total">Total</string>
+    <string name="tools_big_title">Large files</string>
+    <string name="tools_big_summary">Files above 50 MB inside the game folder. Delete leftovers you no longer need.</string>
+    <string name="tools_big_empty">No files above 50 MB.</string>
+    <string name="tools_big_delete_title">Delete file</string>
+    <string name="tools_big_delete_message">Delete %1$s permanently?</string>
+    <string name="tools_big_deleted">File deleted</string>
+    <string name="tools_big_failed">Failed to delete the file</string>
+    <string name="tools_logs_title">Log manager</string>
+    <string name="tools_logs_summary">Launcher logs plus the newest game log of each instance.</string>
+    <string name="tools_logs_count">Log files</string>
+    <string name="tools_logs_clean_button">Delete old logs (keep %1$d)</string>
+    <string name="tools_logs_clean_title">Delete old logs</string>
+    <string name="tools_logs_clean_message">Keep the newest %1$d launcher logs and delete the rest?</string>
+    <string name="tools_logs_clean_done">Deleted %1$d logs, freed %2$s</string>
+    <string name="tools_health_title">Instance health check</string>
+    <string name="tools_health_summary">Checks the version json, client jar, assets, config and Java runtime of every instance.</string>
+    <string name="tools_health_button">Check now</string>
+    <string name="tools_health_ok">No problems found in %1$d instances.</string>
+    <string name="tools_health_found">%1$d instances need attention:</string>
+    <string name="tools_health_issue_json">Version json is missing</string>
+    <string name="tools_health_issue_jar">Client jar is missing</string>
+    <string name="tools_health_issue_assets">Assets folder is missing</string>
+    <string name="tools_health_issue_java">Java runtime is unavailable</string>
+    <string name="tools_health_issue_config">Version config cannot be parsed</string>
+    <string name="tools_health_issue_empty">Instance folder is empty</string>
+    <string name="tools_mods_title">Duplicate mod detector</string>
+    <string name="tools_mods_summary">Finds two or more mods with the same mod id inside one instance, a common cause of launch crashes.</string>
+    <string name="tools_mods_button">Scan mods</string>
+    <string name="tools_mods_none">No duplicate mods found.</string>
+    <string name="tools_mods_found">%1$d duplicate groups found:</string>
+    <string name="tools_backup_title">Settings backup</string>
+    <string name="tools_backup_summary">Export the launcher settings to a json file, or restore them on another device.</string>
+    <string name="tools_backup_export">Export</string>
+    <string name="tools_backup_import">Import</string>
+    <string name="tools_backup_export_done">Settings exported successfully.</string>
+    <string name="tools_backup_import_done">Imported %1$d settings entries. Restart the launcher to apply everything.</string>
+    <string name="tools_backup_import_confirm_title">Import settings</string>
+    <string name="tools_backup_import_confirm_message">Your current settings will be replaced by the imported file. Continue?</string>
+    <string name="tools_backup_failed">Failed: %1$s</string>
+    <string name="tools_report_title">Report bundle</string>
+    <string name="tools_report_summary">Packs device info, launcher logs and instance logs into one zip you can share with support.</string>
+    <string name="tools_report_button">Create and share</string>
+    <string name="tools_report_share_title">Share report</string>
+    <string name="tools_report_failed">Failed: %1$s</string>
+    <string name="tools_notes_title">Instance notes</string>
+    <string name="tools_notes_summary">Write a short note for each instance, for example the mod list or the account you use.</string>
+    <string name="tools_notes_empty">No instances installed yet.</string>
+    <string name="tools_notes_none">No note yet</string>
+    <string name="tools_notes_edit">Edit note</string>
+    <string name="tools_notes_edit_title">Note for %1$s</string>
+    <string name="tools_notes_saved">Note saved</string>
 </resources>
 
